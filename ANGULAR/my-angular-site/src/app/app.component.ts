@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   selector: 'app-root',
 
   // templateUrl: './jmactiv.html',
-  template: `<app-authentification></app-authentification>`  ,
+  template: `<router-outlet></router-outlet>`  ,
   styles: []
 })
 export class AppComponent {
