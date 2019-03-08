@@ -12,7 +12,7 @@ export class AuthGuard implements CanActivate {
       next: ActivatedRouteSnapshot,
       state: RouterStateSnapshot): boolean {
     console.log('AuthGuard#canActivate called');
-    // this.router.navigate(['/toBeNamed']);
-    return true;
+    this.router.navigate(['/toBeNamed']);
+    return false;
   }
 }
