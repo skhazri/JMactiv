@@ -1,35 +1,69 @@
-<div class="activite">
-  <div class="form-group row">
-    <label for="example-text-input" class="col-2 col-form-label">Nom de l'activite</label>
-    <div>
-      <input class="form-control" type="text" id="example-text-input">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="example-number-input" class="col-2 col-form-label">Nombre des personnes</label>
-    <div >
-      <input class="form-control" type="number" id="example-number-input">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="example-datetime-local-input" class="col-2 col-form-label">Date et heure</label>
-    <div >
-      <input class="form-control" type="datetime-local" id="example-datetime-local-input">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="example-dateDebut-input" class="col-2 col-form-label">Date de debut</label>
-    <div>
-      <input class="form-control" type="date" id="example-dateDebut-input">
-    </div>
-  </div>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#exampleModal"> Add Event
+</button>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Event</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form role="form">
+          <div class="form-group mb-3">
+            <div class="input-group input-group-alternative">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+              </div>
+              <input class="form-control" placeholder="Email" type="email">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group input-group-alternative">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+              </div>
+              <input class="form-control" placeholder="Password" type="password">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group input-group-alternative">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+              </div>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                placeholder="Event Description ..."></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group input-group-alternative">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+              </div>
+              <input class="form-control datepicker" placeholder="Select date" type="text" value="06/20/2018">
+            </div>
+          </div>
+          <!-- <div class="custom-control custom-control-alternative custom-checkbox">
+                    <input class="custom-control-input" id=" customCheckLogin" type="checkbox">
+                    <label class="custom-control-label" for=" customCheckLogin">
+                        <span class="text-muted">Remember me</span>
+                    </label>
+                </div> -->
+          <div class="text-center">
+            <button type="button" class="btn btn-primary my-4">Sign in</button>
+          </div>
+        </form>
 
-  <div class="form-group row">
-    <label for="example-dateFin-input" class="col-2 col-form-label">Date de fin</label>
-    <div>
-      <input class="form-control" type="date" id="example-dateFin-input">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
     </div>
   </div>
-
-  <button type="button" class="btn btn-primary">Sauvgarder</button>
 </div>
+<script src="../../assets/vendor//bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
