@@ -1,4 +1,7 @@
-<div class="style">
-  <button type="button" class="btn btn-lg btn-primary" (click)="socialLogin()"><i class="fab fa-facebook-f pr-1"></i>Login with Facebook</button>
-</div>
-
+<ul *ngIf="!user" class="navbar-nav">
+  <li class="nav-item">
+    <a class="nav-link" (click)="socialLogin()">
+      <i class="fab fa-facebook text-success"></i> Login with Facebook
+    </a>
+  </li>
+</ul>
