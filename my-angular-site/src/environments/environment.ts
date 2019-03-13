@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  Facebook_API: "https://graph.facebook.com/v3.2",
+  App_ID: "2229942433740406"
 };
 
 /*
