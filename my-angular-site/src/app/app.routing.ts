@@ -1,34 +1,37 @@
-import { RouterModule} from "@angular/router";
-import  {Routes} from "@angular/router";
-import {AuthentificationComponent} from "./authentification/authentification.component";
-import {ModuleWithProviders} from "@angular/core";
-import {LoginComponent} from "./login/login.component";
-import {AppComponent} from "./app.component";
-import {AccueilComponent} from "./accueil/accueil.component";
-import {AuthGuard} from "./auth/auth.guard";
+import { RouterModule, Routes } from '@angular/router';
+import { ModuleWithProviders } from '@angular/core';
+import { AppComponent } from './app.component';
+import { AuthGuard } from './auth/auth.guard';
+import { LoginComponent } from './login/login.component';
+import { AccueilComponent } from './accueil/accueil.component';
+import { CreeractiviteComponent } from './creeractivite/creeractivite.component';
+import { AfficheractiviteComponent } from './afficheractivite/afficheractivite.component';
+import { AuthentificationComponent } from './authentification/authentification.component';
 
 export const routes: Routes = [
-
-    {
-        path: '', //ToDo
-        component: AccueilComponent
-    }
-    ,
-    {
-        path: 'dashboard', //ToDo
-        component: LoginComponent
-    },
-    {
-        path: 'toBeNamed', //ToDo
-        canActivate: [AuthGuard],
+  {
+    path: '',
+    component: AccueilComponent
+  },
+  // {
+  //     path:'**',
+  //     redirectTo: '',
+  //     pathMatch: 'full'
+  // },
+  {
+    path: 'profile',
+    //canActivate: [AuthGuard],
+    children: [
+      {
+        path: '',
         component: AuthentificationComponent
-    },
-    {
-        path:'**',
-        redirectTo: '',
-        component: AccueilComponent
-    }
+      },
+      {
+        path: 'events/:id',
+        component: AfficheractiviteComponent
+      }
+    ]
+  }
 ];
 
 export const AppRouting: ModuleWithProviders = RouterModule.forRoot(routes);
-
