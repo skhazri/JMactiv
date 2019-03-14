@@ -29,3 +29,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## Pour installer les dépenses ANGULA faire:
 command line: npm install
 faire cette commande dans le repertoire de projet
+
+## Pour lancer l'application ANGULAR faire:
+command line: npm start
