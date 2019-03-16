@@ -36,7 +36,7 @@ export class AuthentificationComponent implements OnInit {
 
   }
   /**
-   * 
+   * Se déconnecter de facebook à partir du profil de l'utilisateur
    */
   public signOut() {
     this.socialAuthService.signOut();

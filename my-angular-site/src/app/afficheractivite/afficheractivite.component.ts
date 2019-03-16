@@ -23,10 +23,13 @@ export class AfficheractiviteComponent implements OnInit {
     let id = this.route.snapshot.params['id'];
     // Check if user is logged in to Facebook and return a user with its properties
 
+
     this.socialAuthService.authState.subscribe((user) => {
       this.user = user;
       this.loggedIn = (user != null);
     });
+
+
 
     // get event data and format it to json
     this.facebookService.getEvent(id, this.user.token)

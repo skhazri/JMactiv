@@ -14,7 +14,6 @@ import { AccueilComponent } from './accueil/accueil.component';
 import { FacebookService } from './services/facebook.service'
 import { AfficheractiviteComponent } from './afficheractivite/afficheractivite.component';
 
-
 //Decorator
 @NgModule({
   declarations: [
@@ -24,7 +23,7 @@ import { AfficheractiviteComponent } from './afficheractivite/afficheractivite.c
     ChercherComponent,
     CreeractiviteComponent,
     AccueilComponent,
-    AfficheractiviteComponent,
+    AfficheractiviteComponent
 
 
   ],
@@ -44,4 +43,18 @@ import { AfficheractiviteComponent } from './afficheractivite/afficheractivite.c
   bootstrap: [AppComponent]
 })
 
-export class AppModule { }
+
+export class AppModule {
+
+  /*
+  constructor(private http: HttpClient) {
+    this.getJSON().subscribe(data => {
+      console.log(data);
+    });
+  }
+
+  public getJSON(): Observable<any> {
+    return this.http.get("./assets/mydata.json");
+  }
+  */
+}

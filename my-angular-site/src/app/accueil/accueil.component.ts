@@ -23,10 +23,11 @@ export class AccueilComponent implements OnInit {
       this.loggedIn = (user != null);
     });
   }
+
   /**
-   * SignOut
+   * Se déconnecter de facebook à partir de la page d'Accueil
    */
-  public SignOut() {
+  public signOut() {
     this.socialAuthService.signOut();
     this.router.navigate(['']);
   }
