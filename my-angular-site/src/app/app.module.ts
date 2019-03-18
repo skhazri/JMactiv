@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
+import { HttpClientModule} from "@angular/common/http";
 import { AppComponent } from './app.component';
 import { AppRouting } from './app.routing';
 
@@ -13,6 +14,8 @@ import { CreeractiviteComponent } from './creeractivite/creeractivite.component'
 import { AccueilComponent } from './accueil/accueil.component';
 import { FacebookService } from './services/facebook.service'
 import { AfficheractiviteComponent } from './afficheractivite/afficheractivite.component';
+import { MalisteactiviteComponent } from './malisteactivite/malisteactivite.component';
+
 
 //Decorator
 @NgModule({
@@ -23,7 +26,8 @@ import { AfficheractiviteComponent } from './afficheractivite/afficheractivite.c
     ChercherComponent,
     CreeractiviteComponent,
     AccueilComponent,
-    AfficheractiviteComponent
+    AfficheractiviteComponent,
+    MalisteactiviteComponent
 
 
   ],
@@ -31,7 +35,8 @@ import { AfficheractiviteComponent } from './afficheractivite/afficheractivite.c
     BrowserModule,
     SocialLoginModule,
     AppRouting,
-    HttpModule
+    HttpModule,
+    HttpClientModule
   ],
   providers: [
     {
@@ -46,15 +51,4 @@ import { AfficheractiviteComponent } from './afficheractivite/afficheractivite.c
 
 export class AppModule {
 
-  /*
-  constructor(private http: HttpClient) {
-    this.getJSON().subscribe(data => {
-      console.log(data);
-    });
-  }
-
-  public getJSON(): Observable<any> {
-    return this.http.get("./assets/mydata.json");
-  }
-  */
 }

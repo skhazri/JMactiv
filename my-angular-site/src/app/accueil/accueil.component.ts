@@ -10,6 +10,7 @@ import { AuthService, SocialUser } from 'angular-6-social-login';
 export class AccueilComponent implements OnInit {
 
   user: SocialUser;
+  users: any;
   loggedIn: boolean = false;
   
   constructor(
@@ -21,6 +22,7 @@ export class AccueilComponent implements OnInit {
     this.socialAuthService.authState.subscribe((user) => {
       this.user = user;
       this.loggedIn = (user != null);
+
     });
   }
 
@@ -31,4 +33,5 @@ export class AccueilComponent implements OnInit {
     this.socialAuthService.signOut();
     this.router.navigate(['']);
   }
+
 }

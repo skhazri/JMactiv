@@ -1,0 +1,28 @@
+  <div>
+    <button>Ajouter</button>
+    <table>
+      <thead>
+      <tr>
+        <th>Activité</th>
+        <th>Date</th>
+        <th>Durée</th>
+        <th>Endroit</th>
+        <th>userid</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let activite of activites">
+        <td>{{activite[0]}}</td>
+        <td>{{activite[1]}}</td>
+        <td>{{activite[2]}}</td>
+        <td>{{activite[3]}}</td>
+        <td>{{activite[4]}}</td>
+        <td>
+          <button>Modifier</button>
+          <button>Effacer</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
