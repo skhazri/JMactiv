@@ -32,10 +32,7 @@
           </a>
 
           <div class="dropdown-divider"></div>
-          <a (click)="signOut()" class="dropdown-item">
-            <i class="ni ni-user-run"></i>
-            <span>Logout</span>
-          </a>
+          <app-logout></app-logout>
         </div>
       </li>
     </ul>
@@ -120,10 +117,7 @@
               <span>My profile</span>
             </a>
             <div class="dropdown-divider"></div>
-            <a (click)="signOut()" class="dropdown-item">
-              <i class="ni ni-user-run"></i>
-              <span>Logout</span>
-            </a>
+            <app-logout></app-logout>
           </div>
         </li>
       </ul>
@@ -142,7 +136,6 @@
           <p class="text-white mt-0 mb-5">{{event.place.location.city}}, {{event.place.location.country}}
             {{event.place.name}}</p>
           <p class="text-white mt-0 mb-5">{{event.start_time | date:'fullDate'}}</p>
-
         </div>
       </div>
     </div>
@@ -158,7 +151,7 @@
                 <h3 class="mb-0">{{event.name}}</h3>
               </div>
               <div class="col-4 text-right">
-                    <share-button button="facebook" url={{currentUrl}}><h1 class="display-2 text-blue"></h1></share-button>
+                 <app-share></app-share>
               </div>
             </div>
           </div>
@@ -168,12 +161,12 @@
         </div>
       </div>
     </div>
-  <!-- Footer -->
-  <footer class="footer">
+    <!-- Footer -->
+    <footer class="footer">
       <div class="row align-items-center justify-content-xl-between">
         <div class="col-xl-6">
           <div class="copyright text-center text-xl-left text-muted">
-            &copy; 2019 <a href="#" class="font-weight-bold ml-1" >JMactiv</a>
+            &copy; 2019 <a href="#" class="font-weight-bold ml-1">JMactiv</a>
           </div>
         </div>
         <div class="col-xl-6">
@@ -185,8 +178,7 @@
               <a routerLink="/team" class="nav-link">About Us</a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link"
-                target="_blank">MIT License</a>
+              <a href="#" class="nav-link" target="_blank">MIT License</a>
             </li>
           </ul>
         </div>

@@ -17,6 +17,8 @@ export class AuthentificationComponent implements OnInit {
   data: [];
   events: [];
   eventsLenght: number;
+  currentUrl:string;
+  searchText;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -28,20 +30,15 @@ export class AuthentificationComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.name = params["name"];
     });
+    this.currentUrl= window.location.href;
     this.socialAuthService.authState.subscribe((user) => {
       this.user = user;
       this.loggedIn = (user != null);
     });
     this.getEvents();
-
+    
   }
-  /**
-   * 
-   */
-  public signOut() {
-    this.socialAuthService.signOut();
-    this.router.navigate(['']);
-  }
+  
   /**
    * get FB events associated to user 
    */
@@ -49,7 +46,7 @@ export class AuthentificationComponent implements OnInit {
     this.facebookService.getEvents(this.user.id, this.user.token)
       .subscribe((data) => {
         this.events = (data.json().data);
-        console.log(this.events);
+        // console.log(this.events);
       });
-  }
+  } 
 }

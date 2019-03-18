@@ -13,7 +13,6 @@ export class AfficheractiviteComponent implements OnInit {
   event: Object;
   user: SocialUser;
   loggedIn: boolean;
-  currentUrl: String;
 
   constructor(private route: ActivatedRoute,
     private facebookService: FacebookService,
@@ -23,11 +22,7 @@ export class AfficheractiviteComponent implements OnInit {
   ngOnInit() {
     // get id passed in the url
     let id = this.route.snapshot.params['id'];
-    // get current url
-    this.currentUrl = "http://www.google.com/" +this.router.url;
 
-    //uncomment after depolyment
-    //this.currentUrl = window.location.href;
     // Check if user is logged in to Facebook and return a user with its properties
     this.socialAuthService.authState.subscribe((user) => {
       this.user = user;

@@ -17,6 +17,10 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { AboutComponent } from './about/about.component';
 import { ShareButtonModule } from '@ngx-share/button';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
+import { ShareComponent } from './share/share.component';
+import { LogoutComponent } from './logout/logout.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { FormsModule } from '@angular/forms';
 
 
 //Decorator
@@ -31,17 +35,19 @@ import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
     AfficheractiviteComponent,
     NotFoundComponent,
     AboutComponent,
-
-
+    ShareComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
     SocialLoginModule,
     AppRouting,
     HttpModule,
-    HttpClientModule,      // (Required) for share counts
-    HttpClientJsonpModule, // (Optional) For Tumblr counts
-    ShareButtonModule
+    HttpClientModule,      
+    HttpClientJsonpModule,
+    ShareButtonModule,
+    Ng2SearchPipeModule ,
+    FormsModule
   ],
   providers: [
     {
