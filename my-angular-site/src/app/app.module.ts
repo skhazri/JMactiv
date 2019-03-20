@@ -15,6 +15,8 @@ import { AccueilComponent } from './accueil/accueil.component';
 import { FacebookService } from './services/facebook.service'
 import { AfficheractiviteComponent } from './afficheractivite/afficheractivite.component';
 import { MalisteactiviteComponent } from './malisteactivite/malisteactivite.component';
+import { ModalModule } from "ngx-bootstrap";
+import {FormsModule} from "@angular/forms";
 
 
 //Decorator
@@ -36,7 +38,7 @@ import { MalisteactiviteComponent } from './malisteactivite/malisteactivite.comp
     SocialLoginModule,
     AppRouting,
     HttpModule,
-    HttpClientModule
+    HttpClientModule, FormsModule
   ],
   providers: [
     {

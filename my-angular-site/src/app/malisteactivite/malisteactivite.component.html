@@ -1,5 +1,5 @@
   <div>
-    <button>Ajouter</button>
+    <button (click)="openModalAdd(add)">Ajouter</button>
     <table #dataTable class="display" style="width:100%" border="black">
       <thead>
       <tr>
@@ -7,7 +7,8 @@
         <th>Date</th>
         <th>Durée</th>
         <th>Endroit</th>
-        <th>userid</th>
+        <th></th>
+        <th></th>
       </tr>
       </thead>
       <tbody>
@@ -16,12 +17,86 @@
         <td>{{activite[1]}}</td>
         <td>{{activite[2]}}</td>
         <td>{{activite[3]}}</td>
-        <td>{{activite[4]}}</td>
         <td>
-          <button>Modifier</button>
-          <button>Effacer</button>
+          <button (click)="openModalUpdate(update, activite)">Modifier</button>
+        </td>
+        <td>
+          <button (click)="openModalDelete(delete, activite)">Effacer</button>
         </td>
       </tr>
       </tbody>
     </table>
   </div>
+
+  <ng-template #add>
+    <div class="model-header">
+      <h4 class="model-title pull-left">Ajouter une activité</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <label for="activitytypeupdate">Type activité</label>
+        <input type="text" class="form-control" name="activitytypeupdate" id="activitytypeupdate" [(ngModel)]="activite.activitytype">
+        <p class="text-error">{{errorMsg.activitytype}}</p>
+
+        <label for="starttimeupdate">Date début</label>
+        <input type="text" class="form-control" name="starttimeupdate" id="starttimeupdate" [(ngModel)]="activite.starttime">
+        <p class="text-error">{{errorMsg.starttime}}</p>
+
+        <label for="activitydurationupdate">Durée (minutes)</label>
+        <input type="text" class="form-control" name="activitydurationupdate" id="activitydurationupdate" [(ngModel)]="activite.activityduration">
+        <p class="text-error">{{errorMsg.activityduration}}</p>
+
+        <label for="activitylocationupdate">Endroit</label>
+        <input type="text" class="form-control" name="activitylocationupdate" id="activitylocationupdate" [(ngModel)]="activite.activitylocation">
+        <p class="text-error">{{errorMsg.activitylocation}}</p>
+
+        <button class="btn btn-primary" (click)="onSave()">Enregistrer</button>
+      </form>
+    </div>
+  </ng-template>
+  <ng-template #update>
+    <div class="model-header">
+      <h4 class="model-title pull-left">Modifier une activité</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <label for="txtactivitytype">Type activité</label>
+        <input type="text" class="form-control" name="txtactivitytype" id="txtactivitytype" [(ngModel)]="editActivity[0]">
+        <p class="text-error">{{errorMsg.activitytype}}</p>
+
+        <label for="starttime">Date début</label>
+        <input type="text" class="form-control" name="starttime" id="starttime" [(ngModel)]="editActivity[1]">
+        <p class="text-error">{{errorMsg.starttime}}</p>
+
+        <label for="activityduration">Durée (minutes)</label>
+        <input type="text" class="form-control" name="activityduration" id="activityduration" [(ngModel)]="editActivity[2]">
+        <p class="text-error">{{errorMsg.activityduration}}</p>
+
+        <label for="activitylocation">Endroit</label>
+        <input type="text" class="form-control" name="activitylocation" id="activitylocation" [(ngModel)]="editActivity[3]">
+        <p class="text-error">{{errorMsg.activitylocation}}</p>
+
+        <button class="btn btn-primary" (click)="onUpdate()">Enregistrer</button>
+      </form>
+    </div>
+  </ng-template>
+
+  <ng-template #delete>
+    <div class="model-header">
+      <h4 class="model-title pull-left">Confirmation</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>Voulez-vous effacer cet activité?</p>
+      <button class="btn btn-primary" (click)="modalRef.hide()">Non</button>
+      <button class="btn btn-danger" (click)="deleteActivity()">Oui</button>
+    </div>
+  </ng-template>

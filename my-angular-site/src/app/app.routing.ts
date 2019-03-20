@@ -1,5 +1,5 @@
 import { RouterModule, Routes } from '@angular/router';
-import { ModuleWithProviders } from '@angular/core';
+import {ModuleWithProviders, NgModule} from '@angular/core';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './auth/auth.guard';
 import { LoginComponent } from './login/login.component';
@@ -7,6 +7,10 @@ import { AccueilComponent } from './accueil/accueil.component';
 import { CreeractiviteComponent } from './creeractivite/creeractivite.component';
 import { AfficheractiviteComponent } from './afficheractivite/afficheractivite.component';
 import { AuthentificationComponent } from './authentification/authentification.component';
+import { ModalModule } from "ngx-bootstrap";
+import {MalisteactiviteComponent} from "./malisteactivite/malisteactivite.component";
+import {FormsModule} from "@angular/forms";
+
 
 export const routes: Routes = [
   {
@@ -34,4 +38,11 @@ export const routes: Routes = [
   }
 ];
 
-export const AppRouting: ModuleWithProviders = RouterModule.forRoot(routes);
+@NgModule({
+  imports: [RouterModule.forRoot(routes),
+    ModalModule.forRoot(),
+    FormsModule],
+  exports: [RouterModule]
+})
+
+export class AppRouting{}
