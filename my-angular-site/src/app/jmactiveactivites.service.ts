@@ -22,6 +22,7 @@ export class JmactiveactivitesService {
   }
 
   postUpdate(data){
+    console.log(data);
     return this.http.post(this.baseUrl + '/api/UpdateActivity', data)
   }
 

@@ -17,7 +17,10 @@ import { AfficheractiviteComponent } from './afficheractivite/afficheractivite.c
 import { MalisteactiviteComponent } from './malisteactivite/malisteactivite.component';
 import { ModalModule } from "ngx-bootstrap";
 import {FormsModule} from "@angular/forms";
-
+import { DataTablesModule } from 'angular-datatables';
+//import {Subject} from "rxjs";
+//import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import {NgxMaskModule} from 'ngx-mask'
 
 //Decorator
 @NgModule({
@@ -31,14 +34,14 @@ import {FormsModule} from "@angular/forms";
     AfficheractiviteComponent,
     MalisteactiviteComponent
 
-
   ],
   imports: [
     BrowserModule,
     SocialLoginModule,
     AppRouting,
     HttpModule,
-    HttpClientModule, FormsModule
+    HttpClientModule, FormsModule, DataTablesModule,
+    NgxMaskModule.forRoot()
   ],
   providers: [
     {

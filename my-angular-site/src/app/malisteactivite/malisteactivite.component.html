@@ -1,6 +1,7 @@
-  <div>
+<div xmlns:date="http://www.w3.org/1999/xhtml" xmlns:date="http://www.w3.org/1999/xhtml"
+     xmlns:date="http://www.w3.org/1999/xhtml" xmlns:mask="http://www.w3.org/1999/xhtml">
     <button (click)="openModalAdd(add)">Ajouter</button>
-    <table #dataTable class="display" style="width:100%" border="black">
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover" width="100%">
       <thead>
       <tr>
         <th>Activité</th>
@@ -13,10 +14,10 @@
       </thead>
       <tbody>
       <tr *ngFor="let activite of activites">
-        <td>{{activite[0]}}</td>
-        <td>{{activite[1]}}</td>
-        <td>{{activite[2]}}</td>
-        <td>{{activite[3]}}</td>
+        <td>{{activite.ACTIVITYTYPE}}</td>
+        <td>{{activite.STARTTIME  | date:'yyyy-MM-dd HH:mm'}}</td>
+        <td>{{activite.ACTIVITYDURATION}}</td>
+        <td>{{activite.ACTIVITYLOCATION}}</td>
         <td>
           <button (click)="openModalUpdate(update, activite)">Modifier</button>
         </td>
@@ -38,19 +39,21 @@
     <div class="modal-body">
       <form>
         <label for="activitytypeupdate">Type activité</label>
-        <input type="text" class="form-control" name="activitytypeupdate" id="activitytypeupdate" [(ngModel)]="activite.activitytype">
+        <input type="text" class="form-control" name="activitytypeupdate" id="activitytypeupdate" [(ngModel)]="activite.ACTIVITYTYPE">
         <p class="text-error">{{errorMsg.activitytype}}</p>
 
         <label for="starttimeupdate">Date début</label>
-        <input type="text" class="form-control" name="starttimeupdate" id="starttimeupdate" [(ngModel)]="activite.starttime">
-        <p class="text-error">{{errorMsg.starttime}}</p>
+        <input type="text" class="form-control" name="starttimeupdate" id="starttimeupdate"  [(ngModel)]="activite.STARTTIME" >
+        <!--mask ='0000-00-00 Hh:m0:s0'-->
+          <p class="text-error">{{errorMsg.starttime}}</p>
 
-        <label for="activitydurationupdate">Durée (minutes)</label>
-        <input type="text" class="form-control" name="activitydurationupdate" id="activitydurationupdate" [(ngModel)]="activite.activityduration">
+
+          <label for="activitydurationupdate">Durée (minutes)</label>
+        <input type="text" class="form-control" name="activitydurationupdate" id="activitydurationupdate" [(ngModel)]="activite.ACTIVITYDURATION">
         <p class="text-error">{{errorMsg.activityduration}}</p>
 
         <label for="activitylocationupdate">Endroit</label>
-        <input type="text" class="form-control" name="activitylocationupdate" id="activitylocationupdate" [(ngModel)]="activite.activitylocation">
+        <input type="text" class="form-control" name="activitylocationupdate" id="activitylocationupdate" [(ngModel)]="activite.ACTIVITYLOCATION">
         <p class="text-error">{{errorMsg.activitylocation}}</p>
 
         <button class="btn btn-primary" (click)="onSave()">Enregistrer</button>
@@ -67,19 +70,19 @@
     <div class="modal-body">
       <form>
         <label for="txtactivitytype">Type activité</label>
-        <input type="text" class="form-control" name="txtactivitytype" id="txtactivitytype" [(ngModel)]="editActivity[0]">
+        <input type="text" class="form-control" name="txtactivitytype" id="txtactivitytype" [(ngModel)]="editActivity.ACTIVITYTYPE">
         <p class="text-error">{{errorMsg.activitytype}}</p>
 
         <label for="starttime">Date début</label>
-        <input type="text" class="form-control" name="starttime" id="starttime" [(ngModel)]="editActivity[1]">
+        <input type="text" class="form-control" name="starttime" id="starttime" [(ngModel)]="editActivity.STARTTIME">
         <p class="text-error">{{errorMsg.starttime}}</p>
 
         <label for="activityduration">Durée (minutes)</label>
-        <input type="text" class="form-control" name="activityduration" id="activityduration" [(ngModel)]="editActivity[2]">
+        <input type="text" class="form-control" name="activityduration" id="activityduration" [(ngModel)]="editActivity.ACTIVITYDURATION">
         <p class="text-error">{{errorMsg.activityduration}}</p>
 
         <label for="activitylocation">Endroit</label>
-        <input type="text" class="form-control" name="activitylocation" id="activitylocation" [(ngModel)]="editActivity[3]">
+        <input type="text" class="form-control" name="activitylocation" id="activitylocation" [(ngModel)]="editActivity.ACTIVITYLOCATION">
         <p class="text-error">{{errorMsg.activitylocation}}</p>
 
         <button class="btn btn-primary" (click)="onUpdate()">Enregistrer</button>
@@ -100,3 +103,5 @@
       <button class="btn btn-danger" (click)="deleteActivity()">Oui</button>
     </div>
   </ng-template>
+
+  <script src="../../assets/vendor//bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>

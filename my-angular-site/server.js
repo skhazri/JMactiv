@@ -82,8 +82,11 @@ app.get("/api/getMaListeActivite/:userid", function(req, res){
             if (err) {console.error(err); res.send(err);}
 
             connection.execute(
-                'SELECT * FROM ACTIVITIES WHERE USERID = :id',
+                'SELECT ACTIVITYTYPE, TO_CHAR(STARTTIME, \'YYYY-MM-DD HH24:MI\') AS STARTTIME, ACTIVITYDURATION, ACTIVITYLOCATION, USERID, ACTIVITYID FROM ACTIVITIES WHERE USERID = :id',
                 [ uid ],
+                {
+                    outFormat: oracledb.OBJECT
+                },
                 function(err,result)
                 {
                     if(err){
@@ -91,13 +94,23 @@ app.get("/api/getMaListeActivite/:userid", function(req, res){
                         res.send(err);
                     }
                     else {
-                        console.log(result.rows);
+
+                        /*console.log(result.rows);
                         doRelease(connection);
-                        res.json(result.rows);
+                        res.json(result.rows);*/
+                        console.log(result.rows);
+                        let json = result ;
+                        json.recordsTotal = result.rows.length;
+                        json.recordsFiltered = result.rows.length;
+                        json.data = result.rows;
+                        doRelease(connection);
+                        console.log(json);
+                        res.json( json );
                     }
                 });
         });
 })
+
 
 app.get("/api/getMonActivite/:activityid", function(req, res){
     const activityid = parseInt(req.params.activityid, 10);
@@ -133,10 +146,10 @@ app.get("/api/getMonActivite/:activityid", function(req, res){
 
 app.post("/api/SaveActivity", function(req, res) {
     console.log("/api/SaveActivity")
-    console.log(req.body.activitytype);
-    const uid = parseInt(req.body.userid, 10);
-    const duration =parseInt(req.body.activityduration, 10);
-    let date = new Date(Date.parse(req.body.starttime));
+    console.log(req.body.ACTIVITYTYPE);
+    const uid = parseInt(req.body.USERID, 10);
+    const duration =parseInt(req.body.ACTIVITYDURATION, 10);
+    let date = new Date(Date.parse(req.body.STARTTIME));
 
     console.log(uid);
     console.log(duration);
@@ -152,9 +165,9 @@ app.post("/api/SaveActivity", function(req, res) {
             if (err) {console.error(err); res.send(err);}
 
             connection.execute(
-                "INSERT INTO ACTIVITIES (ACTIVITYTYPE, STARTTIME, DURATION, ACTIVITYLOCATION, USERID) VALUES (:activitytype, :starttime, :activityduration, :activitylocation, :userid) " ,
-                [ req.body.activitytype, date,
-                    duration, req.body.activitylocation, uid],
+                "INSERT INTO ACTIVITIES (ACTIVITYTYPE, STARTTIME, ACTIVITYDURATION, ACTIVITYLOCATION, USERID) VALUES (:activitytype, :starttime, :activityduration, :activitylocation, :userid) " ,
+                [ req.body.ACTIVITYTYPE, date,
+                    duration, req.body.ACTIVITYLOCATION, uid],
                 { autoCommit: true },
                 function(err,result)
                 {
@@ -174,10 +187,9 @@ app.post("/api/SaveActivity", function(req, res) {
 
 app.post("/api/UpdateActivity", function(req, res) {
     console.log("/api/UpdateActivity")
-    console.log(req.body.activitytype);
-    const actid = parseInt(req.body.activityid, 10);
-    const duration =parseInt(req.body.activityduration, 10);
-    let date = new Date(Date.parse(req.body.starttime));
+    const actid = parseInt(req.body.ACTIVITYID, 10);
+    const duration =parseInt(req.body.ACTIVITYDURATION, 10);
+    let date = new Date(Date.parse(req.body.STARTTIME));
 
     console.log(actid);
     console.log(duration);
@@ -193,9 +205,9 @@ app.post("/api/UpdateActivity", function(req, res) {
             if (err) {console.error(err); res.send(err);}
 
             connection.execute(
-                "UPDATE ACTIVITIES SET ACTIVITYTYPE = :activitytype, STARTTIME = :starttime, DURATION = :activityduration, ACTIVITYLOCATION = :activitylocation where ACTIVITYID = :activityid " ,
-                [ req.body.activitytype, date,
-                    duration, req.body.activitylocation, actid],
+                "UPDATE ACTIVITIES SET ACTIVITYTYPE = :activitytype, STARTTIME = :starttime, ACTIVITYDURATION = :activityduration, ACTIVITYLOCATION = :activitylocation where ACTIVITYID = :activityid " ,
+                [ req.body.ACTIVITYTYPE, date,
+                    duration, req.body.ACTIVITYLOCATION, actid],
                 { autoCommit: true },
                 function(err,result)
                 {
@@ -215,7 +227,7 @@ app.post("/api/UpdateActivity", function(req, res) {
 
 app.post("/api/DeleteActivity", function(req, res) {
     //const actid = parseInt(req.params, 10);
-    const actid = parseInt(req.body.activityid, 10);
+    const actid = parseInt(req.body.ACTIVITYID, 10);
     console.log("/api/DeleteActivity" + actid);
 
 
