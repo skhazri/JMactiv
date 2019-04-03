@@ -1,69 +1,106 @@
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#exampleModal"> Add Event
-</button>
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Event</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form role="form">
-          <div class="form-group mb-3">
-            <div class="input-group input-group-alternative">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="ni ni-email-83"></i></span>
-              </div>
-              <input class="form-control" placeholder="Email" type="email">
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="input-group input-group-alternative">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-              </div>
-              <input class="form-control" placeholder="Password" type="password">
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="input-group input-group-alternative">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-              </div>
-              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
-                placeholder="Event Description ..."></textarea>
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="input-group input-group-alternative">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
-              </div>
-              <input class="form-control datepicker" placeholder="Select date" type="text" value="06/20/2018">
-            </div>
-          </div>
-          <!-- <div class="custom-control custom-control-alternative custom-checkbox">
-                    <input class="custom-control-input" id=" customCheckLogin" type="checkbox">
-                    <label class="custom-control-label" for=" customCheckLogin">
-                        <span class="text-muted">Remember me</span>
-                    </label>
-                </div> -->
-          <div class="text-center">
-            <button type="button" class="btn btn-primary my-4">Sign in</button>
-          </div>
-        </form>
+<h4 class="title">{{title}}</h4>
+<form role="form" [formGroup]="form" (ngSubmit)="save()">
 
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
+  <!-- Name -->
+  <div class="form-group">
+    <mat-form-field>
+      <input required matInput placeholder="Name" formControlName="name">
+      <mat-error *ngIf="f.name.hasError">
+        {{getErrorName()}}
+      </mat-error>
+    </mat-form-field>
   </div>
-</div>
-<script src="../../assets/vendor//bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+
+  <!-- Location -->
+  <div>
+    <mat-form-field>
+      <input matInput placeholder="Location" formControlName="location" ngx-google-places-autocomplete
+        [options]='options' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)" autocomplete="off">
+    </mat-form-field>
+  </div>
+
+  <!-- Description -->
+  <div class="form-group">
+    <mat-form-field>
+      <textarea matInput placeholder="Description" formControlName="description"></textarea>
+    </mat-form-field>
+  </div>
+  <!-- Private Or Public -->
+  <div class="form-group">
+    <mat-radio-group formControlName="type" required labelPosition="after">
+      <mat-radio-button value="private" color="primary"> Private* &nbsp;</mat-radio-button>
+      <mat-radio-button value="public" color="primary"> Public* </mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <!-- Start Date -->
+  <div class="form-group">
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker" (dateChange)="onStartDateChange($event)" formControlName="startDate"
+        placeholder="Start Date" [errorStateMatcher]="errorMatcher" onkeydown="return false" [min]="today">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker class="datepicker"></mat-datepicker>
+      <mat-error *ngIf="form.hasError('StartDateReq')">
+        Field is required
+      </mat-error>
+      <mat-error *ngIf="form.hasError('notValidDate')">
+        Start Date must be inf to end Date
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- Start Time -->
+  <div class="form-group">
+    <mat-form-field>
+      <input matInput [matTimeSelect]="myTimeSelect" placeholder="Start Time" onkeydown="return false"
+        formControlName="startTime" [min]="startTimeMin" [errorStateMatcher]="errorMatcher">
+      <mat-time-select-toggle matSuffix [for]="myTimeSelect"></mat-time-select-toggle>
+      <mat-time-select #myTimeSelect></mat-time-select>
+      <mat-error *ngIf="form.hasError('notValidTime')">
+          Start Time must be inf to end Time
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- Toggle End Date Time -->
+  <div class="form-group">
+    <mat-slide-toggle formControlName="endDateTime" color="primary" (change)="onChange()"> Choose end date and
+      time
+    </mat-slide-toggle>
+  </div>
+
+  <!-- End Date -->
+
+  <div class="form-group" *ngIf="isVisible">
+    <mat-form-field>
+      <input matInput [errorStateMatcher]="errorMatcher" [matDatepicker]="picker1" placeholder="End Date"
+        formControlName="endDate" (dateChange)="onEndDateChange($event)" onkeydown="return false" [min]="today">
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1 class="datepicker"></mat-datepicker>
+      <mat-error *ngIf="form.hasError('EndDateReq')">
+          Field is required 
+      </mat-error>
+      <mat-error *ngIf="form.hasError('notValidDate')">
+          End Date must be sup to start Date
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <!-- End Time -->
+  <div class="form-group" *ngIf="isVisible">
+    <mat-form-field>
+      <input matInput placeholder="End Time" formControlName="endTime" [matTimeSelect]="myTimeSelect1"
+        [errorStateMatcher]="errorMatcher" onkeydown="return false" [min]="endTimeMin">
+      <mat-time-select-toggle matSuffix [for]="myTimeSelect1"></mat-time-select-toggle>
+      <mat-time-select #myTimeSelect1></mat-time-select>
+      <mat-error *ngIf="form.hasError('notValidTime')">
+          End Time must be sup to start time
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="form-group text-center">
+    <button type="button" class="btn btn-secondary" (click)="close()">Close</button>
+    <button class="btn btn-primary my-4" [disabled]="!form.valid">Save changes</button>
+  </div>
+</form>
+<ng-template #loading>
+  Loading User Event...
+</ng-template>

@@ -1,7 +1,9 @@
 @import "../../assets/scss/custom/moon-theme";
-i.fas,i.fab,i.far {
-   color: #5e72e4
- }
- .sb-show-text,.sb-text {
-   color: rebeccapurple;
- }
+ ::ng-deep  .sb-wrapper {
+   padding: 0 0 ;
+  .sb-text {
+    font-weight: 400;
+      color: #5e72e4;
+      font-size: .875rem;
+  }
+}
