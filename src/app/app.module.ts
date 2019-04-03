@@ -31,6 +31,7 @@ import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCardModule,MatPaginatorModule} from '@angular/material';
 import { ErrorComponent } from './error/error.component';
+import { EventbritecardComponent } from './eventbritecard/eventbritecard.component'
 
 //Decorator
 @NgModule({
@@ -46,7 +47,9 @@ import { ErrorComponent } from './error/error.component';
     AboutComponent,
     ShareComponent,
     LogoutComponent,
-    ErrorComponent
+    ErrorComponent,
+    EventbritecardComponent
+
   ],
   imports: [
     BrowserModule,
