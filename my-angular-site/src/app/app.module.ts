@@ -20,7 +20,8 @@ import {FormsModule} from "@angular/forms";
 import { DataTablesModule } from 'angular-datatables';
 //import {Subject} from "rxjs";
 //import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
-import {NgxMaskModule} from 'ngx-mask'
+import {NgxMaskModule} from 'ngx-mask';
+import { EventbritecardComponent } from './eventbritecard/eventbritecard.component'
 
 //Decorator
 @NgModule({
@@ -32,7 +33,8 @@ import {NgxMaskModule} from 'ngx-mask'
     CreeractiviteComponent,
     AccueilComponent,
     AfficheractiviteComponent,
-    MalisteactiviteComponent
+    MalisteactiviteComponent,
+    EventbritecardComponent
 
   ],
   imports: [
