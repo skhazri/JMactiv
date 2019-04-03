@@ -36,7 +36,10 @@ app.get("/api/getUser/:facebookid", function (req, res) {
             connectString: dbConfig.connectString
         },
         function (err, connection) {
-            if (err) { console.error(err); res.send(err); }
+            if (err) {
+                console.error(err);
+                res.send(err);
+            }
 
             connection.execute(
                 "SELECT USERID FROM USER_DEF WHERE FBID = :id ",
@@ -46,8 +49,7 @@ app.get("/api/getUser/:facebookid", function (req, res) {
                     if (err) {
                         console.error(err);
                         res.send(err);
-                    }
-                    else {
+                    } else {
                         console.log(result.rows);
                         result.rows.forEach(function (e) {
                             id = e[0];
@@ -57,7 +59,7 @@ app.get("/api/getUser/:facebookid", function (req, res) {
                     }
                 });
         });
-})
+});
 
 function doRelease(connection) {
     connection.close(
@@ -81,7 +83,10 @@ app.get("/api/getMaListeActivite/:userid", function (req, res) {
             connectString: dbConfig.connectString
         },
         function (err, connection) {
-            if (err) { console.error(err); res.send(err); }
+            if (err) {
+                console.error(err);
+                res.send(err);
+            }
 
             connection.execute(
                 'SELECT  * FROM EVENTS WHERE USERID = :id',
@@ -92,8 +97,7 @@ app.get("/api/getMaListeActivite/:userid", function (req, res) {
                     if (err) {
                         console.error(err);
                         res.send(err);
-                    }
-                    else {
+                    } else {
 
                         console.log(result);
                         result.rows.forEach(function (e) {
@@ -119,7 +123,7 @@ app.get("/api/getMaListeActivite/:userid", function (req, res) {
                     }
                 });
         });
-})
+});
 /* * 
 
 */
@@ -132,7 +136,10 @@ app.get("/api/getActivites/", function (req, res) {
             connectString: dbConfig.connectString
         },
         function (err, connection) {
-            if (err) { console.error(err); res.send(err); }
+            if (err) {
+                console.error(err);
+                res.send(err);
+            }
 
             connection.execute(
                 "SELECT  * FROM EVENTS WHERE TYPE = 'public'",
@@ -142,8 +149,7 @@ app.get("/api/getActivites/", function (req, res) {
                     if (err) {
                         console.error(err);
                         res.send(err);
-                    }
-                    else {
+                    } else {
                         console.log(result);
                         result.rows.forEach(function (e) {
                             let activity = {};
@@ -167,7 +173,7 @@ app.get("/api/getActivites/", function (req, res) {
                     }
                 });
         });
-})
+});
 
 // 
 app.get("/api/getMonActivite/:activityid", function (req, res) {
@@ -181,7 +187,10 @@ app.get("/api/getMonActivite/:activityid", function (req, res) {
             connectString: dbConfig.connectString
         },
         function (err, connection) {
-            if (err) { console.error(err); res.send(err); }
+            if (err) {
+                console.error(err);
+                res.send(err);
+            }
 
             connection.execute(
                 'SELECT * FROM EVENTS WHERE EVENTID = :id',
@@ -191,8 +200,7 @@ app.get("/api/getMonActivite/:activityid", function (req, res) {
                     if (err) {
                         console.error(err);
                         res.send(err);
-                    }
-                    else {
+                    } else {
                         result.rows.forEach(function (e) {
 
                             activity.id = e[1];
@@ -214,11 +222,11 @@ app.get("/api/getMonActivite/:activityid", function (req, res) {
                     }
                 });
         });
-})
+});
 
 
 app.post("/api/SaveActivity", function (req, res) {
-    console.log("/api/SaveActivity")
+    console.log("/api/SaveActivity");
     const uid = req.body.id;
     var connection = oracledb.getConnection(
         {
@@ -227,29 +235,31 @@ app.post("/api/SaveActivity", function (req, res) {
             connectString: dbConfig.connectString
         },
         function (err, connection) {
-            if (err) { console.error(err); res.send(err); }
+            if (err) {
+                console.error(err);
+                res.send(err);
+            }
 
             connection.execute(
                 "INSERT INTO EVENTS (NAME, LOCATION, DESCRIPTION, TYPE, STARTDATE, STARTTIME, ENDDATE, ENDTIME, ENDDATETIME, ISONLINE,USERID) VALUES (:name, :location, :description, :type, :startDate, :startTime, :endDate, :endTime, :endDateTime, :isOnline, :userId)",
                 [req.body.attributes.name, req.body.attributes.location, req.body.attributes.description, req.body.attributes.type, req.body.attributes.startDate, req.body.attributes.startTime,
-                req.body.attributes.endDate, req.body.attributes.endTime, req.body.attributes.endDateTime, req.body.attributes.online, req.body.id],
-                { autoCommit: true },
+                    req.body.attributes.endDate, req.body.attributes.endTime, req.body.attributes.endDateTime, req.body.attributes.online, req.body.id],
+                {autoCommit: true},
                 function (err, result) {
                     if (err) {
                         console.error(err);
                         res.send(err);
-                    }
-                    else {
+                    } else {
                         console.log(result.rowsAffected);
                         res.json(1);
                         doRelease(connection);
                     }
                 });
         });
-})
+});
 
 app.post("/api/UpdateActivity", function (req, res) {
-    console.log("/api/UpdateActivity")
+    console.log("/api/UpdateActivity");
     const eventid = parseInt(req.body.id, 10);
     var connection = oracledb.getConnection(
         {
@@ -258,27 +268,29 @@ app.post("/api/UpdateActivity", function (req, res) {
             connectString: dbConfig.connectString
         },
         function (err, connection) {
-            if (err) { console.error(err); res.send(err); }
+            if (err) {
+                console.error(err);
+                res.send(err);
+            }
 
             connection.execute(
                 "UPDATE EVENTS SET NAME = :name, LOCATION = :location, DESCRIPTION = :description,TYPE = :type, STARTDATE = :startDate, STARTTIME = :startTime,ENDDATETIME = :endDateTime, ENDDATE = :endDate, ENDTIME = :endTime,ISONLINE = :isOnline where EVENTID = :eventid ",
                 [req.body.attributes.name, req.body.attributes.location, req.body.attributes.description, req.body.attributes.type, req.body.attributes.startDate, req.body.attributes.startTime,
-                req.body.attributes.endDateTime, req.body.attributes.endDate, req.body.attributes.endTime, req.body.attributes.online, eventid],
-                { autoCommit: true },
+                    req.body.attributes.endDateTime, req.body.attributes.endDate, req.body.attributes.endTime, req.body.attributes.online, eventid],
+                {autoCommit: true},
                 function (err, result) {
                     if (err) {
                         console.error(err);
                         res.status(err.statusCode || 500).json(err);
-                    }
-                    else {
-                        console.log(result.rowsAffected)
+                    } else {
+                        console.log(result.rowsAffected);
                         res.json(1);
                         doRelease(connection);
                     }
                 });
         });
 
-})
+});
 
 app.post("/api/DeleteActivity", function (req, res) {
     const actid = parseInt(req.body.id, 10);
@@ -290,25 +302,27 @@ app.post("/api/DeleteActivity", function (req, res) {
             connectString: dbConfig.connectString
         },
         function (err, connection) {
-            if (err) { console.error(err); res.send(err); }
+            if (err) {
+                console.error(err);
+                res.send(err);
+            }
 
             connection.execute(
                 "DELETE FROM EVENTS where EVENTID = :id ",
                 [actid],
-                { autoCommit: true },
+                {autoCommit: true},
                 function (err, result) {
                     if (err) {
                         console.error(err.status);
                         res.status(err.statusCode || 500).json(err);
-                    }
-                    else {
+                    } else {
                         console.log(result.rowsAffected);
                         res.json(1);
                         doRelease(connection);
                     }
                 });
         });
-})
+});
 
 app.listen(3000, function () {
     console.log('listen port 3000')

@@ -213,7 +213,7 @@ export class CreeractiviteComponent implements OnInit {
         case false:
           this.form.value.endDateTime = "false";
       }
-      let event = { id: this.userId, attributes: this.form.value }
+      let event = { id: this.userId, attributes: this.form.value };
       this.activiteService.post(event)
         .subscribe(res => {
           this.dialogRef.close();
@@ -237,7 +237,7 @@ export class CreeractiviteComponent implements OnInit {
 
     }
     else {
-      let data = { id: this.id, attributes: this.form.value }
+      let data = { id: this.id, attributes: this.form.value };
       this.activiteService.postUpdate(data).subscribe(res => {
         this.dialogRef.close();
       }, error => {

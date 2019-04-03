@@ -1,66 +1,92 @@
-
-<div class="container-fluid">
+<h3 class="mb-0 text-success">EventBrite</h3>
+<br><br>
+<!--<div class="container-fluid">-->
 <form class="form-inline mr-3 d-md-flex ml-lg-auto">
     <div class="form-group mb-0">
         <div class="input-group input-group-alternative">
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-search"></i></span>
             </div>
-            <input class="form-control" placeholder="Type d'activité" type="search" name="search2" [(ngModel)]="keysearch" (keyup)="searchEvents()" autocomplete="off" >
+            <input class="form-control" placeholder="Type d'activité" type="search" name="search2"
+                   [(ngModel)]="keysearch" (keyup)="searchEvents()" autocomplete="off">
 
         </div>
+        &nbsp;&nbsp;
         <div class="input-group input-group-alternative">
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-search"></i></span>
             </div>
-            <input class="form-control" type="text" name="searchLat" [(ngModel)]="searchLocationLat" (keyup)="searchActivityLocationLat()" autocomplete="off" placeholder="Localisation Latitude">
+            <input class="form-control" type="text" name="searchLat" [(ngModel)]="searchLocationLat"
+                   (keyup)="searchActivityLocationLat()" autocomplete="off" placeholder="Localisation Latitude">
         </div>
+        &nbsp;&nbsp;
         <div class="input-group input-group-alternative">
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-search"></i></span>
             </div>
-            <input class="form-control" type="text" name="searchLon" [(ngModel)]="searchLocationLon" (keyup)="searchActivityLocationLon()" autocomplete="off" placeholder="Localisation Longitude">
+            <input class="form-control" type="text" name="searchLon" [(ngModel)]="searchLocationLon"
+                   (keyup)="searchActivityLocationLon()" autocomplete="off" placeholder="Localisation Longitude">
         </div>
+        &nbsp;&nbsp;
         <div class="input-group input-group-alternative">
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-search"></i></span>
             </div>
-            <input class="form-control" type="text" name="searchWidthIn" [(ngModel)]="locationwidthin" (keyup)="searchEvents()" autocomplete="off" placeholder="Dans un rayon (km)">
+            <input class="form-control" type="text" name="searchWidthIn" [(ngModel)]="locationwidthin"
+                   (keyup)="searchEvents()" autocomplete="off" placeholder="Dans un rayon (km)">
         </div>
-
     </div>
 </form>
-</div>
+<!--</div>-->
 
-                <h3 class="mb-0 text-success">EventBrite</h3>
-                <div class="card-body">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm" *ngFor="let activite of activites">
-                                <div class="card" style="width: 16rem;">
-                                    <img class="card-img-top" src={{activite.LOGO}} alt="Card image cap">
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{activite.ACTIVITYTYPE}}</h5>
-                                        <div class="card-text">
-                                            <h5>
-
-                                            <label for="starttime">Date début: </label>
-                                            <label id="starttime">{{activite.STARTTIME}}</label>
-                                            <br>
-                                                <label for="activityduration">Date fin: </label>
-                                                <label id="activityduration">{{activite.ENDTIME}}</label>
-                                            <br>
-                                            <label for="activitylocation">Endroit: </label>
-                                            <label id="activitylocation">{{activite.ACTIVITYLOCATION}}</label>
-
-
-                                            </h5>
-                                        </div>
-                                        <a href={{activite.URLEVENT}} class="btn btn-primary" target="_blank">Lien eventbrite</a>
+<div class="card-body">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm" *ngFor="let activite of activites">
+                <div class="col-sm">
+                    <div class="card card-single" style="width: 14rem;">
+                        <img class="card-img-top" src={{activite.LOGO}} alt="Card image cap">
+                        <div class="card-body">
+                            <ul class="navbar-nav d-none d-sm d-md-flex" style="position:absolute;right:13px">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link pr-0" role="button" data-toggle="dropdown" aria-haspopup="true"
+                                       aria-expanded="false">
+                                        <i class="fas fa-bars fa-sm"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+                                        <a class="dropdown-item">
+                                            <i class="fas fa-share-square fa-sm "></i>
+                                            <span>
+                                                <share-button [button]="'facebook'" [showIcon]="false" [showText]="true"
+                                                              [size]="1"
+                                                              [icon]="['fas', 'fa-share-square']" text='share Event'
+                                                              url="/profile/events/{{activite.id}}"
+                                                              [autoSetMeta]="false">
+                                                </share-button>
+                                              </span>
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                        <a href="{{activite.URLEVENT}}" target="_blank" class="dropdown-item">
+                                            <i class=" fas fa-edit fa-sm "></i>
+                                            <span>Link eventbrite</span>
+                                        </a>
+                                        <!--<a routerLink="/profile" class="dropdown-item">-->
+                                        <!--<i class="far fa-trash-alt fa-sm "></i>-->
+                                        <!--<span>Remove Event</span>-->
+                                        <!--</a> -->
                                     </div>
-                                </div>
-                            </div>
+                                </li>
+                            </ul>
                             <br>
+                            <h5 class="card-title">{{activite.ACTIVITYTYPE}}</h5>
+                            <p class="card-text">{{activite.ACTIVITYLOCATION| slice:0:70 }}</p>
+                            <a href={{activite.URLEVENT}} class="btn btn-primary" target="_blank">Read More</a>
                         </div>
                     </div>
+                    <br>
                 </div>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
