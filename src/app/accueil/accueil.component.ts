@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService, SocialUser } from 'angular-6-social-login';
-
+import { ActiviteService } from '../services/activite.service';
 @Component({
   selector: 'app-accueil',
   templateUrl: './accueil.component.html',
@@ -12,8 +12,14 @@ export class AccueilComponent implements OnInit {
   user: SocialUser;
   loggedIn: boolean = false;
   
+  facebookService: any;
+  data: [];
+  events: [];
+  id = {'id': ''};
+
   constructor(
-    private router: Router, private socialAuthService: AuthService) { }
+    private router: Router, private socialAuthService: AuthService,
+    private activiteService: ActiviteService ) { }
 
   ngOnInit() {
     // Check if user is logged in to Facebook and return a user with its properties
@@ -21,6 +27,7 @@ export class AccueilComponent implements OnInit {
       this.user = user;
       this.loggedIn = (user != null);
     });
+    this.getActivites();
   }
   /**
    * SignOut
@@ -29,4 +36,14 @@ export class AccueilComponent implements OnInit {
     this.socialAuthService.signOut();
     this.router.navigate(['']);
   }
+  /**
+   * get FB events associated to user 
+   */
+  
+  public getActivites() {
+    this.activiteService.getActivities()
+      .subscribe((data) => {
+        this.events = (data.json());
+      });
+  } 
 }

@@ -20,8 +20,17 @@ import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { ShareComponent } from './share/share.component';
 import { LogoutComponent } from './logout/logout.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
-import { FormsModule } from '@angular/forms';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatRippleModule, MatDatepickerModule, NativeDateModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatNativeDateModule, ErrorStateMatcher, MatDialogModule, MatRadioModule } from '@angular/material';
+import { MatTimeSelectModule, MatNativeTimeModule } from 'ngx-material-time-select';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatSelectModule } from '@angular/material/select';
+import { GooglePlaceModule } from "ngx-google-places-autocomplete";
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatCardModule,MatPaginatorModule} from '@angular/material';
+import { ErrorComponent } from './error/error.component';
 
 //Decorator
 @NgModule({
@@ -36,27 +45,49 @@ import { FormsModule } from '@angular/forms';
     NotFoundComponent,
     AboutComponent,
     ShareComponent,
-    LogoutComponent
+    LogoutComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     SocialLoginModule,
     AppRouting,
     HttpModule,
-    HttpClientModule,      
+    HttpClientModule,
     HttpClientJsonpModule,
     ShareButtonModule,
-    Ng2SearchPipeModule ,
-    FormsModule
+    Ng2SearchPipeModule,
+    FormsModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatRippleModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatTimeSelectModule,
+    MatNativeTimeModule,
+    MatIconModule,
+    MatButtonToggleModule,
+    MatSelectModule,
+    GooglePlaceModule,
+    ReactiveFormsModule,
+    MatSlideToggleModule,
+    MatDialogModule,
+    MatRadioModule,
+    MatPaginatorModule
   ],
   providers: [
     {
       provide: AuthServiceConfig,
       useFactory: getAuthServiceConfigs,
     },
-    FacebookService
+    FacebookService,
+    MatNativeDateModule,
+    MatDatepickerModule
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [CreeractiviteComponent,ErrorComponent]
 })
 
 export class AppModule { }

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FacebookService } from '../services/facebook.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService, SocialUser } from 'angular-6-social-login';
+import { ActiviteService } from '../services/activite.service';
+import { isUndefined } from 'util';
 
 @Component({
   selector: 'app-afficheractivite',
@@ -13,10 +15,13 @@ export class AfficheractiviteComponent implements OnInit {
   event: Object;
   user: SocialUser;
   loggedIn: boolean;
+  isOnline: boolean;
+  eventFacebook: Object;
 
   constructor(private route: ActivatedRoute,
     private facebookService: FacebookService,
     private socialAuthService: AuthService,
+    private activiteService: ActiviteService,
     private router: Router) { }
 
   ngOnInit() {
@@ -29,11 +34,21 @@ export class AfficheractiviteComponent implements OnInit {
       this.loggedIn = (user != null);
     });
 
-    // get event data and format it to json
-    this.facebookService.getEvent(id, this.user.token)
+    // get facebook event data and format it to json
+    // get bd event data and format it to json
+    this.activiteService.getActivity(id)
       .subscribe((data) => {
-        this.event = (data.json());
-      });
+        if (isUndefined(data.json().online)) {
+          this.isOnline = true;
+          this.facebookService.getEvent(id, this.user.token)
+            .subscribe((data) => {
+              this.eventFacebook = (data.json());
+            });
 
+        } else {
+          this.isOnline = data.json().online;
+          this.event = data.json();
+        }
+      });
   }
 }

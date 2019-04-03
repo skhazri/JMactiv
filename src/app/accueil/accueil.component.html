@@ -1,6 +1,7 @@
 <!-- Sidenav -->
 <nav class="navbar navbar-horizontal navbar-expand-lg navbar-light bg-white" id="sidenav-main">
   <div class="container-fluid">
+     
     <!-- Toggler -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main"
       aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
@@ -140,6 +141,12 @@
   </div>
   <!-- Page content -->
   <div class="container-fluid mt--7">
+      <div class="container">
+          <div class="row">
+        
+      
+          </div>
+      </div>
     <div class="row">
       <div class="col-lg">
         <div class="card bg-white shadow">
@@ -151,46 +158,68 @@
             </div>
           </div>
           <div class="card-body">
-            <div class="container">
-              <div class="row">
-                <div class="col-sm">
-                  <div class="card" style="width: 16rem;">
-                    <img class="card-img-top" src="../../assets/img/activ2.jpg" alt="Card image cap">
-                    <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                        the card's content.</p>
-                      <a href="#" class="btn btn-primary">Read More</a>
+              <form>
+                  <div *ngIf="events">
+                    <!-- Search -->
+                    <div class="row justify-content-end">
+                        <div class="form-group mb-0">
+                          <div class="input-group input-group-alternative">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            </div>
+                            <input class="form-control" name="search" placeholder="Search" [(ngModel)]="searchText"
+                              type="text" autocomplete="off">
+                          </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                      <div *ngFor="let event of events  | filter:searchText">
+                        <div class="col-sm">
+                          <div class="card card-single" style="width: 14rem;">
+                            <img class="card-img-top" src="../../assets/event.jpg" alt="Card image cap">
+                            <div class="card-body">
+                              <ul class="navbar-nav d-none d-sm d-md-flex" style="position:absolute;right:13px">
+                                <li class="nav-item dropdown">
+                                  <a class="nav-link pr-0" role="button" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    <i class="fas fa-bars fa-sm"></i>
+                                  </a>
+                                  <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+                                    <a class="dropdown-item">
+                                      <i class="fas fa-share-square fa-sm "></i>
+                                      <span>
+                                        <share-button [button]="'facebook'" [showIcon]="false" [showText]="true" [size]="1"
+                                          [icon]="['fas', 'fa-share-square']" text='share Event'
+                                          url="/profile/events/{{event.id}}" [autoSetMeta]="false">
+                                        </share-button>
+                                      </span>
+                                    </a>
+                                    <!-- <div class="dropdown-divider"></div>
+                                    <a routerLink="/profile" class="dropdown-item">
+                                      <i class=" fas fa-edit fa-sm "></i>
+                                      <span>Update Event</span>
+                                    </a>
+                                    <a routerLink="/profile" class="dropdown-item">
+                                      <i class="far fa-trash-alt fa-sm "></i>
+                                      <span>Remove Event</span>
+                                    </a> -->
+                                  </div>
+                                </li>
+                              </ul>
+                              <br>
+                              <h5 class="card-title">{{event.name}}</h5>
+                              <p class="card-text">{{event.description | slice:0:70 }}</p>
+                              <a [routerLink]="['/profile/events', event.id]" class="btn btn-primary">Read More</a>
+                            </div>
+                          </div>
+                          <br>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <br>
-                <div class="col-sm">
-                  <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="../../assets/img/activ2.jpg" alt="Card image cap">
-                    <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                        the card's content.</p>
-                      <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                  </div>
-                </div>
-                <br>
-                <div class="col-sm">
-                  <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="../../assets/img/activ2.jpg" alt="Card image cap">
-                    <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                        the card's content.</p>
-                      <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                  </div>
-                </div>
-                <br>
-              </div>
-            </div>
+                </form>
           </div>
         </div>
       </div>

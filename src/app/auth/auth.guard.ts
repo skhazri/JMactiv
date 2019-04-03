@@ -22,7 +22,6 @@ export class AuthGuard implements CanActivate {
       this.user = user;
       this.loggedIn = (user != null);
     });
-
     if (this.loggedIn) {
       return true;
     }

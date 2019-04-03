@@ -130,25 +130,39 @@
     <span class="mask bg-gradient-default opacity-8"></span>
     <!-- Header container -->
     <div class="container-fluid d-flex align-items-center">
+       <div class="row" *ngIf="eventFacebook && isOnline">
+          <div class="col-lg-7 col-md-10">
+          <h1 class="display-2 text-white">{{eventFacebook.name}}</h1>
+          <p class="text-white mt-0 mb-5" *ngIf="eventFacebook.place.location">{{eventFacebook.place.location.city}}, {{eventFacebook.place.location.country}}
+            {{eventFacebook.place.name}}</p>
+          <p class="text-white mt-0 mb-5" *ngIf="eventFacebook.start_time"> Start {{eventFacebook.start_time | date:'medium'}} 
+              <span *ngIf="eventFacebook.end_time"> Ends {{eventFacebook.end_time | date:'medium'}}</span>
+          </p>
+          </div>
+        </div>
       <div class="row" *ngIf="event">
         <div class="col-lg-7 col-md-10">
-          <h1 class="display-2 text-white">{{event.name}}</h1>
-          <p class="text-white mt-0 mb-5">{{event.place.location.city}}, {{event.place.location.country}}
-            {{event.place.name}}</p>
-          <p class="text-white mt-0 mb-5">{{event.start_time | date:'fullDate'}}</p>
+          <h1 class="display-2 text-white" *ngIf="event.name">{{event.name}}</h1>
+          <p class="text-white mt-0 mb-5" *ngIf="event.location">{{event.location}} </p>
+          <p class="text-white mt-0 mb-5" *ngIf="event.startDate"> Start {{event.startDate | date:'fullDate'}}
+            <span *ngIf="event.startTime"> At {{event.startTime | date:'shortTime'}}</span>
+           </p>
+          <p class="text-white mt-0 mb-5" *ngIf="event.endDate">Ends {{event.endDate | date:'fullDate'}} 
+            <span *ngIf="event.endTime"> At {{event.endTime | date:'shortTime'}}</span>
+          </p>
         </div>
       </div>
     </div>
-  </div>
+    </div>
   <!-- Page content -->
   <div class="container-fluid mt--7">
     <div class="row">
       <div class="col-xl">
-        <div class="card bg-secondary shadow" *ngIf="event">
+        <div class="card bg-secondary shadow" *ngIf="eventFacebook && isOnline">
           <div class="card-header bg-white border-0">
             <div class="row align-items-center">
               <div class="col-8">
-                <h3 class="mb-0">{{event.name}}</h3>
+                <h3 class="mb-0">{{eventFacebook.name}}</h3>
               </div>
               <div class="col-4 text-right">
                  <app-share></app-share>
@@ -156,9 +170,24 @@
             </div>
           </div>
           <div class="card-body">
-            {{event.description}}
+            {{eventFacebook.description}}
           </div>
         </div>
+        <div class="card bg-secondary shadow" *ngIf="event">
+            <div class="card-header bg-white border-0">
+              <div class="row align-items-center">
+                <div class="col-8">
+                  <h3 class="mb-0">{{event.name}}</h3>
+                </div>
+                <div class="col-4 text-right">
+                   <app-share></app-share>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              {{event.description}}
+            </div>
+          </div>
       </div>
     </div>
     <!-- Footer -->
