@@ -217,6 +217,7 @@ app.get("/api/getMonActivite/:activityid", function (req, res) {
                             activity.type = e[9];
                             activity.endDateTime = e[10];
                             activity.online = e[11];
+                            activity.image = e[12];
 
                         });
                         console.log((activity));

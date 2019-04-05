@@ -124,24 +124,35 @@
     </div>
   </nav>
   <!-- Header -->
-  <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
-    style="min-height:400px; background-image: url(../assets/event.jpg); background-size:contain; background-position: center top;">
+  <!-- Facebook Event -->
+  <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" *ngIf="eventFacebook "
+    [ngStyle]="{'background-repeat': 'no-repeat','min-height':'400px','background-image': ' url(' + eventFacebook.cover.source + ') ','background-size':'cover','background-position': 'center center' } ">
     <!-- Mask -->
-    <span class="mask bg-gradient-default opacity-8"></span>
+    <span class=" mask bg-gradient-default opacity-6"></span>
     <!-- Header container -->
     <div class="container-fluid d-flex align-items-center">
-       <div class="row" *ngIf="eventFacebook && isOnline">
-          <div class="col-lg-7 col-md-10">
-          <h1 class="display-2 text-white">{{eventFacebook.name}}</h1>
-          <p class="text-white mt-0 mb-5" *ngIf="eventFacebook.place.location">{{eventFacebook.place.location.city}}, {{eventFacebook.place.location.country}}
-            {{eventFacebook.place.name}}</p>
-          <p class="text-white mt-0 mb-5" *ngIf="eventFacebook.start_time"> Start {{eventFacebook.start_time | date:'medium'}} 
-              <span *ngIf="eventFacebook.end_time"> Ends {{eventFacebook.end_time | date:'medium'}}</span>
-          </p>
-          </div>
-        </div>
-      <div class="row" *ngIf="event">
+      <div class="row">
         <div class="col-lg-7 col-md-10">
+          <h1 class="display-2 text-white">{{eventFacebook.name}}</h1>
+          <p class="text-white mt-0 mb-5" *ngIf="eventFacebook.place.location">{{eventFacebook.place.location.city}},
+            {{eventFacebook.place.location.country}}
+            {{eventFacebook.place.name}}</p>
+          <p class="text-white mt-0 mb-5" *ngIf="eventFacebook.start_time"> Start
+            {{eventFacebook.start_time | date:'medium'}}
+            <span *ngIf="eventFacebook.end_time"> Ends {{eventFacebook.end_time | date:'medium'}}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- event -->
+  <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" *ngIf="event"
+  [ngStyle]="{'background-repeat': 'no-repeat','min-height':'400px','background-image': ' url(' + event.image + ')','background-size':'cover','background-position': 'center center' } ">
+  <!-- Mask -->
+  <span class=" mask bg-gradient-default opacity-6"></span>
+  <!-- Header container -->
+  <div class="container-fluid d-flex align-items-center">
+      <div class="col-lg-7 col-md-10">
           <h1 class="display-2 text-white" *ngIf="event.name">{{event.name}}</h1>
           <p class="text-white mt-0 mb-5" *ngIf="event.location">{{event.location}} </p>
           <p class="text-white mt-0 mb-5" *ngIf="event.startDate"> Start {{event.startDate | date:'fullDate'}}
@@ -152,13 +163,33 @@
           </p>
         </div>
       </div>
+  </div>
+<!-- eventbrite -->
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" *ngIf="eventbrite"
+[ngStyle]="{'background-repeat': 'no-repeat','min-height':'400px','background-image': ' url(' + eventbrite.logo.original.url + ') ','background-size':'cover','background-position': 'center center'}">
+<!-- Mask -->
+<span class="mask bg-gradient-default opacity-6"></span>
+<!-- Header container -->
+<div class="container-fluid d-flex align-items-center">
+    <div class="col-lg-7 col-md-10">
+        <h1 class="display-2 text-white" *ngIf="eventbrite.name.html">{{eventbrite.name.text}}</h1>
+        <!-- <p class="text-white mt-0 mb-5" *ngIf="eventbrite.location">{{eventbrite.location}} </p> -->
+        <p class="text-white mt-0 mb-5" *ngIf="eventbrite.start"> Start {{eventbrite.start.local | date:'fullDate'}}
+          <span *ngIf="eventbrite.start"> At {{eventbrite.start.local | date:'shortTime'}}</span>
+         </p>
+        <p class="text-white mt-0 mb-5" *ngIf="eventbrite.end">Ends {{eventbrite.end.local | date:'fullDate'}} 
+          <span *ngIf="eventbrite.end"> At {{eventbrite.end.local | date:'shortTime'}}</span>
+        </p>
+      </div>
     </div>
-    </div>
+</div>
+
+
   <!-- Page content -->
   <div class="container-fluid mt--7">
     <div class="row">
       <div class="col-xl">
-        <div class="card bg-secondary shadow" *ngIf="eventFacebook && isOnline">
+        <div class="card bg-secondary shadow" *ngIf="eventFacebook">
           <div class="card-header bg-white border-0">
             <div class="row align-items-center">
               <div class="col-8">
@@ -188,6 +219,22 @@
               {{event.description}}
             </div>
           </div>
+          <!--  -->
+          <div class="card bg-secondary shadow" *ngIf="eventbrite">
+              <div class="card-header bg-white border-0">
+                <div class="row align-items-center">
+                  <div class="col-8">
+                    <h3 class="mb-0">{{eventbrite.name.text}}</h3>
+                  </div>
+                  <div class="col-4 text-right">
+                     <app-share></app-share>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                {{eventbrite.description.text}}
+              </div>
+            </div>
       </div>
     </div>
     <!-- Footer -->
