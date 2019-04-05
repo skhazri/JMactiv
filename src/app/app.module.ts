@@ -43,6 +43,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatCardModule, MatPaginatorModule} from '@angular/material';
 import {ErrorComponent} from './error/error.component';
 import {EventbritecardComponent} from './eventbritecard/eventbritecard.component'
+import {EventjmactivComponent} from "./eventjmactiv/eventjmactiv.component";
 
 //Decorator
 @NgModule({
@@ -59,7 +60,8 @@ import {EventbritecardComponent} from './eventbritecard/eventbritecard.component
         ShareComponent,
         LogoutComponent,
         ErrorComponent,
-        EventbritecardComponent
+        EventbritecardComponent,
+        EventjmactivComponent
 
     ],
     imports: [

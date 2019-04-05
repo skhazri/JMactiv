@@ -33,13 +33,13 @@ export class AuthentificationComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private route: ActivatedRoute,
-    private router: Router,
-    private socialAuthService: AuthService,
-    private facebookService: FacebookService,
-    private activiteService: ActiviteService,
-    private userService: UserService,
-    private dialog: MatDialog,
-    
+              private router: Router,
+              private socialAuthService: AuthService,
+              private facebookService: FacebookService,
+              private activiteService: ActiviteService,
+              private userService: UserService,
+              private dialog: MatDialog,
+
   ) { }
 
   ngOnInit() {
@@ -67,29 +67,29 @@ export class AuthentificationComponent implements OnInit {
    */
   getUserId() {
     this.userService.get(this.user.id).then(
-      (res) => {
-        this.userId = res;
-        this.getActivites(this.userId);
-      });
+        (res) => {
+          this.userId = res;
+          this.getActivites(this.userId);
+        });
   }
 
   /**
-   * get FB events associated to user 
+   * get FB events associated to user
    */
   public getEvents() {
     this.facebookService.getEvents(this.user.id, this.user.token)
-      .subscribe((data) => {
-        this.events = (data.json().data);
-      });
+        .subscribe((data) => {
+          this.events = (data.json().data);
+        });
   }
   /**
-   * get DB events associated to user 
+   * get DB events associated to user
    */
   getActivites(id) {
     this.activiteService.get(id)
-      .subscribe((data) => {
-        this.eventsF = (data.json());
-      });
+        .subscribe((data) => {
+          this.eventsF = (data.json());
+        });
   }
 
   /**
@@ -115,7 +115,7 @@ export class AuthentificationComponent implements OnInit {
       this.dialog.open(ErrorComponent,dialogConfig);
     });
   }
- 
+
   /**
    * updateEvent(event)
    */
@@ -128,7 +128,7 @@ export class AuthentificationComponent implements OnInit {
     dialogConfig.width = '550px';
     dialogConfig.height = '750px';
 
-   
+
     switch (event.endDateTime) {
       case "true":
         event.endDateTime = true;
@@ -150,10 +150,10 @@ export class AuthentificationComponent implements OnInit {
       console.log("error");
     });
   }
- 
- /**
-  * updateFacebookEvent
-  */
+
+  /**
+   * updateFacebookEvent
+   */
   public updateFacebookEvent(event) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
@@ -168,8 +168,8 @@ export class AuthentificationComponent implements OnInit {
     this.dialog.open(ErrorComponent, dialogConfig);
   }
   /**
-     * addEvent()
-     */
+   * addEvent()
+   */
   addEvent() {
     const dialogConfig = new MatDialogConfig();
 
