@@ -137,6 +137,7 @@
           <h3 class="text-primary">Find and share your activities</h3>
         </div>
       </div>
+      <div></div>
     </div>
   </div>
   <!-- Page content -->
@@ -159,7 +160,11 @@
           </div>
           <div class="card-body">
               <form>
-                  <div *ngIf="events">
+                <app-eventbritecard></app-eventbritecard>
+                <h3 class="mb-0 text-success">Local Events</h3>
+
+
+                <div *ngIf="events">
                     <!-- Search -->
                     <div class="row justify-content-end">
                         <div class="form-group mb-0">
@@ -175,6 +180,8 @@
                     <br>
                     <br>
                     <div class="row">
+
+                      <!-- events db-->
                       <div *ngFor="let event of events  | filter:searchText">
                         <div class="col-sm">
                           <div class="card card-single" style="width: 14rem;">
@@ -217,6 +224,7 @@
                           <br>
                         </div>
                       </div>
+                      <!-- end db events-->
                     </div>
                   </div>
                 </form>

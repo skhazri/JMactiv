@@ -83,7 +83,7 @@ var CopyIcon = (function() {
 				.tooltip('_fixTitle')
 				.tooltip('show')
 				.attr('title', 'Copy to clipboard')
-				.tooltip('_fixTitle')
+				.tooltip('_fixTitle');
 
 			e.clearSelection()
 		});
@@ -150,7 +150,7 @@ function initMap() {
         center: myLatlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         styles: [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":color},{"visibility":"on"}]}]
-    }
+    };
 
     map = new google.maps.Map(map, mapOptions);
 
@@ -249,7 +249,7 @@ var Navbar = (function() {
 		'show.bs.collapse': function() {
 			accordion($(this));
 		}
-	})
+	});
 
 	$dropdown.on({
 		'hide.bs.dropdown': function() {
@@ -291,7 +291,7 @@ var NavbarCollapse = (function() {
 			'hide.bs.collapse': function() {
 				hideNavbarCollapse($collapse);
 			}
-		})
+		});
 
 		$collapse.on({
 			'hidden.bs.collapse': function() {
@@ -514,7 +514,7 @@ var Charts = (function() {
 	var mode = 'light';//(themeMode) ? themeMode : 'light';
 	var fonts = {
 		base: 'Open Sans'
-	}
+	};
 
 	// Colors
 	var colors = {
@@ -718,7 +718,7 @@ var Charts = (function() {
 					}
 				}
 			}
-		}
+		};
 
 		// yAxes
 		Chart.scaleService.updateScaleDefaults('linear', {
@@ -850,7 +850,7 @@ var Charts = (function() {
 				if (!(value % 10)) {
 					return prefix + value + suffix;
 				}
-			}
+			};
 
 			// Update tooltips
 			$chart.options.tooltips.callbacks.label = function(item, data) {
@@ -1051,10 +1051,8 @@ var SalesChart = (function() {
 
 		$chart.data('chart', salesChart);
 
-	};
-
-
-	// Events
+}
+    // Events
 
 	if ($chart.length) {
 		init($chart);
