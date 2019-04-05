@@ -1,6 +1,6 @@
 <h4 class="title">{{title}}</h4>
-<form role="form" [formGroup]="form" (ngSubmit)="save()">
-
+<form role="form" [formGroup]="form" (ngSubmit)="save()" >
+ <div *ngIf="isGallery; else gallery">
   <!-- Name -->
   <div class="form-group">
     <mat-form-field>
@@ -10,7 +10,22 @@
       </mat-error>
     </mat-form-field>
   </div>
-
+  
+  <!-- photo -->
+  <mat-button-toggle-group #gallery="matButtonToggleGroup" >
+      <mat-button-toggle value="center" aria-label="Text align center"  (click)="choosePhoto()"> Choose photo
+        <mat-icon></mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+    
+  <div class="form-group col " *ngIf="isImage">
+    <br><br>
+    <div class="card card-single center" style="width: 20rem;">
+      <img class="card-img-top" src={{f.image.value}}>
+      <a class="remove-image" (click)="removePhoto()" style="display: inline;">&#215;</a>
+    </div>
+  </div>
+  
   <!-- Location -->
   <div>
     <mat-form-field>
@@ -100,7 +115,26 @@
     <button type="button" class="btn btn-secondary" (click)="close()">Close</button>
     <button class="btn btn-primary my-4" [disabled]="!form.valid">Save changes</button>
   </div>
-</form>
-<ng-template #loading>
-  Loading User Event...
-</ng-template>
+</div>
+  <ng-template #gallery>
+    <div class="col-xl-6">
+      <div class="copyright text-center text-xl-left text-muted">
+        <a (click)="backEvent()" class="font-weight-bold ml-1"> <i class="fas fa-md fa-arrow-left"></i><span></span> back
+        </a>
+      </div>
+    </div>
+    <div class="row gallery">
+      <mat-radio-group formControlName="image" class="person-radio-group" (change)="onImageChange($event)">
+        <mat-radio-button class="person-radio-button" color="transparent" *ngFor="let i of images "
+          value={{i.webformatURL}}>
+          <div class="col-sm">
+            <div class="card card-single" style="width: 12rem;">
+              <img class="card-img-top" src={{i.webformatURL}}>
+            </div>
+            <br>
+          </div>
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </ng-template>
+  </form>

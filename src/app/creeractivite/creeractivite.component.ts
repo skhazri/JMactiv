@@ -6,6 +6,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormBuilder, FormGroup, Validators, FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 import { ActiviteService } from '../services/activite.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 /** Error when the parent is invalid */
 class CrossFieldErrorMatcher implements ErrorStateMatcher {
@@ -49,6 +50,10 @@ export class CreeractiviteComponent implements OnInit {
   online: any;
   endDateTime: any;
   userId: any;
+  isGallery : boolean = true;
+  images : Array<any> [9];
+  isImage: boolean = false;
+  image: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -71,6 +76,7 @@ export class CreeractiviteComponent implements OnInit {
     this.endDateTime = event.endDateTime;
     this.isVisible = event.endDateTime;
     this.userId = event.userId
+    this.image = event.image;
   }
 
 
@@ -85,7 +91,8 @@ export class CreeractiviteComponent implements OnInit {
       startTime: [this.startTime],
       endDate: [this.endDate],
       endTime: [this.endTime],
-      online: [this.online]
+      online: [this.online],
+      image: [this.image]
     },
       {
         validators: [
@@ -96,6 +103,7 @@ export class CreeractiviteComponent implements OnInit {
         ]
       }
     );
+  this.getImages();
 
   }
   get f() {
@@ -107,6 +115,12 @@ export class CreeractiviteComponent implements OnInit {
   public handleAddressChange(address: any) {
     console.log(address);
     this.location = address.formatted_address;
+  }
+  getImages() {
+    return this.activiteService.getImages().then(
+      (res) => {
+        this.images = res.json().hits;
+      });
   }
 
   checkDates(form: FormGroup) {
@@ -228,6 +242,7 @@ export class CreeractiviteComponent implements OnInit {
             endDate: null,
             endTime: null,
             online: 'false',
+            image: null
           });
 
           for (let i in this.form.controls) { this.form.controls[i].setErrors(null);}
@@ -249,4 +264,39 @@ export class CreeractiviteComponent implements OnInit {
   close() {
     this.dialogRef.close();
   }
+  /**
+   * choosePhoto
+   */
+  choosePhoto() {
+    console.log('selected');
+    this.isGallery = false;
+    this.isImage = true;
+  }
+ 
+  /**
+   * removePhoto
+   */
+  removePhoto() {
+    this.isImage = false;
+    this.form.patchValue({
+      image: this.image
+    });
+    
+  }
+  /**
+   * backEvent
+   */
+  backEvent() {
+    this.isGallery = true;
+    if(this.form.value.image == null) {
+      this.isImage = false;
+    }
+  }
+  onImageChange(image) {
+    this.isGallery = true;
+    this.isImage = true;
+    if(image == null) {
+      this.isImage = false;
+    }
+ }
 }

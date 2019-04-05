@@ -113,6 +113,8 @@ app.get("/api/getMaListeActivite/:userid", function (req, res) {
                             activity.type = e[9];
                             activity.endDateTime = e[10];
                             activity.online = e[11];
+                            activity.image = e[12];
+
                             activities.push(activity);
                         });
                         // console.log((activities));
@@ -164,6 +166,7 @@ app.get("/api/getActivites/", function (req, res) {
                             activity.type = e[9];
                             activity.endDateTime = e[10];
                             activity.online = e[11];
+                            activity.image = e[12];
 
                             activities.push(activity);
                         });
@@ -241,10 +244,10 @@ app.post("/api/SaveActivity", function (req, res) {
             }
 
             connection.execute(
-                "INSERT INTO EVENTS (NAME, LOCATION, DESCRIPTION, TYPE, STARTDATE, STARTTIME, ENDDATE, ENDTIME, ENDDATETIME, ISONLINE,USERID) VALUES (:name, :location, :description, :type, :startDate, :startTime, :endDate, :endTime, :endDateTime, :isOnline, :userId)",
+                "INSERT INTO EVENTS (NAME, LOCATION, DESCRIPTION, TYPE, STARTDATE, STARTTIME, ENDDATE, ENDTIME, ENDDATETIME, ISONLINE,USERID,IMAGE) VALUES (:name, :location, :description, :type, :startDate, :startTime, :endDate, :endTime, :endDateTime, :isOnline, :userId, :image)",
                 [req.body.attributes.name, req.body.attributes.location, req.body.attributes.description, req.body.attributes.type, req.body.attributes.startDate, req.body.attributes.startTime,
-                    req.body.attributes.endDate, req.body.attributes.endTime, req.body.attributes.endDateTime, req.body.attributes.online, req.body.id],
-                {autoCommit: true},
+                req.body.attributes.endDate, req.body.attributes.endTime, req.body.attributes.endDateTime, req.body.attributes.online, req.body.id,req.body.attributes.image],
+                { autoCommit: true },
                 function (err, result) {
                     if (err) {
                         console.error(err);
@@ -274,10 +277,10 @@ app.post("/api/UpdateActivity", function (req, res) {
             }
 
             connection.execute(
-                "UPDATE EVENTS SET NAME = :name, LOCATION = :location, DESCRIPTION = :description,TYPE = :type, STARTDATE = :startDate, STARTTIME = :startTime,ENDDATETIME = :endDateTime, ENDDATE = :endDate, ENDTIME = :endTime,ISONLINE = :isOnline where EVENTID = :eventid ",
+                "UPDATE EVENTS SET NAME = :name, LOCATION = :location, DESCRIPTION = :description,TYPE = :type, STARTDATE = :startDate, STARTTIME = :startTime,ENDDATETIME = :endDateTime, ENDDATE = :endDate, ENDTIME = :endTime,ISONLINE = :isOnline, IMAGE= :image where EVENTID = :eventid ",
                 [req.body.attributes.name, req.body.attributes.location, req.body.attributes.description, req.body.attributes.type, req.body.attributes.startDate, req.body.attributes.startTime,
-                    req.body.attributes.endDateTime, req.body.attributes.endDate, req.body.attributes.endTime, req.body.attributes.online, eventid],
-                {autoCommit: true},
+                req.body.attributes.endDateTime, req.body.attributes.endDate, req.body.attributes.endTime, req.body.attributes.online,req.body.attributes.image, eventid],
+                { autoCommit: true },
                 function (err, result) {
                     if (err) {
                         console.error(err);

@@ -32,11 +32,10 @@ import {
     MatNativeDateModule,
     ErrorStateMatcher,
     MatDialogModule,
-    MatRadioModule
-} from '@angular/material';
+    MatRadioModule,
+    MatButtonToggleModule} from '@angular/material';
 import {MatTimeSelectModule, MatNativeTimeModule} from 'ngx-material-time-select';
 import {MatIconModule} from '@angular/material/icon';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatSelectModule} from '@angular/material/select';
 import {GooglePlaceModule} from "ngx-google-places-autocomplete";
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';

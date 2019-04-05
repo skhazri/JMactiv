@@ -1,37 +1,24 @@
-<!-- Header -->
+<!-- Sidenav -->
 <nav class="navbar navbar-horizontal navbar-expand-lg navbar-light bg-white" id="sidenav-main">
   <div class="container-fluid">
+     
+    <!-- Toggler -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main"
+      aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
     <!-- Brand -->
     <a class="navbar-brand pt-0" routerLink="">
-      <img src="../assets/logo.png" class="navbar-brand-img" style="height: 70px" alt="logo">
+      <img src="../assets/logo.png" class="navbar-brand-img" style="height: 70px" alt="...">
     </a>
-
-    <!-- Collapse -->
-    <div class="collapse navbar-collapse" id="sidenav-collapse-main">
-      <!-- Navigation -->
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="">
-            <i class="ni ni-tv-2 text-success"></i> Home
-          </a>
-        </li>
-      </ul>
-    </div>
-
     <!-- User -->
-    <app-login></app-login>
-
-    <ul *ngIf="user" class="navbar-nav align-items-center d-none d-md-flex">
+    <ul *ngIf="user" class="nav align-items-center d-md-none">
       <li class="nav-item dropdown">
-        <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
-           aria-expanded="false">
+        <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <div class="media align-items-center">
-              <span class="avatar avatar-sm rounded-circle">
-                <img alt="Image placeholder" src={{user.image}}>
-              </span>
-            <div class="media-body ml-2 d-none d-lg-block">
-              <span class="mb-0 text-sm  font-weight-bold">{{user.name}}</span>
-            </div>
+            <span class="avatar avatar-sm rounded-circle">
+              <img alt="Image placeholder" src={{user.image}}>
+            </span>
           </div>
         </a>
         <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
@@ -47,13 +34,99 @@
         </div>
       </li>
     </ul>
+    <!-- Collapse -->
+    <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+      <!-- Collapse header -->
+      <div class="navbar-collapse-header d-md-none">
+        <div class="row">
+          <div class="col-6 collapse-brand">
+            <a routerLink="">
+              <img src="../assets/logo.png">
+            </a>
+          </div>
+          <div class="col-6 collapse-close">
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#sidenav-collapse-main"
+              aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle sidenav">
+              <span></span>
+              <span></span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Form -->
+      <form class="mt-4 mb-3 d-md-none">
+        <div class="input-group input-group-rounded input-group-merge">
+          <input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="Search"
+            aria-label="Search">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <span class="fa fa-search"></span>
+            </div>
+          </div>
+        </div>
+      </form>
+      <!-- Navigation -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="">
+            <i class="ni ni-tv-2 text-success"></i> Home
+          </a>
+        </li>
+      </ul>
+      <!-- Divider -->
+      <hr class="my-3">
+      <app-login></app-login>
+    </div>
   </div>
 </nav>
 <!-- Main content -->
 <div class="main-content">
+  <!-- Top navbar -->
+  <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
+    <div class="container-fluid">
+      <!-- Form -->
+      <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
+        <div class="form-group mb-0">
+          <div class="input-group input-group-alternative">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-search"></i></span>
+            </div>
+            <input class="form-control" placeholder="Search" type="text">
+          </div>
+        </div>
+      </form>
+      <!-- User -->
+      <ul *ngIf="user" class="navbar-nav align-items-center d-none d-md-flex">
+        <li class="nav-item dropdown">
+          <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            <div class="media align-items-center">
+              <span class="avatar avatar-sm rounded-circle">
+                <img alt="Image placeholder" src={{user.image}}>
+              </span>
+              <div class="media-body ml-2 d-none d-lg-block">
+                <span class="mb-0 text-sm  font-weight-bold">{{user.name}}</span>
+              </div>
+            </div>
+          </a>
+          <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+            <div class=" dropdown-header noti-title">
+              <h6 class="text-overflow m-0">Welcome!</h6>
+            </div>
+            <a routerLink="/profile" class="dropdown-item">
+              <i class="ni ni-single-02"></i>
+              <span>My profile</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <app-logout></app-logout>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
   <!-- Header -->
-  <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" hidden="false"
-       style="min-height: 750px; background-image: url(../../assets/skiing.jpg); background-size: cover; background-position: center top;">
+  <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
+    style="min-height: 700px; background-image: url(../../assets/skiing.jpg); background-size: cover; background-position: center top;">
     <!-- Mask -->
     <span class="mask opacity-8"></span>
     <!-- Header container -->
@@ -69,77 +142,118 @@
   </div>
   <!-- Page content -->
   <div class="container-fluid mt--7">
+      <div class="container">
+          <div class="row">
+        
+      
+          </div>
+      </div>
     <div class="row">
       <div class="col-lg">
         <div class="card bg-white shadow">
-          <nav>
-            <button id="btJMactiv" (click)="showEventComp(0)" mat-raised-button color="{{set_color(0)}}" style="margin:.5em">JMactiv Events</button>
-            <button id="btEventbrite" (click)="showEventComp(1)" mat-raised-button color="{{set_color(1)}}" style="margin:.5em"> EventBrite Events</button>
-          </nav>
-          <form class="form-inline mr-3 d-md-flex ml-lg-auto">
-            <div class="form-group mb-0">
-              <div class="input-group input-group-alternative">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-search"></i></span>
-                </div>
-                <input class="form-control" placeholder="Type d'activité" type="search" name="search2"
-                       [(ngModel)]="parentEventCriteria" autocomplete="off">
-
-              </div>
-              &nbsp;&nbsp;
-              <div class="input-group input-group-alternative">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-search"></i></span>
-                </div>
-                <input class="form-control" type="text" name="searchLat" [(ngModel)]="searchLocationLat"
-                       (keyup)="searchActivityLocationLat()" autocomplete="off" placeholder="Localisation Latitude">
-              </div>
-              &nbsp;&nbsp;
-              <div class="input-group input-group-alternative">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-search"></i></span>
-                </div>
-                <input class="form-control" type="text" name="searchLon" [(ngModel)]="searchLocationLon"
-                       (keyup)="searchActivityLocationLon()" autocomplete="off" placeholder="Localisation Longitude">
-              </div>
-              &nbsp;&nbsp;
-              <div class="input-group input-group-alternative">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-search"></i></span>
-                </div>
-                <input class="form-control" type="text" name="searchWidthIn" [(ngModel)]="locationwidthin"
-                       (keyup)="searchEvents()" autocomplete="off" placeholder="Dans un rayon (km)">
+          <div class="card-header bg-white border-0">
+            <div class="row align-items-center">
+              <div class="col-8">
+                <h3 class="mb-0 text-success">Upcoming Events</h3>
               </div>
             </div>
-          </form>
-          <app-eventjmactiv id="appEventJMactiv" [eventCriteria]="parentEventCriteria"></app-eventjmactiv>
-          <app-eventbritecard id="appEventEventbrite" [eventCriteria]="parentEventCriteria"></app-eventbritecard>
+          </div>
+          <div class="card-body">
+              <form>
+                <app-eventbritecard></app-eventbritecard>
+                <h3 class="mb-0 text-success">Local Events</h3>
+
+
+                <div *ngIf="events">
+                    <!-- Search -->
+                    <div class="row justify-content-end">
+                        <div class="form-group mb-0">
+                          <div class="input-group input-group-alternative">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            </div>
+                            <input class="form-control" name="search" placeholder="Search" [(ngModel)]="searchText"
+                              type="text" autocomplete="off">
+                          </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+
+                      <!-- events db-->
+                      <div *ngFor="let event of events  | filter:searchText">
+                        <div class="col-sm">
+                          <div class="card card-single" style="width: 14rem;">
+                            <img class="card-img-top" src="../../assets/event.jpg" alt="Card image cap">
+                            <div class="card-body">
+                              <ul class="navbar-nav d-none d-sm d-md-flex" style="position:absolute;right:13px">
+                                <li class="nav-item dropdown">
+                                  <a class="nav-link pr-0" role="button" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    <i class="fas fa-bars fa-sm"></i>
+                                  </a>
+                                  <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+                                    <a class="dropdown-item">
+                                      <i class="fas fa-share-square fa-sm "></i>
+                                      <span>
+                                        <share-button [button]="'facebook'" [showIcon]="false" [showText]="true" [size]="1"
+                                          [icon]="['fas', 'fa-share-square']" text='share Event'
+                                          url="/profile/events/{{event.id}}" [autoSetMeta]="false">
+                                        </share-button>
+                                      </span>
+                                    </a>
+                                    <!-- <div class="dropdown-divider"></div>
+                                    <a routerLink="/profile" class="dropdown-item">
+                                      <i class=" fas fa-edit fa-sm "></i>
+                                      <span>Update Event</span>
+                                    </a>
+                                    <a routerLink="/profile" class="dropdown-item">
+                                      <i class="far fa-trash-alt fa-sm "></i>
+                                      <span>Remove Event</span>
+                                    </a> -->
+                                  </div>
+                                </li>
+                              </ul>
+                              <br>
+                              <h5 class="card-title">{{event.name}}</h5>
+                              <p class="card-text">{{event.description | slice:0:70 }}</p>
+                              <a [routerLink]="['/profile/events', event.id]" class="btn btn-primary">Read More</a>
+                            </div>
+                          </div>
+                          <br>
+                        </div>
+                      </div>
+                      <!-- end db events-->
+                    </div>
+                  </div>
+                </form>
+          </div>
         </div>
       </div>
     </div>
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="row align-items-center justify-content-xl-between">
+        <div class="col-xl-6">
+          <div class="copyright text-center text-xl-left text-muted">
+            &copy; 2019 <a href="#" class="font-weight-bold ml-1" >JMactiv</a>
+          </div>
+        </div>
+        <div class="col-xl-6">
+          <ul class="nav nav-footer justify-content-center justify-content-xl-end">
+            <li class="nav-item">
+              <a href="#" class="nav-link" target="_blank">INF5001</a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/team" class="nav-link">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link"
+                target="_blank">MIT License</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </footer>
   </div>
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="row align-items-center justify-content-xl-between">
-      <div class="col-xl-6">
-        <div class="copyright text-center text-xl-left text-muted">
-          &copy; 2019 <a href="#" class="font-weight-bold ml-1" >JMactiv</a>
-        </div>
-      </div>
-      <div class="col-xl-6">
-        <ul class="nav nav-footer justify-content-center justify-content-xl-end">
-          <li class="nav-item">
-            <a href="#" class="nav-link" target="_blank">INF5001</a>
-          </li>
-          <li class="nav-item">
-            <a routerLink="/team" class="nav-link">About Us</a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link"
-               target="_blank">MIT License</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </footer>
-</div>

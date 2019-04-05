@@ -33,4 +33,8 @@ postDelete(activityid){
   return this.http.post(environment.ACTIVITY_API + '/api/DeleteActivity', activityid)
 }
 
+getImages() {
+  return this.http.get('https://pixabay.com/api/?key=12098401-a292f25354960a9d8b0f06319&q=sport&image_type=photo&per_page=40&min_height="400"')
+  .toPromise();
+}
 }
