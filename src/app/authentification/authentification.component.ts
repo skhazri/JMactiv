@@ -144,8 +144,7 @@ export class AuthentificationComponent implements OnInit {
     console.log(event);
     const dialogRef = this.dialog.open(CreeractiviteComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(res => {
-      console.log(res);
-      //this.getActivites(this.userId);
+      this.getActivites(this.userId);
     }, error => {
       console.log("error");
     });
@@ -191,17 +190,13 @@ export class AuthentificationComponent implements OnInit {
         "endTime": null,
         "type": 'private',
         "online": 'false',
-        "userId": this.userId
+        "userId": this.userId,
+        "image": null,
       }
     };
     const dialogRef = this.dialog.open(CreeractiviteComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(res => {
       this.getActivites(this.userId);
     });
-  }
-  private handleOtherError(error: HttpErrorResponse){
-    // this.createErrorMessage(error);
-    this.dialogConfig.data = { 'errorMessage': this.errorMessage };
-    this.dialog.open(ErrorComponent, this.dialogConfig);
   }
 }

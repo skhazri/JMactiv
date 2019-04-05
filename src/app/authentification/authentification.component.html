@@ -228,7 +228,8 @@
                   <div *ngFor="let event of eventsF  | filter:searchText">
                     <div class="col-sm">
                       <div class="card card-single" style="width: 14rem;">
-                        <img class="card-img-top" src="../../assets/event.jpg" alt="Card image cap">
+                        <img class="card-img-top" height="165" *ngIf="event.image" src={{event.image}} >
+                        <img class="card-img-top" *ngIf="!event.image" src="../../assets/event.jpg">
                         <div class="card-body">
                           <ul class="navbar-nav d-none d-sm d-md-flex" style="position:absolute;right:13px">
                             <li class="nav-item dropdown">
@@ -272,7 +273,9 @@
                   <div *ngFor="let event of events  | filter:searchText">
                     <div class="col-sm">
                       <div class="card card-single" style="width: 14rem;">
-                        <img class="card-img-top" src="../../assets/event.jpg" alt="Card image cap">
+                          <img class="card-img-top" src="../../assets/event.jpg" alt="Card image cap">
+
+                        <!-- <img class="card-img-top" src="../../assets/event.jpg" alt="Card image cap"> -->
                         <div class="card-body">
                           <ul class="navbar-nav d-none d-sm d-md-flex" style="position:absolute;right:13px">
                             <li class="nav-item dropdown">

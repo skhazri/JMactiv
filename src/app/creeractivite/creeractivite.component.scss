@@ -2,6 +2,18 @@
   width: 100%;
 }
 
+::ng-deep mat-radio-button .mat-primary .mat-radio-inner-circle  .mat-radio-outer-circle{
+  background-color: #fff;
+  opacity: 0;
+  }
+
+::ng-deep mat-radio-butto .mat-radio-outer-circle {
+ border-style: none;
+}
+::ng-deep .gallery .mat-radio-outer-circle {
+  border-color: transparent;
+}
+
 ::ng-deep html.cdk-global-scrollblock {
 	position: initial;
 	width: initial;
@@ -95,3 +107,27 @@
 .pac-placeholder {
   color: gray
 }
+
+.remove-image {
+  display: none;
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  padding: 1px 5px 1px;
+  text-decoration: none;
+  border: 1px solid #fff;
+  color: #FFF;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5), inset 0 2px 4px rgba(0,0,0,0.3);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    -webkit-transition: background 0.5s;
+    transition: background 0.5s;
+  }
+  .remove-image:hover {
+    padding: 1px 5px 1px;
+    top: 2px;
+  right: 2px;
+  }
+  .remove-image:active {
+    top: 2px;
+  right: 2px;
+  }

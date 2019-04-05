@@ -75,7 +75,8 @@ import { ErrorComponent } from './error/error.component';
     MatSlideToggleModule,
     MatDialogModule,
     MatRadioModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatButtonToggleModule
   ],
   providers: [
     {
