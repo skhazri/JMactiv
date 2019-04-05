@@ -192,7 +192,7 @@
                           <br>
                           <h5 class="card-title">{{event.name}}</h5>
                           <p class="card-text">{{event.description | slice:0:70 }}</p>
-                          <a [routerLink]="['/profile/events', event.id]" class="btn btn-primary">Read More</a>
+                          <a [routerLink]="['/profile/events', event.id]" [queryParams]="{type:'local'}" class="btn btn-primary">Read More</a>
                         </div>
                       </div>
                       <br>
@@ -203,7 +203,7 @@
                   <div *ngFor="let event of events  | filter:searchText">
                     <div class="col-sm">
                       <div class="card card-single" style="width: 14rem;">
-                          <img class="card-img-top" src="../../assets/event.jpg" alt="Card image cap">
+                          <img class="card-img-top" src={{event.cover.source}} alt="Card image cap">
 
                         <!-- <img class="card-img-top" src="../../assets/event.jpg" alt="Card image cap"> -->
                         <div class="card-body">
@@ -238,7 +238,7 @@
                           <br>
                           <h5 class="card-title">{{event.name}}</h5>
                           <p class="card-text">{{event.description | slice:0:70 }}</p>
-                          <a [routerLink]="['/profile/events', event.id]" class="btn btn-primary">Read More</a>
+                          <a [routerLink]="['/profile/events', event.id]" [queryParams]="{type:'facebook'}" class="btn btn-primary">Read More</a>
                         </div>
                       </div>
                       <br>

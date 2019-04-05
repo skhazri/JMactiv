@@ -16,7 +16,7 @@ export class FacebookService {
    * @param token 
    */
   getEvents(id: any, token: any) {
-    let url = `${environment.Facebook_API}/${id}/events?access_token=${token}`;
+    let url = `${environment.Facebook_API}/${id}/events?fields=cover%2Cend_time%2Cid%2Cname%2Cplace%2Ctype%2Cstart_time%2Cdescription&access_token=${token}`;
     return this.http.get(url);
   }
   /**
@@ -25,7 +25,7 @@ export class FacebookService {
    * @param token 
    */
     public getEvent(id: number, token) {
-    let url = `${environment.Facebook_API}/${id}?access_token=${token}`;
+    let url = `${environment.Facebook_API}/${id}?fields=cover%2Cend_time%2Cid%2Cname%2Cplace%2Ctype%2Cstart_time%2Cdescription&access_token=${token}`;
     return this.http.get(url);
   }
   
