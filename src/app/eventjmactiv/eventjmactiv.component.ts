@@ -14,6 +14,7 @@ export class EventjmactivComponent implements OnInit, OnChanges {
 
 
   events: [];
+  searchText;
 
   constructor(private activiteService: ActiviteService) {
   }
