@@ -53,7 +53,7 @@
                                                 <share-button [button]="'facebook'" [showIcon]="false" [showText]="true"
                                                               [size]="1"
                                                               [icon]="['fas', 'fa-share-square']" text='share Event'
-                                                              url="/profile/events/{{activite.id}}"
+                                                              url="/profile/events/{{activite.ID}}"
                                                               [autoSetMeta]="false">
                                                 </share-button>
                                               </span>
@@ -72,10 +72,10 @@
                             </ul>
                             <br>
                             <h5 class="card-title">{{activite.ACTIVITYTYPE}}</h5>
-                            <p class="card-text">{{activite.ACTIVITYLOCATION| slice:0:70 }}</p>
-                            <a href={{activite.URLEVENT}} class="btn btn-primary" target="_blank">Read More</a>
+                            <p class="card-text">{{activite.DESCRIPTION.text| slice:0:70 }}</p>
+                            <a [routerLink]="['/profile/events', activite.ID]" [queryParams]="{type:'eventbrite'}" class="btn btn-primary">Read More</a>
+                            </div>
                         </div>
-                    </div>
                     <br>
                 </div>
             </div>

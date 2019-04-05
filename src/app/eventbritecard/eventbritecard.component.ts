@@ -42,13 +42,14 @@ export class EventbritecardComponent implements OnInit, OnChanges {
 
                 activities.events.forEach(function(element) {
                     let ac = new Activities();
-                    ac.ACTIVITYTYPE=element.name.html;
-                    ac.STARTTIME=element.start.local;
-                    ac.ENDTIME=element.end.local;
-                    //ac.ACTIVITYLOCATION="Adresse";
+                    ac.ACTIVITYTYPE = element.name.html;
+                    ac.STARTTIME = element.start.local;
+                    ac.ENDTIME = element.end.local;
+                    ac.DESCRIPTION = element.description;
                     ac.LOGO = element.logo.url;
-                    ac.URLEVENT=element.url;
+                    ac.URLEVENT = element.url;
                     ac.VENUE_ID = element.venue_id;
+                    ac.ID = element.id;
                     a.push(ac);
                 });
 
@@ -87,5 +88,7 @@ class Activities {
     ACTIVITYLOCATION: string;
     LOGO: string;
     URLEVENT: string;
-    VENUE_ID: string
+    VENUE_ID: string;
+    DESCRIPTION: string;
+    ID: string;
 }
