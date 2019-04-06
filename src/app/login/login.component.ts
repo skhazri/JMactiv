@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { AuthService, FacebookLoginProvider, SocialUser } from 'angular-6-social-login';
 import { UserService } from '../services/user.service';
+import { isNullOrUndefined, isNull } from 'util';
 
 @Component({
   selector: 'app-login',
@@ -31,25 +32,7 @@ export class LoginComponent {
       (userData) => {
         this.name = userData.name;
         this.id = userData.id;
-        this.getUserId(userData.id);
-        if(this.userId = null) {
-          let data = { id: userData.id};
-
-          this.postUser(data);
-          let navigationExtras: NavigationExtras = {
-            queryParams: {
-              name: this.name
-            }
-          };
-          this.router.navigate(['profile'], navigationExtras);
-        } else {
-          let navigationExtras: NavigationExtras = {
-            queryParams: {
-              name: this.name
-            }
-          };
-          this.router.navigate(['profile'], navigationExtras);
-        }      
+        this.getUserId(userData.id);           
       }
     );
   }
@@ -57,6 +40,24 @@ export class LoginComponent {
     this.userService.get(id).then(
         (res) => {
           this.userId = res;
+          if(!isNull(this.userId)) {
+         
+            let navigationExtras: NavigationExtras = {
+              queryParams: {
+                name: this.name
+              }
+            };
+            this.router.navigate(['profile'], navigationExtras);
+          } else {
+            let data = { id: id};
+            this.postUser(data);
+            let navigationExtras: NavigationExtras = {
+              queryParams: {
+                name: this.name
+              }
+            };
+            this.router.navigate(['profile'], navigationExtras);
+          }  
         });
   }
   postUser(data) {
