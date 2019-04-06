@@ -61,6 +61,39 @@ app.get("/api/getUser/:facebookid", function (req, res) {
         });
 });
 
+app.post("/api/postUser", function (req, res) {
+    console.log("/api/postUser");
+    const uid = req.body.id;
+    console.log('id',uid);
+
+    var connection = oracledb.getConnection(
+        {
+            user: dbConfig.user,
+            password: dbConfig.password,
+            connectString: dbConfig.connectString
+        },
+        function (err, connection) {
+            if (err) {
+                console.error(err);
+                res.send(err);
+            }
+
+            connection.execute(
+                "INSERT INTO USER_DEF (FBID) VALUES (:fbid)",
+                [uid],
+                { autoCommit: true },
+                function (err, result) {
+                    if (err) {
+                        console.error(err);
+                        res.send(err);
+                    } else {
+                        console.log(result.rowsAffected);
+                        res.json(1);
+                        doRelease(connection);
+                    }
+                });
+        });
+});
 function doRelease(connection) {
     connection.close(
         function (err) {

@@ -26,7 +26,7 @@ export class AccueilComponent implements OnInit {
     this.socialAuthService.authState.subscribe((user) => {
       this.user = user;
       this.loggedIn = (user != null);
-      console.log(user);
+      // console.log(user);
       this.showEventComp(0);
     });
   }
