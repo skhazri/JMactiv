@@ -32,7 +32,7 @@ export class LoginComponent {
         this.name = userData.name;
         this.id = userData.id;
         this.getUserId(userData.id);
-        if(this.userId == null) {
+        if(this.userId = null) {
           let data = { id: userData.id};
 
           this.postUser(data);
