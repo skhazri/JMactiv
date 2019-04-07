@@ -20,8 +20,8 @@
     
   <div class="form-group col " *ngIf="isImage">
     <br><br>
-    <div class="card card-single center" style="width: 20rem;">
-      <img class="card-img-top" src={{f.image.value}}>
+    <div class="card card-single center" style="width: 18rem; height: 12rem">
+      <img class="card-img-top" src={{f.image.value}} style="width: 18rem; height: 12rem">
       <a class="remove-image" (click)="removePhoto()" style="display: inline;">&#215;</a>
     </div>
   </div>
@@ -126,10 +126,10 @@
     <div class="row gallery">
       <mat-radio-group formControlName="image" class="person-radio-group" (change)="onImageChange($event)">
         <mat-radio-button class="person-radio-button" color="transparent" *ngFor="let i of images "
-          value={{i.webformatURL}}>
+          value={{i.urls.regular}}>
           <div class="col-sm">
-            <div class="card card-single" style="width: 12rem;">
-              <img class="card-img-top" src={{i.webformatURL}}>
+            <div class="card card-single" style="width: 12rem; height: 7rem">
+              <img class="card-img-top" src={{i.urls.regular}} style="width: 12rem; height: 7rem">
             </div>
             <br>
           </div>

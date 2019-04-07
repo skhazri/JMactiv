@@ -34,7 +34,7 @@ postDelete(activityid){
 }
 
 getImages() {
-  return this.http.get('https://pixabay.com/api/?key=12098401-a292f25354960a9d8b0f06319&q=sport&image_type=photo&per_page=40&min_height="400"')
-  .toPromise();
+    return this.http.get(environment.PHOTO_API+'/collections/4592632/photos?client_id=c4aef0d3752bf00f465ad1b4c5f5ceafb7b10ce919788d2bee18d50926b87346&page=1&rel=next&per_page=40&fit=crop&w=300&h=100')
+    .toPromise();
 }
 }

@@ -119,7 +119,7 @@ export class CreeractiviteComponent implements OnInit {
   getImages() {
     return this.activiteService.getImages().then(
       (res) => {
-        this.images = res.json().hits;
+        this.images = res.json();
       });
   }
 
