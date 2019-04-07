@@ -13,7 +13,7 @@ export class EventbritecardComponent implements OnInit, OnChanges {
 
     activites: Activities[] = [];
     activite: Activities  = new Activities();
-    searchText;
+
     lat = "45.665352";
     lon = "-73.510709";
     locationwidthin = 50;

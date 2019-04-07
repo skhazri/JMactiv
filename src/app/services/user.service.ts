@@ -17,6 +17,8 @@ export class UserService {
       })
   }
   post(data) {
+    console.log("user.servicepost:");
+    console.log(data)
     return this.http.post(environment.ACTIVITY_API + '/api/postUser', data);
   }
 }

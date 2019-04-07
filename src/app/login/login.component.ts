@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
-import { AuthService, FacebookLoginProvider, SocialUser } from 'angular-6-social-login';
+import { AuthService, FacebookLoginProvider, SocialUser } from 'angularx-social-login';
 import { UserService } from '../services/user.service';
 import { isNullOrUndefined, isNull } from 'util';
 
@@ -15,23 +15,29 @@ export class LoginComponent {
   loggedIn: boolean = false;
   id: string;
   userId: any;
+
   constructor(
     private router: Router,
     private socialAuthService: AuthService,
     private userService :UserService ) { }
 
   ngOnInit() {
+
+  }
+  public socialLogin() {
     this.socialAuthService.authState.subscribe((user) => {
       this.user = user;
       this.loggedIn = (user != null);
     });
-  }
-  public socialLogin() {
-    let socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
-    this.socialAuthService.signIn(socialPlatformProvider).then(
+    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID).then(
       (userData) => {
+        console.log("login33:");
+        console.log(userData);
         this.name = userData.name;
         this.id = userData.id;
+        this.user.idToken = userData.authToken;
+
+
         this.getUserId(userData.id);           
       }
     );
@@ -61,6 +67,7 @@ export class LoginComponent {
         });
   }
   postUser(data) {
+
     this.userService.post(data)
     .subscribe(
         (res) => {

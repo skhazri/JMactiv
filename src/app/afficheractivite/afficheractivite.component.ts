@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FacebookService } from '../services/facebook.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService, SocialUser } from 'angular-6-social-login';
+import { AuthService, SocialUser } from 'angularx-social-login';
 import { ActiviteService } from '../services/activite.service';
 import { Http, Response } from '@angular/http';
 import {map} from "rxjs/operators";
@@ -64,7 +64,7 @@ export class AfficheractiviteComponent implements OnInit {
       });
   }
   getFacebookEvent() {
-    this.facebookService.getEvent(this.id, this.user.token)
+    this.facebookService.getEvent(this.id, this.user.idToken)
       .subscribe((data) => {
         this.eventFacebook = (data.json());
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SocialUser, AuthService, FacebookLoginProvider } from 'angular-6-social-login';
+import { SocialUser, AuthService, FacebookLoginProvider } from 'angularx-social-login';
 import { Router, NavigationExtras } from '@angular/router';
 
 @Component({

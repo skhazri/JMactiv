@@ -5,7 +5,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, Router, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthService, FacebookLoginProvider, SocialUser } from 'angular-6-social-login';
+import { AuthService, FacebookLoginProvider, SocialUser } from 'angularx-social-login';
 
 @Injectable({
   providedIn: 'root'

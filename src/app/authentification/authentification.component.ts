@@ -2,14 +2,14 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { map, switchMap } from "rxjs/operators";
 import { Observable } from "rxjs";
-import { AuthService, SocialUser } from 'angular-6-social-login';
+import { AuthService, SocialUser } from 'angularx-social-login';
 import { FacebookService } from '../services/facebook.service';
 import { ActiviteService } from '../services/activite.service';
 import { MatDialog, MatDialogConfig, MatPaginator } from '@angular/material';
 import { CreeractiviteComponent } from '../creeractivite/creeractivite.component';
 import { UserService } from '../services/user.service';
 import { ErrorComponent } from '../error/error.component';
-import { HttpErrorResponse } from '@angular/common/http';
+
 @Component({
   selector: 'app-authentification',
   templateUrl: './authentification.component.html',
@@ -58,6 +58,8 @@ export class AuthentificationComponent implements OnInit {
    */
   public getFacebookUser() {
     this.socialAuthService.authState.subscribe((user) => {
+      console.log("authcomp61:")
+      console.log(user)
       this.loggedIn = (user != null);
       this.user = user;
     });
@@ -69,7 +71,7 @@ export class AuthentificationComponent implements OnInit {
     this.userService.get(this.user.id).then(
         (res) => {
           this.userId = res;
-          this.getActivites(this.userId);
+          this.getActivites(this.user.id);
         });
   }
 
@@ -77,7 +79,8 @@ export class AuthentificationComponent implements OnInit {
    * get FB events associated to user
    */
   public getEvents() {
-    this.facebookService.getEvents(this.user.id, this.user.token)
+    console.log("authentification:82");
+    this.facebookService.getEvents(this.user.id, this.user.authToken)
         .subscribe((data) => {
           this.events = (data.json().data);
         });
@@ -109,7 +112,7 @@ export class AuthentificationComponent implements OnInit {
     };
 
     this.activiteService.postDelete(event).subscribe(res => {
-      this.getActivites(this.userId);
+      this.getActivites(this.user.id);
     }, error => {
       console.log(error);
       this.dialog.open(ErrorComponent,dialogConfig);

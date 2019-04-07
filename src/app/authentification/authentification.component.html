@@ -19,7 +19,7 @@
     </div>
 
     <!-- User -->
-    <app-login></app-login>
+
 
     <ul *ngIf="user" class="navbar-nav align-items-center d-none d-md-flex">
       <li class="nav-item dropdown">
@@ -27,7 +27,7 @@
            aria-expanded="false">
           <div class="media align-items-center">
               <span class="avatar avatar-sm rounded-circle">
-                <img alt="Image placeholder" src={{user.image}}>
+                <img alt="Image authcomp30" src="{{ user.photoUrl }}">
               </span>
             <div class="media-body ml-2 d-none d-lg-block">
               <span class="mb-0 text-sm  font-weight-bold">{{user.name}}</span>
@@ -77,7 +77,7 @@
             <div class="col-lg-3 order-lg-2">
               <div class="card-profile-image">
                 <a routerLink="/profile">
-                  <img src={{user.image}} class="rounded-circle" style="width:140px;height:140px">
+                  <img src="{{ user.photoUrl }}" class="rounded-circle" style="width:140px;height:140px">
                 </a>
               </div>
             </div>
@@ -108,7 +108,7 @@
                 <i class="ni business_briefcase-24 mr-2"></i>{{user.id}}
               </div>
               <div>
-                <i class="ni education_hat mr-2"></i>{{user.token}}
+                <i class="ni education_hat mr-2"></i>{{user.idToken}}
               </div>
               <hr class="my-4" />
               <span class="badge badge-default">Sport</span>

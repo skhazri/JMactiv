@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService, SocialUser } from 'angular-6-social-login';
+import { AuthService, SocialUser } from 'angularx-social-login';
 
 @Component({
   selector: 'app-accueil',
@@ -10,25 +10,38 @@ import { AuthService, SocialUser } from 'angular-6-social-login';
 export class AccueilComponent implements OnInit {
 
   user: SocialUser;
-  loggedIn: boolean = false;
+
+  loggedIn: boolean;
   componentActive = 0; //Conserve le numéro du bouton cliquer pour selectionner le bouton actif
 
   parentEventCriteria = "hockey";
-  facebookService: any;
+
   data: [];
   id = {'id': ''};
 
   constructor(
       private router: Router, private socialAuthService: AuthService) { }
 
-  ngOnInit() {
+
+  ngOnInit(){
     // Check if user is logged in to Facebook and return a user with its properties
-    this.socialAuthService.authState.subscribe((user) => {
-      this.user = user;
-      this.loggedIn = (user != null);
-      // console.log(user);
-      this.showEventComp(0);
-    });
+      this.socialAuthService.authState.subscribe((user) => {
+        this.user = user;
+        if (user != null) {
+          if (user.id != null) {
+            this.loggedIn = true; }
+          else {
+            this.loggedIn = false;
+          }
+        } else {
+          this.loggedIn = false;
+        }
+
+      });
+
+      if (this.loggedIn) {
+        this.showEventComp(0);
+    };
   }
   /**
    * SignOut

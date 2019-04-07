@@ -19,15 +19,15 @@
     </div>
 
     <!-- User -->
-    <app-login></app-login>
 
-    <ul *ngIf="user" class="navbar-nav align-items-center d-none d-md-flex">
+    <div *ngIf="loggedIn; then thenBlock else elseBlock"></div>
+    <ng-template #thenBlock>
       <li class="nav-item dropdown">
         <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
            aria-expanded="false">
           <div class="media align-items-center">
               <span class="avatar avatar-sm rounded-circle">
-                <img alt="Image placeholder" src={{user.image}}>
+                <img alt="Image accComp30" src="{{ user.photoUrl }}">
               </span>
             <div class="media-body ml-2 d-none d-lg-block">
               <span class="mb-0 text-sm  font-weight-bold">{{user.name}}</span>
@@ -46,6 +46,15 @@
           <app-logout></app-logout>
         </div>
       </li>
+    </ng-template>
+    <ng-template #elseBlock>
+      <app-login></app-login>
+    </ng-template>
+
+
+
+    <ul *ngIf="user" class="navbar-nav align-items-center d-none d-md-flex">
+
     </ul>
   </div>
 </nav>

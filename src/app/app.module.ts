@@ -4,7 +4,7 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { AppRouting } from './app.routing';
 
-import { SocialLoginModule, FacebookLoginProvider, AuthServiceConfig } from 'angular-6-social-login';
+import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { LoginComponent } from './login/login.component';
 import { getAuthServiceConfigs } from "../../facebookConfig";
 import { AuthentificationComponent } from './authentification/authentification.component';

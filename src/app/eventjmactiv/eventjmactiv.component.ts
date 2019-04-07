@@ -1,5 +1,5 @@
 import {Component, OnInit, Input, OnChanges} from '@angular/core';
-import {AuthService} from "angular-6-social-login";
+
 import {ActiviteService} from "../services/activite.service";
 
 @Component({
