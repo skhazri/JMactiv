@@ -30,6 +30,7 @@ export class AuthentificationComponent implements OnInit {
   public errorMessage: string = '';
   public dialogConfig;
   dataSource: object;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private route: ActivatedRoute,

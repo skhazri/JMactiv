@@ -14,7 +14,14 @@ export class AccueilComponent implements OnInit {
   loggedIn: boolean;
   componentActive = 0; //Conserve le numéro du bouton cliquer pour selectionner le bouton actif
 
-  parentEventCriteria = "hockey";
+  parentEventCriteria="";
+  parentLongitudeCriteria;
+  parentLatitudeCriteria;
+  parentDistanceCriteria=50;
+  parentStartDateCriteria = new Date();
+  parentStartTimeCriteria = new Date();
+  parentEndCriteria;
+
 
   data: [];
   id = {'id': ''};
@@ -38,10 +45,10 @@ export class AccueilComponent implements OnInit {
         }
 
       });
-
+      //Les évènements sont affichés peut importe si l'usagé est connecté ou non.
       if (this.loggedIn) {
         this.showEventComp(0);
-    };
+        };
   }
   /**
    * SignOut
@@ -68,7 +75,4 @@ export class AccueilComponent implements OnInit {
 
   }
 
-  private searchEvents(){
-
-  }
 }

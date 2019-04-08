@@ -1,37 +1,5 @@
 <h3 class="mb-0 text-success">EventBrite</h3>
-<h3>{{eventCriteria}}</h3>
-<br><br>
-<!--<div class="container-fluid">-->
-<form class="form-inline mr-3 d-md-flex ml-lg-auto">
-    <div class="form-group mb-0">
-
-        <div class="input-group input-group-alternative">
-            <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-search"></i></span>
-            </div>
-            <input class="form-control" type="text" name="searchLat" [(ngModel)]="searchLocationLat"
-                   (keyup)="searchActivityLocationLat()" autocomplete="off" placeholder="Localisation Latitude">
-        </div>
-        &nbsp;&nbsp;
-        <div class="input-group input-group-alternative">
-            <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-search"></i></span>
-            </div>
-            <input class="form-control" type="text" name="searchLon" [(ngModel)]="searchLocationLon"
-                   (keyup)="searchActivityLocationLon()" autocomplete="off" placeholder="Localisation Longitude">
-        </div>
-        &nbsp;&nbsp;
-        <div class="input-group input-group-alternative">
-            <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-search"></i></span>
-            </div>
-            <input class="form-control" type="text" name="searchWidthIn" [(ngModel)]="locationwidthin"
-                   (keyup)="searchEvents()" autocomplete="off" placeholder="Dans un rayon (km)">
-        </div>
-    </div>
-</form>
-<!--</div>-->
-
+<h3>{{eventCriteria}}, {{StartDateCriteria | date :  "yyyy-MM-dd"}}T{{StartTimeCriteria  | date :  "HH:mm:ss"}}Z, {{DistanceCriteria}}</h3>
 <div class="card-body">
     <div class="container">
         <div class="row">

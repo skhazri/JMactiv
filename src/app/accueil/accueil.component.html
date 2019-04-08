@@ -86,44 +86,48 @@
             <button id="btEventbrite" (click)="showEventComp(1)" mat-raised-button color="{{set_color(1)}}" style="margin:.5em"> EventBrite Events</button>
           </nav>
           <form class="form-inline mr-3 d-md-flex ml-lg-auto">
-            <div class="form-group mb-0">
-              <div class="input-group input-group-alternative">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-search"></i></span>
-                </div>
-                <input class="form-control" placeholder="Type d'activité" type="search" name="search2"
+            <div class="form-group mb-0" align="left">
+              <div>
+                  <mat-form-field>
+                      <input matInput placeholder="Type d'activité" type="search" name="search2"
                        [(ngModel)]="parentEventCriteria" autocomplete="off">
+                  </mat-form-field>
 
               </div>
-              &nbsp;&nbsp;
-              <div class="input-group input-group-alternative">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-search"></i></span>
+                <div style="margin:.5em">
+                    <nav>
+                        <button id="btGPS" mat-raised-button color="basic" > Coordonnées </button>
+                    </nav>
                 </div>
-                <input class="form-control" type="text" name="searchLat" [(ngModel)]="searchLocationLat"
-                       (keyup)="searchActivityLocationLat()" autocomplete="off" placeholder="Localisation Latitude">
-              </div>
-              &nbsp;&nbsp;
-              <div class="input-group input-group-alternative">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-search"></i></span>
+                <!-- Start Date -->
+                <div class="form-group" style="margin-right: .5em">
+                    <mat-form-field>
+                        <input matInput [matDatepicker]="picker" name="startdate"
+                               placeholder="Start Date" [errorStateMatcher]="errorMatcher" onkeydown="return false" [min]="today" [(ngModel)]="parentStartDateCriteria" >
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker class="datepicker"></mat-datepicker>
+                    </mat-form-field>
                 </div>
-                <input class="form-control" type="text" name="searchLon" [(ngModel)]="searchLocationLon"
-                       (keyup)="searchActivityLocationLon()" autocomplete="off" placeholder="Localisation Longitude">
-              </div>
-              &nbsp;&nbsp;
-              <div class="input-group input-group-alternative">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-search"></i></span>
+                <!-- Start Time -->
+                <div class="form-group" style="margin-right: .5em">
+                    <mat-form-field>
+                        <input matInput [matTimeSelect]="myTimeSelect" placeholder="Start Time" onkeydown="return false"  [(ngModel)]="parentStartTimeCriteria"
+                               onkeydown="return false" [errorStateMatcher]="errorMatcher">
+                        <mat-time-select-toggle matSuffix [for]="myTimeSelect"></mat-time-select-toggle>
+                        <mat-time-select #myTimeSelect></mat-time-select>
+                    </mat-form-field>
                 </div>
-                <input class="form-control" type="text" name="searchWidthIn" [(ngModel)]="locationwidthin"
+
+                <div>
+                    <mat-form-field>
+                        <input matInput type="text" name="searchWidthIn" [(ngModel)]="parentDistanceCriteria"
                        (keyup)="searchEvents()" autocomplete="off" placeholder="Dans un rayon (km)">
+                    </mat-form-field>
               </div>
             </div>
           </form>
-          <app-eventjmactiv id="appEventJMactiv" [eventCriteria]="parentEventCriteria"></app-eventjmactiv>
-          <app-eventbritecard id="appEventEventbrite" [eventCriteria]="parentEventCriteria"></app-eventbritecard>
-
+          <app-eventjmactiv id="appEventJMactiv" style="display: block" [eventCriteria]="parentEventCriteria"></app-eventjmactiv>
+          <app-eventbritecard id="appEventEventbrite" style="display: none" [eventCriteria]="parentEventCriteria" [LongitudeCriteria]="parentLongitudeCriteria" [LatitudeCriteria]="parentLatitudeCriteria" [DistanceCriteria]="parentDistanceCriteria" [StartDateCriteria]="parentStartDateCriteria" [StartTimeCriteria]="parentStartTimeCriteria" [EndCriteria]="parentEndCriteria"></app-eventbritecard>
         </div>
       </div>
     </div>

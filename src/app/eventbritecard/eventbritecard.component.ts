@@ -10,13 +10,19 @@ import {Http, Response} from  '@angular/http'
 export class EventbritecardComponent implements OnInit, OnChanges {
 
     @Input() eventCriteria: string;
+    @Input() LongitudeCriteria: number;
+    @Input() LatitudeCriteria: number;
+    @Input() DistanceCriteria: number;
+    @Input() StartDateCriteria: string;
+    @Input() StartTimeCriteria: string;
+    @Input() EndCriteria: string;
+
 
     activites: Activities[] = [];
     activite: Activities  = new Activities();
 
     lat = "45.665352";
     lon = "-73.510709";
-    locationwidthin = 50;
 
     constructor(private http: Http) { }
 
@@ -32,8 +38,9 @@ export class EventbritecardComponent implements OnInit, OnChanges {
     }
 
     private searchEvents(){
-
-        let theUrl = 'https://www.eventbriteapi.com/v3/events/search/?q=' + this.eventCriteria + '&sort_by=date&location.address=100&location.within=' + this.locationwidthin + 'km&location.latitude=' + this.lat + '&location.longitude=' + this.lon + '&categories=108&start_date.range_start=2019-04-02T00%3A00%3A00&search_type=public&token=QOFJL3X3PX6VGOTEA24J';
+console.log(this.DistanceCriteria);
+        let theUrl = 'https://www.eventbriteapi.com/v3/events/search/?q=' + this.eventCriteria + '&sort_by=date&location.address=100&location.within=' + this.DistanceCriteria + 'km&location.latitude=' + this.lat + '&location.longitude=' + this.lon + '&categories=108&start_date.range_start=2019-04-02T00%3A00%3A00&search_type=public&token=QOFJL3X3PX6VGOTEA24J';
+        console.log(theUrl);
         this.http.get(theUrl)
             .pipe(map(this.extractData))
             .subscribe(activities => {
