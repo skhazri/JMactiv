@@ -1,6 +1,7 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {map} from "rxjs/operators";
 import {Http, Response} from  '@angular/http'
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-eventbritecard',
@@ -15,7 +16,8 @@ export class EventbritecardComponent implements OnInit, OnChanges {
     @Input() DistanceCriteria: number;
     @Input() StartDateCriteria: string;
     @Input() StartTimeCriteria: string;
-    @Input() EndCriteria: string;
+    @Input() EndDateCriteria: string;
+    @Input() EndTimeCriteria: string;
 
 
     activites: Activities[] = [];
@@ -24,22 +26,25 @@ export class EventbritecardComponent implements OnInit, OnChanges {
     lat = "45.665352";
     lon = "-73.510709";
 
+
     constructor(private http: Http) { }
 
     ngOnInit() {
 
-        this.searchEvents();
+//        this.searchEvents();
     }
 
     ngOnChanges() {
         // create header using child_id
-        console.log(this.eventCriteria);
         this.searchEvents();
     }
 
     private searchEvents(){
-console.log(this.DistanceCriteria);
-        let theUrl = 'https://www.eventbriteapi.com/v3/events/search/?q=' + this.eventCriteria + '&sort_by=date&location.address=100&location.within=' + this.DistanceCriteria + 'km&location.latitude=' + this.lat + '&location.longitude=' + this.lon + '&categories=108&start_date.range_start=2019-04-02T00%3A00%3A00&search_type=public&token=QOFJL3X3PX6VGOTEA24J';
+
+        let startdatetime = moment(this.StartDateCriteria).format("YYYY-MM-DD") + 'T' + moment(this.StartTimeCriteria).format("HH:mm:ss");
+        let enddatetime = moment(this.EndDateCriteria).format("YYYY-MM-DD") + 'T' + moment(this.EndTimeCriteria).format("HH:mm:ss");
+        'Tuesday, August 2nd, 2016, 5:45:19 PM'
+        let theUrl = 'https://www.eventbriteapi.com/v3/events/search/?q=' + this.eventCriteria + '&sort_by=date&location.address=100&location.within=' + this.DistanceCriteria + 'km&location.latitude=' + this.lat + '&location.longitude=' + this.lon + '&categories=108&start_date.range_start=' + startdatetime + '&start_date.range_end=' + enddatetime + '&search_type=public&token=QOFJL3X3PX6VGOTEA24J';
         console.log(theUrl);
         this.http.get(theUrl)
             .pipe(map(this.extractData))
@@ -53,8 +58,8 @@ console.log(this.DistanceCriteria);
                     ac.STARTTIME = element.start.local;
                     ac.ENDTIME = element.end.local;
                     ac.DESCRIPTION = element.description;
-                    ac.LOGO = element.logo.url;
-                    ac.URLEVENT = element.url;
+                    ac.LOGO = element.logo === null ? '' : element.logo.url;
+                    ac.URLEVENT = element.url === null ? '' : element.url;
                     ac.VENUE_ID = element.venue_id;
                     ac.ID = element.id;
                     a.push(ac);

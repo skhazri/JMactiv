@@ -20,7 +20,8 @@ export class AccueilComponent implements OnInit {
   parentDistanceCriteria=50;
   parentStartDateCriteria = new Date();
   parentStartTimeCriteria = new Date();
-  parentEndCriteria;
+  parentEndDateCriteria;
+  parentEndTimeCriteria;
 
 
   data: [];

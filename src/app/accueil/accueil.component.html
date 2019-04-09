@@ -101,7 +101,7 @@
                 </div>
                 <!-- Start Date -->
                 <div class="form-group" style="margin-right: .5em">
-                    <mat-form-field>
+                    <mat-form-field style="width:125px !important">
                         <input matInput [matDatepicker]="picker" name="startdate"
                                placeholder="Start Date" [errorStateMatcher]="errorMatcher" onkeydown="return false" [min]="today" [(ngModel)]="parentStartDateCriteria" >
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -110,24 +110,41 @@
                 </div>
                 <!-- Start Time -->
                 <div class="form-group" style="margin-right: .5em">
-                    <mat-form-field>
-                        <input matInput [matTimeSelect]="myTimeSelect" placeholder="Start Time" onkeydown="return false"  [(ngModel)]="parentStartTimeCriteria"
-                               onkeydown="return false" [errorStateMatcher]="errorMatcher">
+                    <mat-form-field style="width:100px !important">
+                        <input matInput [matTimeSelect]="myTimeSelect" name="searchtime" placeholder="Start Time" onkeydown="return false"  [(ngModel)]="parentStartTimeCriteria"
+                               [min]="startTimeMin">
                         <mat-time-select-toggle matSuffix [for]="myTimeSelect"></mat-time-select-toggle>
                         <mat-time-select #myTimeSelect></mat-time-select>
                     </mat-form-field>
                 </div>
-
-                <div>
-                    <mat-form-field>
+                <!-- End Date -->
+                <div class="form-group" style="margin-right: .5em">
+                    <mat-form-field style="width:125px !important">
+                        <input matInput [matDatepicker]="pickerend" name="enddate"
+                               placeholder="End Date" [errorStateMatcher]="errorMatcher" onkeydown="return false" [min]="today" [(ngModel)]="parentEndDateCriteria" >
+                        <mat-datepicker-toggle matSuffix [for]="pickerend"></mat-datepicker-toggle>
+                        <mat-datepicker #pickerend class="datepicker"></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <!-- End Time -->
+                <div class="form-group" style="margin-right: .5em">
+                    <mat-form-field style="width:100px !important">
+                        <input matInput [matTimeSelect]="myTimeSelectend" name="endtime" placeholder="End Time" onkeydown="return false"  [(ngModel)]="parentEndTimeCriteria"
+                               [min]="endTimeMin">
+                        <mat-time-select-toggle matSuffix [for]="myTimeSelectend"></mat-time-select-toggle>
+                        <mat-time-select #myTimeSelectend></mat-time-select>
+                    </mat-form-field>
+                </div>
+                <div style="margin-right: .5em">
+                    <mat-form-field style="width:75px !important">
                         <input matInput type="text" name="searchWidthIn" [(ngModel)]="parentDistanceCriteria"
-                       (keyup)="searchEvents()" autocomplete="off" placeholder="Dans un rayon (km)">
+                       autocomplete="off" placeholder="Rayon (km)">
                     </mat-form-field>
               </div>
             </div>
           </form>
           <app-eventjmactiv id="appEventJMactiv" style="display: block" [eventCriteria]="parentEventCriteria"></app-eventjmactiv>
-          <app-eventbritecard id="appEventEventbrite" style="display: none" [eventCriteria]="parentEventCriteria" [LongitudeCriteria]="parentLongitudeCriteria" [LatitudeCriteria]="parentLatitudeCriteria" [DistanceCriteria]="parentDistanceCriteria" [StartDateCriteria]="parentStartDateCriteria" [StartTimeCriteria]="parentStartTimeCriteria" [EndCriteria]="parentEndCriteria"></app-eventbritecard>
+          <app-eventbritecard id="appEventEventbrite" style="display: none" [eventCriteria]="parentEventCriteria" [LongitudeCriteria]="parentLongitudeCriteria" [LatitudeCriteria]="parentLatitudeCriteria" [DistanceCriteria]="parentDistanceCriteria" [StartDateCriteria]="parentStartDateCriteria" [StartTimeCriteria]="parentStartTimeCriteria" [EndDateCriteria]="parentEndDateCriteria" [EndTimeCriteria]="parentEndTimeCriteria"></app-eventbritecard>
         </div>
       </div>
     </div>
