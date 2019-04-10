@@ -64,7 +64,7 @@ export class AfficheractiviteComponent implements OnInit {
       });
   }
   getFacebookEvent() {
-    this.facebookService.getEvent(this.id, this.user.idToken)
+    this.facebookService.getEvent(this.id, this.user.authToken)
       .subscribe((data) => {
         this.eventFacebook = (data.json());
 

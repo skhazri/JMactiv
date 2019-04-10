@@ -31,8 +31,6 @@ export class LoginComponent {
     });
     this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID).then(
       (userData) => {
-        console.log("login33:");
-        console.log(userData);
         this.name = userData.name;
         this.id = userData.id;
         this.user.idToken = userData.authToken;

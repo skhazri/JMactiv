@@ -59,8 +59,6 @@ export class AuthentificationComponent implements OnInit {
    */
   public getFacebookUser() {
     this.socialAuthService.authState.subscribe((user) => {
-      console.log("authcomp61:")
-      console.log(user)
       this.loggedIn = (user != null);
       this.user = user;
     });
