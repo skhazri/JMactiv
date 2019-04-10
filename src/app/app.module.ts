@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { AppRouting } from './app.routing';
+import {AgmCoreModule } from '@agm/core';
 
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { LoginComponent } from './login/login.component';
@@ -31,9 +32,10 @@ import {
     MatInputModule,
     MatNativeDateModule,
     ErrorStateMatcher,
+    MatCheckboxModule,
     MatDialogModule,
     MatRadioModule,
-    MatButtonToggleModule} from '@angular/material';
+    MatButtonToggleModule }from '@angular/material';
 import {MatTimeSelectModule, MatNativeTimeModule} from 'ngx-material-time-select';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSelectModule} from '@angular/material/select';
@@ -43,6 +45,7 @@ import {MatCardModule, MatPaginatorModule} from '@angular/material';
 import {ErrorComponent} from './error/error.component';
 import {EventbritecardComponent} from './eventbritecard/eventbritecard.component'
 import {EventjmactivComponent} from "./eventjmactiv/eventjmactiv.component";
+import { MyDialogComponent } from './my-dialog/my-dialog.component';
 
 //Decorator
 @NgModule({
@@ -60,11 +63,15 @@ import {EventjmactivComponent} from "./eventjmactiv/eventjmactiv.component";
         LogoutComponent,
         ErrorComponent,
         EventbritecardComponent,
-        EventjmactivComponent
-
+        EventjmactivComponent,
+        MyDialogComponent
     ],
     imports: [
+        MatButtonModule,
+        MatCheckboxModule,
+        MatDialogModule,
         BrowserModule,
+        AgmCoreModule,
         BrowserAnimationsModule,
         SocialLoginModule,
         AppRouting,
@@ -74,7 +81,6 @@ import {EventjmactivComponent} from "./eventjmactiv/eventjmactiv.component";
         ShareButtonModule,
         Ng2SearchPipeModule,
         FormsModule,
-        MatButtonModule,
         MatFormFieldModule,
         MatInputModule,
         MatRippleModule,
@@ -90,7 +96,11 @@ import {EventjmactivComponent} from "./eventjmactiv/eventjmactiv.component";
         MatSlideToggleModule,
         MatDialogModule,
         MatRadioModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        AgmCoreModule.forRoot({
+            apiKey:'AIzaSyARKmM-KagJ34P1bMysrnDbHpLvQAG4Pmw'
+        })
+
     ],
     providers: [
         {
@@ -102,7 +112,7 @@ import {EventjmactivComponent} from "./eventjmactiv/eventjmactiv.component";
         MatDatepickerModule
     ],
     bootstrap: [AppComponent],
-    entryComponents: [CreeractiviteComponent, ErrorComponent]
+    entryComponents: [CreeractiviteComponent, ErrorComponent, MyDialogComponent]
 })
 
 export class AppModule {

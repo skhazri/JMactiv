@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService, SocialUser } from 'angularx-social-login';
+import {MatDialog} from '@angular/material';
+import {MyDialogComponent} from '../my-dialog/my-dialog.component';
 
 @Component({
   selector: 'app-accueil',
@@ -8,6 +10,16 @@ import { AuthService, SocialUser } from 'angularx-social-login';
   styleUrls: ['./accueil.component.scss']
 })
 export class AccueilComponent implements OnInit {
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(MyDialogComponent, {
+      width: '500px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
 
   user: SocialUser;
 
@@ -28,7 +40,7 @@ export class AccueilComponent implements OnInit {
   id = {'id': ''};
 
   constructor(
-      private router: Router, private socialAuthService: AuthService) { }
+      public dialog:MatDialog,private router: Router, private socialAuthService: AuthService) { }
 
 
   ngOnInit(){

@@ -1,4 +1,7 @@
 <!-- Header -->
+<li>
+    <button mat-raised-button (click)="openDialog()">Map</button>
+</li>
 <nav class="navbar navbar-horizontal navbar-expand-lg navbar-light bg-white" id="sidenav-main">
   <div class="container-fluid">
     <!-- Brand -->
@@ -15,6 +18,7 @@
             <i class="ni ni-tv-2 text-success"></i> Home
           </a>
         </li>
+
       </ul>
     </div>
 
@@ -30,7 +34,7 @@
                 <img alt="Image accComp30" src="{{ user.photoUrl }}">
               </span>
             <div class="media-body ml-2 d-none d-lg-block">
-              <span class="mb-0 text-sm  font-weight-bold">{{user.name}}</span>
+              <span class="mb-0 text-sm  npfont-weight-bold">{{user.name}}</span>
             </div>
           </div>
         </a>
