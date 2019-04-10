@@ -23,9 +23,6 @@ export class EventbritecardComponent implements OnInit, OnChanges {
     activites: Activities[] = [];
     activite: Activities  = new Activities();
 
-    lat = "45.665352";
-    lon = "-73.510709";
-
 
     constructor(private http: Http) { }
 
@@ -42,9 +39,15 @@ export class EventbritecardComponent implements OnInit, OnChanges {
     private searchEvents(){
 
         let startdatetime = moment(this.StartDateCriteria).format("YYYY-MM-DD") + 'T' + moment(this.StartTimeCriteria).format("HH:mm:ss");
-        let enddatetime = moment(this.EndDateCriteria).format("YYYY-MM-DD") + 'T' + moment(this.EndTimeCriteria).format("HH:mm:ss");
+        let enddatetime;
+        let endDateTimeParam="";
+        if (!(this.EndDateCriteria === undefined)) {
+            enddatetime = moment(this.EndDateCriteria).format("YYYY-MM-DD") + 'T' + moment(this.EndTimeCriteria).format("HH:mm:ss");
+            endDateTimeParam= "&start_date.range_end=" + enddatetime ;
+
+        }
         'Tuesday, August 2nd, 2016, 5:45:19 PM'
-        let theUrl = 'https://www.eventbriteapi.com/v3/events/search/?q=' + this.eventCriteria + '&sort_by=date&location.address=100&location.within=' + this.DistanceCriteria + 'km&location.latitude=' + this.lat + '&location.longitude=' + this.lon + '&categories=108&start_date.range_start=' + startdatetime + '&start_date.range_end=' + enddatetime + '&search_type=public&token=QOFJL3X3PX6VGOTEA24J';
+        let theUrl = 'https://www.eventbriteapi.com/v3/events/search/?q=' + this.eventCriteria + '&sort_by=date&location.address=100&location.within=' + this.DistanceCriteria + 'km&location.latitude=' + this.LatitudeCriteria + '&location.longitude=' + this.LongitudeCriteria + '&categories=108&start_date.range_start=' + startdatetime + endDateTimeParam + '&search_type=public&token=QOFJL3X3PX6VGOTEA24J';
         console.log(theUrl);
         this.http.get(theUrl)
             .pipe(map(this.extractData))

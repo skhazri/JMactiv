@@ -3,6 +3,12 @@ import { Router } from '@angular/router';
 import { AuthService, SocialUser } from 'angularx-social-login';
 import {MatDialog} from '@angular/material';
 import {MyDialogComponent} from '../my-dialog/my-dialog.component';
+import {Response} from "@angular/http";
+
+export interface GPSData {
+  latitude: any;
+  longitude: any;
+}
 
 @Component({
   selector: 'app-accueil',
@@ -14,10 +20,12 @@ export class AccueilComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(MyDialogComponent, {
       width: '500px',
+      data: {latitude: this.parentLatitudeCriteria, longitude: this.parentLongitudeCriteria}
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+    dialogRef.afterClosed().subscribe((result) => {
+      this.parentLongitudeCriteria = result.longitude;
+      this.parentLatitudeCriteria = result.latitude;
     });
   }
 
@@ -27,8 +35,8 @@ export class AccueilComponent implements OnInit {
   componentActive = 0; //Conserve le numéro du bouton cliquer pour selectionner le bouton actif
 
   parentEventCriteria="";
-  parentLongitudeCriteria;
-  parentLatitudeCriteria;
+  parentLongitudeCriteria=-73.67649939547277;
+  parentLatitudeCriteria= 45.58148250928232;
   parentDistanceCriteria=50;
   parentStartDateCriteria = new Date();
   parentStartTimeCriteria = new Date();

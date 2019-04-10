@@ -1,7 +1,16 @@
-<agm-map [latitude]="latitude" [longitude]="longitude" (mapClick)="onChoseLocation($event)" >
+<agm-map [latitude]="latitude" [longitude]="longitude" (mapClick)="onChoseLocation($event)" close >
   <agm-marker [latitude]="latitude" [longitude]="longitude">
 
   </agm-marker>
 
 </agm-map>
 
+<!--mat-form-field>
+  <input matInput name="lat" placeholder="latitude" [(ngModel)]="data.latitude">
+</--mat-form-field>
+<mat-form-field>
+  <input matInput name="lon" placeholder="longitude" [(ngModel)]="data.longitude">
+</mat-form-field-->
+
+  <button id="btSet" (click)="setGPSCoord()" mat-raised-button color="primary" style="margin:.5em">Set</button>
+  <button id="btClose" (click)="onClose()" mat-raised-button color="basic" style="margin:.5em"> Close </button>

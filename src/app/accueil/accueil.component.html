@@ -1,7 +1,4 @@
 <!-- Header -->
-<li>
-    <button mat-raised-button (click)="openDialog()">Map</button>
-</li>
 <nav class="navbar navbar-horizontal navbar-expand-lg navbar-light bg-white" id="sidenav-main">
   <div class="container-fluid">
     <!-- Brand -->
@@ -89,18 +86,18 @@
             <button id="btJMactiv" (click)="showEventComp(0)" mat-raised-button color="{{set_color(0)}}" style="margin:.5em">JMactiv Events</button>
             <button id="btEventbrite" (click)="showEventComp(1)" mat-raised-button color="{{set_color(1)}}" style="margin:.5em"> EventBrite Events</button>
           </nav>
-          <form class="form-inline mr-3 d-md-flex ml-lg-auto">
+          <form class="form-inline mr-3 d-md-flex">
             <div class="form-group mb-0" align="left">
-              <div>
+              <div style="margin:.5em">
                   <mat-form-field>
-                      <input matInput placeholder="Type d'activité" type="search" name="search2"
+                      <input matInput placeholder="Activity" type="search" name="search2"
                        [(ngModel)]="parentEventCriteria" autocomplete="off">
                   </mat-form-field>
 
               </div>
                 <div style="margin:.5em">
                     <nav>
-                        <button id="btGPS" mat-raised-button color="basic" > Coordonnées </button>
+                        <button id="btGPS" mat-raised-button color="basic" (click)="openDialog()"> Location </button>
                     </nav>
                 </div>
                 <!-- Start Date -->
@@ -142,12 +139,12 @@
                 <div style="margin-right: .5em">
                     <mat-form-field style="width:75px !important">
                         <input matInput type="text" name="searchWidthIn" [(ngModel)]="parentDistanceCriteria"
-                       autocomplete="off" placeholder="Rayon (km)">
+                       autocomplete="off" placeholder="Radius (km)">
                     </mat-form-field>
               </div>
             </div>
           </form>
-          <app-eventjmactiv id="appEventJMactiv" style="display: block" [eventCriteria]="parentEventCriteria"></app-eventjmactiv>
+          <app-eventjmactiv id="appEventJMactiv" style="display: block" [eventCriteria]="parentEventCriteria" ></app-eventjmactiv>
           <app-eventbritecard id="appEventEventbrite" style="display: none" [eventCriteria]="parentEventCriteria" [LongitudeCriteria]="parentLongitudeCriteria" [LatitudeCriteria]="parentLatitudeCriteria" [DistanceCriteria]="parentDistanceCriteria" [StartDateCriteria]="parentStartDateCriteria" [StartTimeCriteria]="parentStartTimeCriteria" [EndDateCriteria]="parentEndDateCriteria" [EndTimeCriteria]="parentEndTimeCriteria"></app-eventbritecard>
         </div>
       </div>
