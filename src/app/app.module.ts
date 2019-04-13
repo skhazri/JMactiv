@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { AppRouting } from './app.routing';
-import {AgmCoreModule } from '@agm/core';
-
+import {AgmCoreModule,GoogleMapsAPIWrapper } from '@agm/core';
+import { MapComponent } from './map/map.component';
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { LoginComponent } from './login/login.component';
 import { getAuthServiceConfigs } from "../../facebookConfig";
@@ -47,6 +47,7 @@ import {EventbritecardComponent} from './eventbritecard/eventbritecard.component
 import {EventjmactivComponent} from "./eventjmactiv/eventjmactiv.component";
 import { MyDialogComponent } from './my-dialog/my-dialog.component';
 
+
 //Decorator
 @NgModule({
     declarations: [
@@ -64,7 +65,8 @@ import { MyDialogComponent } from './my-dialog/my-dialog.component';
         ErrorComponent,
         EventbritecardComponent,
         EventjmactivComponent,
-        MyDialogComponent
+        MyDialogComponent,
+        MapComponent
     ],
     imports: [
         MatButtonModule,
@@ -109,7 +111,9 @@ import { MyDialogComponent } from './my-dialog/my-dialog.component';
         },
         FacebookService,
         MatNativeDateModule,
-        MatDatepickerModule
+        MatDatepickerModule,
+        GoogleMapsAPIWrapper,
+        MapComponent
     ],
     bootstrap: [AppComponent],
     entryComponents: [CreeractiviteComponent, ErrorComponent, MyDialogComponent]
