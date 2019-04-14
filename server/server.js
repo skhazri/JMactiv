@@ -7,8 +7,8 @@ const dbConfig = require('./dbconfig');
 const bodyParser = require('body-parser');
 const moment = require('moment');
 
-app.use(cors());
-app.options('*', cors());
+// app.use(cors());
+// app.options('*', cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
