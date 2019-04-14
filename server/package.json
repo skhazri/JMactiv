@@ -4,7 +4,6 @@
   "scripts": {
     "start": "node server.js",
     "publishheroku": "cd ../ && git subtree push --prefix server jmactiv-api master || true"
-    
   },
   "engines": {
     "node": "10.15.3",
