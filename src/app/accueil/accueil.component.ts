@@ -70,6 +70,9 @@ export class AccueilComponent implements OnInit {
       if (this.loggedIn) {
         this.showEventComp(0);
         };
+
+      console.log(this.parentLatitudeCriteria);
+      console.log(this.parentLongitudeCriteria);
   }
   /**
    * SignOut

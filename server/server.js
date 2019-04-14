@@ -273,26 +273,15 @@ app.get("/api/getMonActivite/:activityid", function (req, res) {
 });
 
 app.get("/api/searchActivites/:startdatetime/:enddatetime", function (req, res) {
-    console.log("searchActivites " + req.params["startdatetime"]);
+    console.log("searchActivites " + req.params["latitude"]);
     let st = moment(req.params["startdatetime"]).format("YYYY-MM-DD HH:mm:ss");
-    console.log(req.params["enddatetime"]);
-    //let et;
+    let et;
     if (req.params["enddatetime"] === 'undefined'){
         et = moment("9999-12-31 23:59:59").format("YYYY-MM-DD HH:mm:ss");
     } else {
         et = moment(req.params["enddatetime"]).format("YYYY-MM-DD HH:mm:ss");
     }
-    console.log(st);
-    //console.log(req.params);
-    /*for (let p in req.params) {
-        let val = req.params[p];
-        console.log(p);
-    }*/
-    //const latitude  = parseFloat(req.params.latitude);
-    //const longitude = parseFloat(req.params.longitude);
-    //const distance = parseInt(req.params.distance, 10);
-    console.log("searchActivites2 " + st);
-    //req.query.exhibitorID;
+
     let connection = oracledb.getConnection(
         {
             user: dbConfig.user,
@@ -345,10 +334,13 @@ app.get("/api/searchActivites/:startdatetime/:enddatetime", function (req, res) 
         });
 });
 
-
 app.post("/api/SaveActivity", function (req, res) {
     console.log("/api/SaveActivity" + req.body);
     const uid = req.body.id;
+    let st = moment(req.body.attributes.startDate).format("YYYY-MM-DD");
+    let ti = moment(req.body.attributes.startTime).format("HH:mm:00");
+    let dt = moment(st + ' ' + ti).format("YYYY-MM-DD HH:mm:00");
+
     var connection = oracledb.getConnection(
         {
             user: dbConfig.user,
@@ -362,9 +354,9 @@ app.post("/api/SaveActivity", function (req, res) {
             }
 
             connection.execute(
-                "INSERT INTO EVENTS (NAME, LOCATION, DESCRIPTION, TYPE, STARTDATE, STARTTIME, ENDDATE, ENDTIME, ENDDATETIME, ISONLINE,USERID,IMAGE) VALUES (:name, :location, :description, :type, :startDate, :startTime, :endDate, :endTime, :endDateTime, :isOnline, :userId, :image)",
+                "INSERT INTO EVENTS (NAME, LOCATION, DESCRIPTION, TYPE, STARTDATE, STARTTIME, ENDDATE, ENDTIME, ENDDATETIME, ISONLINE,USERID,IMAGE,LATITUDE,LONGITUDE,STARTEVENT) VALUES (:name, :location, :description, :type, :startDate, :startTime, :endDate, :endTime, :endDateTime, :isOnline, :userId, :image, :lat, :lng, TO_DATE(:sdt, 'YYYY-MM-DD HH24:mi:ss') )",
                 [req.body.attributes.name, req.body.attributes.location, req.body.attributes.description, req.body.attributes.type, req.body.attributes.startDate, req.body.attributes.startTime,
-                req.body.attributes.endDate, req.body.attributes.endTime, req.body.attributes.endDateTime, req.body.attributes.online, req.body.id,req.body.attributes.image],
+                req.body.attributes.endDate, req.body.attributes.endTime, req.body.attributes.endDateTime, req.body.attributes.online, req.body.id,req.body.attributes.image,req.body.attributes.latitude,req.body.attributes.longitude, dt],
                 { autoCommit: true },
                 function (err, result) {
                     if (err) {
@@ -381,6 +373,12 @@ app.post("/api/SaveActivity", function (req, res) {
 
 app.post("/api/UpdateActivity", function (req, res) {
     console.log("/api/UpdateActivity " + req.body.attributes.latitude);
+    let st = moment(req.body.attributes.startDate).format("YYYY-MM-DD");
+    let ti = moment(req.body.attributes.startTime).format("HH:mm:00");
+    let dt = moment(st + ' ' + ti).format("YYYY-MM-DD HH:mm:00");
+    console.log("/api/UpdateActivity " + ti);
+    console.log("/api/UpdateActivity " + st);
+    console.log("/api/UpdateActivity " + dt);
     const eventid = parseInt(req.body.id, 10);
     var connection = oracledb.getConnection(
         {
@@ -395,9 +393,9 @@ app.post("/api/UpdateActivity", function (req, res) {
             }
 
             connection.execute(
-                "UPDATE EVENTS SET NAME = :name, LOCATION = :location, DESCRIPTION = :description,TYPE = :type, STARTDATE = :startDate, STARTTIME = :startTime,ENDDATETIME = :endDateTime, ENDDATE = :endDate, ENDTIME = :endTime,ISONLINE = :isOnline, IMAGE= :image, LATITUDE= :lat, LONGITUDE= :lng where EVENTID = :eventid ",
+                "UPDATE EVENTS SET NAME = :name, LOCATION = :location, DESCRIPTION = :description,TYPE = :type, STARTDATE = :startDate, STARTTIME = :startTime,ENDDATETIME = :endDateTime, ENDDATE = :endDate, ENDTIME = :endTime,ISONLINE = :isOnline, IMAGE= :image, LATITUDE= :lat, LONGITUDE= :lng, STARTEVENT= TO_DATE(:sdt, 'YYYY-MM-DD HH24:mi:ss') where EVENTID = :eventid ",
                 [req.body.attributes.name, req.body.attributes.location, req.body.attributes.description, req.body.attributes.type, req.body.attributes.startDate, req.body.attributes.startTime,
-                req.body.attributes.endDateTime, req.body.attributes.endDate, req.body.attributes.endTime, req.body.attributes.online,req.body.attributes.image, req.body.attributes.latitude, req.body.attributes.longitude, eventid],
+                req.body.attributes.endDateTime, req.body.attributes.endDate, req.body.attributes.endTime, req.body.attributes.online,req.body.attributes.image, req.body.attributes.latitude, req.body.attributes.longitude, dt, eventid],
                 { autoCommit: true },
                 function (err, result) {
                     if (err) {

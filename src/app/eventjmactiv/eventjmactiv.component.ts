@@ -79,8 +79,23 @@ console.log("et :"  + et);
   public searchActivites(starttime, enditime, latitude, longitude, distance) {
     this.activiteService.searchActivities(starttime, enditime, latitude, longitude, distance)
         .subscribe((data) => {
-          this.events = data.json();
+          let res: any[] = data.json();
+console.log(this.LatitudeCriteria);
+console.log(this.LongitudeCriteria);
+          for( let i = res.length-1; i--;){
+            let e = res[i];
+            let activity: any[];
+
+            if(!this.distanceOk(e.location, e.latitude, e.longitude)){
+              console.log("K " + e.location);
+            //  console.log(e);
+              res.splice(i, 1);
+            }
+
+          }
+
           console.log(data);
+          this.events = res;
         });
   }
   public getActivites() {
@@ -92,11 +107,11 @@ console.log("et :"  + et);
          });
       }
 
-  public getDistance(adr:string, max:number){
+  public getDistance(adr:string, dest: any){
       let distance:number;
       const centre = {lat: this.LatitudeCriteria, lon: this.LongitudeCriteria};
-      const dest = this.getDest(adr);
-      distance = headingDistanceTo(centre, dest).distance;
+      //const dest = //this.getDest(adr);
+      distance = headingDistanceTo( centre, dest).distance;
       console.log(distance/1000, " km");
       return distance;
 
@@ -118,12 +133,13 @@ console.log("et :"  + et);
     return dest;
   }
 
-  public distanceOk( Adre :string){
+  private distanceOk( Adre: string, lat: number, lng: number){
     let Max = this.DistanceCriteria;
     const centre = {lat: this.LatitudeCriteria, lon: this.LongitudeCriteria};
-    const dest = this.getDest(Adre);
-    let res1 =  (this.getDistance(Adre, Max) <= Max);
-    let res2 =  insideCircle(dest,centre,Max);
+    //const dest = this.getDest(Adre);
+    const dest ={lat: lat, lon: lng};
+    let res1 =  (this.getDistance(Adre, dest) <= Max);
+    let res2 =  insideCircle(dest,centre,Max*1000);
     console.log("ok1:",res1,"ok2:", res2);
     return res2;
   }

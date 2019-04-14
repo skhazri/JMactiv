@@ -48,13 +48,10 @@ export class AuthentificationComponent implements OnInit {
       this.name = params["name"];
     });
     this.currentUrl = window.location.href;
-console.log(this.searchText);
+
     this.getFacebookUser();
     this.getEvents();
-
-
     this.getUserId();
-    console.log("oninit " + this.userId);
     this.getActivites(this.userId);
   }
 
@@ -75,7 +72,6 @@ console.log(this.searchText);
     this.userService.get(this.user.id).then(
         (res) => {
           this.userId = res;
-          console.log("getUserId " + res);
           this.getActivites(this.userId);
         });
   }
@@ -94,8 +90,6 @@ console.log(this.searchText);
    * get DB events associated to user
    */
   getActivites(id) {
-   // if (id === 'undefined')
-     // this.getUserId();
 
     console.log("getActivites(id) " + id);
     this.activiteService.get(id)
