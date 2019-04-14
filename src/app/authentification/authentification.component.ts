@@ -48,10 +48,14 @@ export class AuthentificationComponent implements OnInit {
       this.name = params["name"];
     });
     this.currentUrl = window.location.href;
-
+console.log(this.searchText);
     this.getFacebookUser();
-    this.getUserId();
     this.getEvents();
+
+
+    this.getUserId();
+    console.log("oninit " + this.userId);
+    this.getActivites(this.userId);
   }
 
   /**
@@ -67,10 +71,12 @@ export class AuthentificationComponent implements OnInit {
    * getUserId
    */
   getUserId() {
+
     this.userService.get(this.user.id).then(
         (res) => {
           this.userId = res;
-          this.getActivites(this.user.id);
+          console.log("getUserId " + res);
+          this.getActivites(this.userId);
         });
   }
 
@@ -88,9 +94,13 @@ export class AuthentificationComponent implements OnInit {
    * get DB events associated to user
    */
   getActivites(id) {
+   // if (id === 'undefined')
+     // this.getUserId();
+
+    console.log("getActivites(id) " + id);
     this.activiteService.get(id)
         .subscribe((data) => {
-          this.eventsF = (data.json());
+          this.eventsF = data.json();
         });
   }
 
@@ -111,7 +121,7 @@ export class AuthentificationComponent implements OnInit {
     };
 
     this.activiteService.postDelete(event).subscribe(res => {
-      this.getActivites(this.user.id);
+      this.getActivites(this.userId);
     }, error => {
       console.log(error);
       this.dialog.open(ErrorComponent,dialogConfig);
@@ -194,6 +204,8 @@ export class AuthentificationComponent implements OnInit {
         "online": 'false',
         "userId": this.userId,
         "image": null,
+        "latitude": null,
+        "longitude": null
       }
     };
     const dialogRef = this.dialog.open(CreeractiviteComponent, dialogConfig);

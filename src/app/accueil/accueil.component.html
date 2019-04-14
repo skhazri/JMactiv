@@ -19,6 +19,7 @@
       </ul>
     </div>
 
+      <div><button routerLink="/profile">Profil</button></div>
     <!-- User -->
 
     <div *ngIf="loggedIn; then thenBlock else elseBlock"></div>
@@ -144,8 +145,8 @@
               </div>
             </div>
           </form>
-          <app-eventjmactiv id="appEventJMactiv" style="display: block" [eventCriteria]="parentEventCriteria" ></app-eventjmactiv>
-          <app-eventbritecard id="appEventEventbrite" style="display: none" [eventCriteria]="parentEventCriteria" [LongitudeCriteria]="parentLongitudeCriteria" [LatitudeCriteria]="parentLatitudeCriteria" [DistanceCriteria]="parentDistanceCriteria" [StartDateCriteria]="parentStartDateCriteria" [StartTimeCriteria]="parentStartTimeCriteria" [EndDateCriteria]="parentEndDateCriteria" [EndTimeCriteria]="parentEndTimeCriteria"></app-eventbritecard>
+            <app-eventjmactiv id="appEventJMactiv" style="display: block" [eventCriteria]="parentEventCriteria" [LongitudeCriteria]="parentLongitudeCriteria" [LatitudeCriteria]="parentLatitudeCriteria" [DistanceCriteria]="parentDistanceCriteria" [StartDateCriteria]="parentStartDateCriteria" [StartTimeCriteria]="parentStartTimeCriteria" [EndDateCriteria]="parentEndDateCriteria" [EndTimeCriteria]="parentEndTimeCriteria"></app-eventjmactiv>
+            <app-eventbritecard id="appEventEventbrite" style="display: none" [eventCriteria]="parentEventCriteria" [LongitudeCriteria]="parentLongitudeCriteria" [LatitudeCriteria]="parentLatitudeCriteria" [DistanceCriteria]="parentDistanceCriteria" [StartDateCriteria]="parentStartDateCriteria" [StartTimeCriteria]="parentStartTimeCriteria" [EndDateCriteria]="parentEndDateCriteria" [EndTimeCriteria]="parentEndTimeCriteria"></app-eventbritecard>
         </div>
       </div>
     </div>

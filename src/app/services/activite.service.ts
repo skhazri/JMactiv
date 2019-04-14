@@ -21,6 +21,14 @@ getActivity(activityid){
 getActivities(){
   return this.http.get(environment.ACTIVITY_API + '/api/getActivites' )
 }
+
+searchActivities(startdatetime, enddatetime, latitude, longitude, distance){
+    console.log("searchstarttime " + startdatetime);
+    //let params = new HttpParams().set('startTime',startdatetime);//.set("sdt",startdatetime).set("enddatetime", enddatetime).set("latitude", latitude).set("longitude",  longitude).set("distance", distance); //Create new HttpParams
+    //console.log(params.toString());
+    return this.http.get(environment.ACTIVITY_API + '/api/searchActivites/' + startdatetime + '/' + enddatetime);
+}
+
 post(data){
   return this.http.post(environment.ACTIVITY_API+ '/api/SaveActivity', data)
 }

@@ -34,6 +34,13 @@
     </mat-form-field>
   </div>
 
+     <div>
+         <mat-form-field>
+             <input matInput placeholder="Latitude" formControlName="latitude" (onAddressChange)="handleAddressChange($event)"
+                    autocomplete="off">
+         </mat-form-field>
+     </div>
+
   <!-- Description -->
   <div class="form-group">
     <mat-form-field>

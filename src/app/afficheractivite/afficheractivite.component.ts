@@ -39,6 +39,8 @@ export class AfficheractiviteComponent implements OnInit {
     this.socialAuthService.authState.subscribe((user) => {
       this.user = user;
       this.loggedIn = (user != null);
+
+
     });
 
     // get facebook event data and format it to json
@@ -61,6 +63,7 @@ export class AfficheractiviteComponent implements OnInit {
     this.activiteService.getActivity(this.id)
       .subscribe((data) => {
         this.event = data.json();
+        console.log("afficheractivite" + data);
       });
   }
   getFacebookEvent() {
