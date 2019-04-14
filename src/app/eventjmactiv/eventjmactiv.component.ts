@@ -8,6 +8,7 @@ import { MapComponent } from '../map/map.component';
 import {LonLat, headingDistanceTo, insideCircle} from 'geolocation-utils'
 import {isNull} from "@angular/compiler/src/output/output_ast";
 import {Stringifier} from "postcss";
+import * as moment from 'moment';
 
 
 @Component({
@@ -23,6 +24,10 @@ export class EventjmactivComponent implements OnInit, OnChanges {
   @Input() LongitudeCriteria: number;
   @Input() LatitudeCriteria: number;
   @Input() DistanceCriteria: number;
+  @Input() StartDateCriteria: string;
+  @Input() StartTimeCriteria: string;
+  @Input() EndDateCriteria: string;
+  @Input() EndTimeCriteria: string;
 
   events: any[];
   lat: number;
@@ -40,17 +45,52 @@ export class EventjmactivComponent implements OnInit, OnChanges {
   ngOnChanges() {
     // create header using child_id
     console.log(this.eventCriteria);
+    console.log(this.LongitudeCriteria);
+    console.log(this.LatitudeCriteria);
+    console.log("distance" + this.DistanceCriteria);
+    console.log(this.StartDateCriteria);
+    console.log(this.StartTimeCriteria);
+    console.log(this.EndDateCriteria);
+    console.log(this.EndTimeCriteria);
+    this.searchEvent();
   }
 
+  private searchEvent(){
+    let startdatetime = moment(this.StartDateCriteria).format("YYYY-MM-DD") + ' ' + moment(this.StartTimeCriteria).format("HH:mm:ss");
+    let enddatetime;
+    if (!(this.EndDateCriteria === undefined)) {
+
+      let et;
+      if (!(this.EndTimeCriteria === undefined)) {
+        et = moment(this.EndTimeCriteria).format("HH:mm:ss");
+      } else {
+        et = "23:59:59";
+      }
+console.log("et :"  + et);
+      enddatetime = moment(this.EndDateCriteria).format("YYYY-MM-DD") + 'T' + et;
+    }
+    console.log("EndDateCriteria" + this.EndDateCriteria);
+    console.log("startdatetime" + startdatetime);
+    console.log("enddatetime" + enddatetime);
+    //this.getActivites();
+    this.searchActivites(startdatetime, enddatetime, this.LatitudeCriteria, this.LongitudeCriteria, this.DistanceCriteria);
+  }
+
+  public searchActivites(starttime, enditime, latitude, longitude, distance) {
+    this.activiteService.searchActivities(starttime, enditime, latitude, longitude, distance)
+        .subscribe((data) => {
+          this.events = data.json();
+          console.log(data);
+        });
+  }
   public getActivites() {
     let newArray: any[] = [];
     let array: any[] = [];
     this.activiteService.getActivities()
         .subscribe((data) => {
-           this.events =  data.json();
+          // this.events =  data.json();
          });
       }
-
 
   public getDistance(adr:string, max:number){
       let distance:number;

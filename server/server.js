@@ -50,7 +50,7 @@ app.get("/api/getUser/:facebookid", function (req, res) {
                         console.error(err);
                         res.send(err);
                     } else {
-                        console.log(result.rows);
+                     //   console.log(result.rows);
                         result.rows.forEach(function (e) {
                             id = e[0];
                         });
@@ -132,7 +132,7 @@ app.get("/api/getMaListeActivite/:userid", function (req, res) {
                         res.send(err);
                     } else {
 
-                        console.log(result);
+                       // console.log(result);
                         result.rows.forEach(function (e) {
                             let activity = {};
                             activity.id = e[1];
@@ -185,7 +185,7 @@ app.get("/api/getActivites/", function (req, res) {
                         console.error(err);
                         res.send(err);
                     } else {
-                        console.log(result);
+                      //  console.log(result);
                         result.rows.forEach(function (e) {
                             let activity = {};
                             activity.id = e[1];
@@ -203,7 +203,7 @@ app.get("/api/getActivites/", function (req, res) {
 
                             activities.push(activity);
                         });
-                        console.log((activities));
+                      //  console.log((activities));
                         doRelease(connection);
                         res.json(activities);
                     }
@@ -253,9 +253,79 @@ app.get("/api/getMonActivite/:activityid", function (req, res) {
                             activity.image = e[12];
 
                         });
-                        console.log((activity));
+                   //     console.log((activity));
                         doRelease(connection);
                         res.json(activity);
+                    }
+                });
+        });
+});
+
+app.get("/api/searchActivites/:startdatetime/:enddatetime", function (req, res) {
+    console.log("searchActivites " + req.params["startdatetime"]);
+    let st = moment(req.params["startdatetime"]).format("YYYY-MM-DDTHH:mm:ss");
+    console.log(req.params["enddatetime"]);
+    //let et;
+    if (req.params["enddatetime"] === 'undefined'){
+        et = moment("9999-12-31T23:59:59").format("YYYY-MM-DDTHH:mm:ss");
+    } else {
+        et = moment(req.params["enddatetime"]).format("YYYY-MM-DDTHH:mm:ss");
+    }
+    console.log(et);
+    console.log(req.params);
+    for (let p in req.params) {
+        let val = req.params[p];
+        console.log(p);
+    }
+    //const latitude  = parseFloat(req.params.latitude);
+    //const longitude = parseFloat(req.params.longitude);
+    //const distance = parseInt(req.params.distance, 10);
+    console.log("searchActivites2 " + et);
+    //req.query.exhibitorID;
+    let connection = oracledb.getConnection(
+        {
+            user: dbConfig.user,
+            password: dbConfig.password,
+            connectString: dbConfig.connectString
+        },
+        function (err, connection) {
+            if (err) {
+                console.error("error:" + err);
+                res.send(err);
+            }
+
+            connection.execute(
+                "SELECT *  FROM EVENTS WHERE TYPE = 'public' AND STARTDATE between :startevent AND :endevent",
+                [st, et],
+                function (err, result) {
+                    let activities = [];
+
+                    if (err) {
+                        console.error(err);
+                        res.send(err);
+                    } else {
+                        console.log("resultat search");
+                        console.log(result);
+                        result.rows.forEach(function (e) {
+                            let activity = {};
+                            activity.id = e[1];
+                            activity.name = e[2];
+                            activity.location = e[3];
+                            activity.description = e[4];
+                            activity.startDate = e[5];
+                            activity.startTime = e[6];
+                            activity.endDate = e[7];
+                            activity.endTime = e[8];
+                            activity.type = e[9];
+                            activity.endDateTime = e[10];
+                            activity.online = e[11];
+                            activity.image = e[12];
+
+                            activities.push(activity);
+                        });
+                        // console.log((activities));
+                        doRelease(connection);
+                        res.json(activities);
                     }
                 });
         });
