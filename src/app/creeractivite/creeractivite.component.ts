@@ -54,6 +54,8 @@ export class CreeractiviteComponent implements OnInit {
   images : Array<any> [9];
   isImage: boolean = false;
   image: any;
+  latitude: any;
+  longitude: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -77,6 +79,8 @@ export class CreeractiviteComponent implements OnInit {
     this.isVisible = event.endDateTime;
     this.userId = event.userId
     this.image = event.image;
+    this.latitude = event.latitude;
+    this.longitude = event.longitude;
   }
 
 
@@ -92,7 +96,9 @@ export class CreeractiviteComponent implements OnInit {
       endDate: [this.endDate],
       endTime: [this.endTime],
       online: [this.online],
-      image: [this.image]
+      image: [this.image],
+      latitude: [this.latitude],
+      longitude: [this.longitude]
     },
       {
         validators: [
@@ -113,8 +119,10 @@ export class CreeractiviteComponent implements OnInit {
   @ViewChild("placesRef") placesRef: GooglePlaceDirective;
 
   public handleAddressChange(address: any) {
-    console.log(address);
+    console.log("handleAddressChange " + address.geometry.location.lat());
     this.location = address.formatted_address;
+    this.latitude = address.geometry.location.lat();
+    this.longitude = address.geometry.location.lng();
   }
   getImages() {
     return this.activiteService.getImages().then(
@@ -202,8 +210,11 @@ export class CreeractiviteComponent implements OnInit {
   }
 
   save() {
+    console.log("save");
     this.form.patchValue({
-      location: this.location
+      location: this.location,
+      latitude: this.latitude,
+      longitude: this.longitude
     });
     switch (this.form.value.endDateTime) {
       case true:
@@ -227,7 +238,8 @@ export class CreeractiviteComponent implements OnInit {
         case false:
           this.form.value.endDateTime = "false";
       }
-      let event = { id: this.userId, attributes: this.form.value };
+      let event = { id: this.userId, attributes: this.form.value }
+      console.log(event);
       this.activiteService.post(event)
         .subscribe(res => {
           this.dialogRef.close();
@@ -242,7 +254,9 @@ export class CreeractiviteComponent implements OnInit {
             endDate: null,
             endTime: null,
             online: 'false',
-            image: null
+            image: null,
+            latitude: null,
+            longitude: null
           });
 
           for (let i in this.form.controls) { this.form.controls[i].setErrors(null);}
@@ -252,7 +266,9 @@ export class CreeractiviteComponent implements OnInit {
 
     }
     else {
+
       let data = { id: this.id, attributes: this.form.value };
+      console.log(data);
       this.activiteService.postUpdate(data).subscribe(res => {
         this.dialogRef.close();
       }, error => {

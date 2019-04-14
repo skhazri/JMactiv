@@ -9,7 +9,7 @@
     </button>
     <!-- Brand -->
     <a class="navbar-brand pt-0" routerLink="">
-      <img src="../assets/logo.png" class="navbar-brand-img" style="width=70px" alt="...">
+      <img src="../assets/logo.png" class="navbar-brand-img" style="width:70px" alt="...">
     </a>
     <!-- User -->
     <ul class="nav align-items-center d-md-none">
@@ -155,6 +155,8 @@
       <div class="col-lg-7 col-md-10">
           <h1 class="display-2 text-white" *ngIf="event.name">{{event.name}}</h1>
           <p class="text-white mt-0 mb-5" *ngIf="event.location">{{event.location}} </p>
+        <p class="text-white mt-0 mb-5" *ngIf="event.location">{{event.latitude}} </p>
+        <p class="text-white mt-0 mb-5" *ngIf="event.location">{{event.longitude}} </p>
           <p class="text-white mt-0 mb-5" *ngIf="event.startDate"> Start {{event.startDate | date:'fullDate'}}
             <span *ngIf="event.startTime"> At {{event.startTime | date:'shortTime'}}</span>
            </p>

@@ -147,6 +147,10 @@ app.get("/api/getMaListeActivite/:userid", function (req, res) {
                             activity.endDateTime = e[10];
                             activity.online = e[11];
                             activity.image = e[12];
+                            activity.latitude = e[13];
+                            activity.longitude = e[14];
+                            activity.startevent = e[15];
+                            activity.endevent = e[16];
 
                             activities.push(activity);
                         });
@@ -200,6 +204,10 @@ app.get("/api/getActivites/", function (req, res) {
                             activity.endDateTime = e[10];
                             activity.online = e[11];
                             activity.image = e[12];
+                            activity.latitude = e[13];
+                            activity.longitude = e[14];
+                            activity.startevent = e[15];
+                            activity.endevent = e[16];
 
                             activities.push(activity);
                         });
@@ -251,7 +259,10 @@ app.get("/api/getMonActivite/:activityid", function (req, res) {
                             activity.endDateTime = e[10];
                             activity.online = e[11];
                             activity.image = e[12];
-
+                            activity.latitude = e[13];
+                            activity.longitude = e[14];
+                            activity.startevent = e[15];
+                            activity.endevent = e[16];
                         });
                    //     console.log((activity));
                         doRelease(connection);
@@ -263,24 +274,24 @@ app.get("/api/getMonActivite/:activityid", function (req, res) {
 
 app.get("/api/searchActivites/:startdatetime/:enddatetime", function (req, res) {
     console.log("searchActivites " + req.params["startdatetime"]);
-    let st = moment(req.params["startdatetime"]).format("YYYY-MM-DDTHH:mm:ss");
+    let st = moment(req.params["startdatetime"]).format("YYYY-MM-DD HH:mm:ss");
     console.log(req.params["enddatetime"]);
     //let et;
     if (req.params["enddatetime"] === 'undefined'){
-        et = moment("9999-12-31T23:59:59").format("YYYY-MM-DDTHH:mm:ss");
+        et = moment("9999-12-31 23:59:59").format("YYYY-MM-DD HH:mm:ss");
     } else {
-        et = moment(req.params["enddatetime"]).format("YYYY-MM-DDTHH:mm:ss");
+        et = moment(req.params["enddatetime"]).format("YYYY-MM-DD HH:mm:ss");
     }
-    console.log(et);
-    console.log(req.params);
-    for (let p in req.params) {
+    console.log(st);
+    //console.log(req.params);
+    /*for (let p in req.params) {
         let val = req.params[p];
         console.log(p);
-    }
+    }*/
     //const latitude  = parseFloat(req.params.latitude);
     //const longitude = parseFloat(req.params.longitude);
     //const distance = parseInt(req.params.distance, 10);
-    console.log("searchActivites2 " + et);
+    console.log("searchActivites2 " + st);
     //req.query.exhibitorID;
     let connection = oracledb.getConnection(
         {
@@ -295,7 +306,7 @@ app.get("/api/searchActivites/:startdatetime/:enddatetime", function (req, res) 
             }
 
             connection.execute(
-                "SELECT *  FROM EVENTS WHERE TYPE = 'public' AND STARTDATE between :startevent AND :endevent",
+                "SELECT * FROM EVENTS WHERE TYPE = 'public' AND STARTEVENT >= TO_DATE(:st, 'YYYY-MM-DD HH24:mi:ss') AND ENDEVENT <= TO_DATE(:et, 'YYYY-MM-DD HH24:mi:ss')",
                 [st, et],
                 function (err, result) {
                     let activities = [];
@@ -305,7 +316,7 @@ app.get("/api/searchActivites/:startdatetime/:enddatetime", function (req, res) 
                         res.send(err);
                     } else {
                         console.log("resultat search");
-                        console.log(result);
+                    //    console.log(result);
                         result.rows.forEach(function (e) {
                             let activity = {};
                             activity.id = e[1];
@@ -320,7 +331,10 @@ app.get("/api/searchActivites/:startdatetime/:enddatetime", function (req, res) 
                             activity.endDateTime = e[10];
                             activity.online = e[11];
                             activity.image = e[12];
-
+                            activity.latitude = e[13];
+                            activity.longitude = e[14];
+                            activity.startevent = e[15];
+                            activity.endevent = e[16];
                             activities.push(activity);
                         });
                         // console.log((activities));
@@ -333,7 +347,7 @@ app.get("/api/searchActivites/:startdatetime/:enddatetime", function (req, res) 
 
 
 app.post("/api/SaveActivity", function (req, res) {
-    console.log("/api/SaveActivity");
+    console.log("/api/SaveActivity" + req.body);
     const uid = req.body.id;
     var connection = oracledb.getConnection(
         {
@@ -366,7 +380,7 @@ app.post("/api/SaveActivity", function (req, res) {
 });
 
 app.post("/api/UpdateActivity", function (req, res) {
-    console.log("/api/UpdateActivity");
+    console.log("/api/UpdateActivity " + req.body.attributes.latitude);
     const eventid = parseInt(req.body.id, 10);
     var connection = oracledb.getConnection(
         {
@@ -381,9 +395,9 @@ app.post("/api/UpdateActivity", function (req, res) {
             }
 
             connection.execute(
-                "UPDATE EVENTS SET NAME = :name, LOCATION = :location, DESCRIPTION = :description,TYPE = :type, STARTDATE = :startDate, STARTTIME = :startTime,ENDDATETIME = :endDateTime, ENDDATE = :endDate, ENDTIME = :endTime,ISONLINE = :isOnline, IMAGE= :image where EVENTID = :eventid ",
+                "UPDATE EVENTS SET NAME = :name, LOCATION = :location, DESCRIPTION = :description,TYPE = :type, STARTDATE = :startDate, STARTTIME = :startTime,ENDDATETIME = :endDateTime, ENDDATE = :endDate, ENDTIME = :endTime,ISONLINE = :isOnline, IMAGE= :image, LATITUDE= :lat, LONGITUDE= :lng where EVENTID = :eventid ",
                 [req.body.attributes.name, req.body.attributes.location, req.body.attributes.description, req.body.attributes.type, req.body.attributes.startDate, req.body.attributes.startTime,
-                req.body.attributes.endDateTime, req.body.attributes.endDate, req.body.attributes.endTime, req.body.attributes.online,req.body.attributes.image, eventid],
+                req.body.attributes.endDateTime, req.body.attributes.endDate, req.body.attributes.endTime, req.body.attributes.online,req.body.attributes.image, req.body.attributes.latitude, req.body.attributes.longitude, eventid],
                 { autoCommit: true },
                 function (err, result) {
                     if (err) {
