@@ -94,12 +94,4 @@ export class AccueilComponent implements OnInit {
     document.getElementById("appEventEventbrite").style.display = (compVisible == 1) ? "block" : "none";
     this.componentActive = compVisible;
   }
-
-  
-  onLinkClick(event: MatTabChangeEvent) {
-    console.log('event => ', event);
-    console.log('index => ', event.index);
-    console.log('tab => ', event.tab);
-  
-  }
 }
