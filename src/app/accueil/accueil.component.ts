@@ -4,6 +4,8 @@ import { AuthService, SocialUser } from 'angularx-social-login';
 import {MatDialog} from '@angular/material';
 import {MyDialogComponent} from '../my-dialog/my-dialog.component';
 import {Response} from "@angular/http";
+import {MatTabsModule, MatTabChangeEvent} from '@angular/material/tabs';
+import { ActiviteService } from '../services/activite.service';
 
 export interface GPSData {
   latitude: any;
@@ -26,6 +28,10 @@ export class AccueilComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       this.parentLongitudeCriteria = result.longitude;
       this.parentLatitudeCriteria = result.latitude;
+      this.activiteService.geocode(this.parentLatitudeCriteria,this.parentLongitudeCriteria).subscribe((location) => {
+        this.parentLocationCriteria = location.json().results[0].formatted_address;
+        console.log(this.parentLocationCriteria);
+      });
     });
   }
 
@@ -42,13 +48,14 @@ export class AccueilComponent implements OnInit {
   parentStartTimeCriteria = new Date();
   parentEndDateCriteria;
   parentEndTimeCriteria;
+  parentLocationCriteria;
 
 
   data: [];
   id = {'id': ''};
 
   constructor(
-      public dialog:MatDialog,private router: Router, private socialAuthService: AuthService) { }
+      public dialog:MatDialog,private router: Router, private socialAuthService: AuthService, private activiteService: ActiviteService) { }
 
 
   ngOnInit(){
@@ -88,12 +95,11 @@ export class AccueilComponent implements OnInit {
     this.componentActive = compVisible;
   }
 
-  /**
-   * Retourne la couleur du bouton selon si le component qui lui est relié est visible ou non
-   * */
-  private set_color(compSelect){
-    return (compSelect == this.componentActive ) ? "primary" : "basic";
-
+  
+  onLinkClick(event: MatTabChangeEvent) {
+    console.log('event => ', event);
+    console.log('index => ', event.index);
+    console.log('tab => ', event.tab);
+  
   }
-
 }
