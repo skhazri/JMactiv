@@ -18,11 +18,26 @@ export class MyDialogComponent implements OnInit {
 
   ngOnInit() {
     if (navigator) {
-      navigator.geolocation.getCurrentPosition( pos => {
-        console.log(pos);
+      navigator.geolocation.getCurrentPosition(pos => {
         this.latitude = +pos.coords.latitude;
         this.longitude = +pos.coords.longitude;
-      });
+      }, error =>{
+        switch (error.code) {
+          case 1:
+            //console.log('Permission Denied');
+            this.latitude = 45.509324;
+            this.longitude = -73.568179;
+            this.data.latitude = this.latitude;
+            this.data.longitude = this.longitude;
+            break;
+          case 2:
+            console.log('Position Unavailable');
+            break;
+          case 3:
+            console.log('Timeout');
+            break;
+        }
+      })
     }
   }
 
@@ -32,6 +47,7 @@ export class MyDialogComponent implements OnInit {
   }
 
   setGPSCoord() {
+
     this.dialogRef.close(this.data);
   }
   unSetGPSCoord() {
@@ -40,7 +56,14 @@ export class MyDialogComponent implements OnInit {
     this.dialogRef.close(this.data);
   }
   onClose() {
-    this.dialogRef.close();
+    if ((this.data.latitude == this.latitude) && (this.data.longitude == this.longitude))
+    {
+      console.log("close mydial sans modif");
+      this.dialogRef.close();
+    } else {
+      console.log("close mydial avec modif poser question");
+
+    }
   }
 
 
