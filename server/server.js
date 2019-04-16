@@ -347,7 +347,7 @@ app.get("/api/searchActivites/:startdatetime/:enddatetime", function (req, res) 
 
 
 app.post("/api/SaveActivity", function (req, res) {
-    console.log("/api/SaveActivity" + req.body);
+    console.log("/api/SaveActivity" + req.body.attributes);
     const uid = req.body.id;
     var connection = oracledb.getConnection(
         {
@@ -362,9 +362,9 @@ app.post("/api/SaveActivity", function (req, res) {
             }
 
             connection.execute(
-                "INSERT INTO EVENTS (NAME, LOCATION, DESCRIPTION, TYPE, STARTDATE, STARTTIME, ENDDATE, ENDTIME, ENDDATETIME, ISONLINE,USERID,IMAGE) VALUES (:name, :location, :description, :type, :startDate, :startTime, :endDate, :endTime, :endDateTime, :isOnline, :userId, :image)",
+                "INSERT INTO EVENTS (NAME, LOCATION, DESCRIPTION, TYPE, STARTDATE, STARTTIME, ENDDATE, ENDTIME, ENDDATETIME, ISONLINE,USERID,IMAGE,LATITUDE,LONGITUDE) VALUES (:name, :location, :description, :type, :startDate, :startTime, :endDate, :endTime, :endDateTime, :isOnline, :userId, :image, :lat, :lng)",
                 [req.body.attributes.name, req.body.attributes.location, req.body.attributes.description, req.body.attributes.type, req.body.attributes.startDate, req.body.attributes.startTime,
-                req.body.attributes.endDate, req.body.attributes.endTime, req.body.attributes.endDateTime, req.body.attributes.online, req.body.id,req.body.attributes.image],
+                req.body.attributes.endDate, req.body.attributes.endTime, req.body.attributes.endDateTime, req.body.attributes.online, req.body.id,req.body.attributes.image,req.body.attributes.latitude,req.body.attributes.longitude],
                 { autoCommit: true },
                 function (err, result) {
                     if (err) {

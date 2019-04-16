@@ -73,10 +73,7 @@ export class AccueilComponent implements OnInit {
         }
 
       });
-      //Les évènements sont affichés peut importe si l'usagé est connecté ou non.
-      if (this.loggedIn) {
-        this.showEventComp(0);
-        };
+
   }
   /**
    * SignOut
@@ -86,12 +83,4 @@ export class AccueilComponent implements OnInit {
     this.router.navigate(['']);
   }
 
-  /**
-   * Affiche le component selon le paramètre reçu
-   * */
-  private showEventComp(compVisible){
-    document.getElementById("appEventJMactiv").style.display = (compVisible == 0) ? "block" : "none" ;
-    document.getElementById("appEventEventbrite").style.display = (compVisible == 1) ? "block" : "none";
-    this.componentActive = compVisible;
-  }
 }
