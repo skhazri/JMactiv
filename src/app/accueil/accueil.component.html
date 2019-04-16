@@ -78,65 +78,50 @@
       <div class="col-lg">
         <div class="card bg-white shadow">
           <form class="form-inline mr-3 d-md-flex" >
-              <div class="form-group mb-0" align="left">
-                <div style="margin:.5em">
-                    <mat-form-field>
-                        <input matInput placeholder="Activity" type="search" name="search2"
-                         [(ngModel)]="parentEventCriteria" autocomplete="off">
-                    </mat-form-field>
-                </div>
-                  <div style="padding:7px">
-                      <mat-form-field style="width:400px !important">
-                          <input matInput id="btGPS" placeholder="Location" name="searchlocation" (click)="openDialog()"
-                           [(ngModel)]="parentLocationCriteria" autocomplete="off" onkeydown="return false" >
-                      </mat-form-field>
-                  </div>
-                  <br>
+                <mat-form-field style="margin-right: .5em">
+                    <input matInput placeholder="Activity" type="search" name="search2"
+                         [(ngModel)]="localeventCriteria" autocomplete="off">
+                </mat-form-field>
+                <mat-form-field style="margin-right: .5em;width:400px !important">
+                    <input matInput id="btGPS" placeholder="Location" name="searchlocation" (click)="openDialog()"
+                        [(ngModel)]="localLocationCriteria" autocomplete="off" onkeydown="return false" >
+                </mat-form-field>
                   <!-- Start Date -->
-                  <div class="form-group" style="margin-right: .5em">
-                      <mat-form-field style="width:125px !important">
-                          <input matInput [matDatepicker]="picker" name="startdate"
-                                 placeholder="Start Date" [errorStateMatcher]="errorMatcher" onkeydown="return false" [min]="today" [(ngModel)]="parentStartDateCriteria" >
-                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                          <mat-datepicker #picker class="datepicker"></mat-datepicker>
-                      </mat-form-field>
-                  </div>
+                  <mat-form-field style="margin-right: .5em;width:125px !important" >
+                      <input matInput [matDatepicker]="picker" name="startdate"
+                             placeholder="Start Date" [errorStateMatcher]="errorMatcher" onkeydown="return false" [min]="today" [(ngModel)]="localStartDateCriteria" >
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker class="datepicker"></mat-datepicker>
+                  </mat-form-field>
                   <!-- Start Time -->
-                  <div class="form-group" style="margin-right: .5em">
-                      <mat-form-field style="width:100px !important">
-                          <input matInput [matTimeSelect]="myTimeSelect" name="searchtime" placeholder="Start Time" onkeydown="return false"  [(ngModel)]="parentStartTimeCriteria"
-                                 [min]="startTimeMin">
-                          <mat-time-select-toggle matSuffix [for]="myTimeSelect"></mat-time-select-toggle>
-                          <mat-time-select #myTimeSelect></mat-time-select>
-                      </mat-form-field>
-                  </div>
+                  <mat-form-field style="margin-right: .5em;width:100px !important">
+                      <input matInput [matTimeSelect]="myTimeSelect" name="searchtime" placeholder="Start Time" onkeydown="return false"  [(ngModel)]="localStartTimeCriteria"
+                             [min]="startTimeMin">
+                      <mat-time-select-toggle matSuffix [for]="myTimeSelect"></mat-time-select-toggle>
+                      <mat-time-select #myTimeSelect></mat-time-select>
+                  </mat-form-field>
                   <!-- End Date -->
-                  <div class="form-group" style="margin-right: .5em">
-                      <mat-form-field style="width:125px !important">
-                          <input matInput [matDatepicker]="pickerend" name="enddate"
-                                 placeholder="End Date" [errorStateMatcher]="errorMatcher" onkeydown="return false" [min]="today" [(ngModel)]="parentEndDateCriteria" >
-                          <mat-datepicker-toggle matSuffix [for]="pickerend"></mat-datepicker-toggle>
-                          <mat-datepicker #pickerend class="datepicker"></mat-datepicker>
-                      </mat-form-field>
-                  </div>
+                  <mat-form-field style="margin-right: .5em;width:125px !important">
+                      <input matInput [matDatepicker]="pickerend" name="enddate"
+                             placeholder="End Date" [errorStateMatcher]="errorMatcher" onkeydown="return false" [min]="today" [(ngModel)]="localEndDateCriteria" >
+                      <mat-datepicker-toggle matSuffix [for]="pickerend"></mat-datepicker-toggle>
+                      <mat-datepicker #pickerend class="datepicker"></mat-datepicker>
+                  </mat-form-field>
                   <!-- End Time -->
-                  <div class="form-group" style="margin-right: .5em">
-                      <mat-form-field style="width:100px !important">
-                          <input matInput [matTimeSelect]="myTimeSelectend" name="endtime" placeholder="End Time" onkeydown="return false"  [(ngModel)]="parentEndTimeCriteria"
-                                 [min]="endTimeMin">
-                          <mat-time-select-toggle matSuffix [for]="myTimeSelectend"></mat-time-select-toggle>
-                          <mat-time-select #myTimeSelectend></mat-time-select>
-                      </mat-form-field>
-                  </div>
-                  <div style="margin-right: .5em">
-                      <mat-form-field style="width:75px !important">
-                          <input matInput type="text" name="searchWidthIn" [(ngModel)]="parentDistanceCriteria"
-                         autocomplete="off" placeholder="Radius (km)">
-                      </mat-form-field>
-                </div>
-              </div>
+                  <mat-form-field style="margin-right: .5em;width:100px !important">
+                      <input matInput [matTimeSelect]="myTimeSelectend" name="endtime" placeholder="End Time" onkeydown="return false"  [(ngModel)]="localEndTimeCriteria"
+                             [min]="endTimeMin">
+                      <mat-time-select-toggle matSuffix [for]="myTimeSelectend"></mat-time-select-toggle>
+                      <mat-time-select #myTimeSelectend></mat-time-select>
+                  </mat-form-field>
+                  <mat-form-field style="margin-right: .5em;width:75px !important">
+                      <input matInput type="text" name="searchWidthIn" [(ngModel)]="localDistanceCriteria"
+                     autocomplete="off" placeholder="Radius (km)">
+                  </mat-form-field>
+                <button mat-raised-button style="margin-right: .5em" (click)="OnSearch()">Search</button>
+
             </form>
-          <mat-tab-group (selectedTabChange)="onLinkClick($event)">
+          <mat-tab-group>   <!--(selectedTabChange)="onLinkClick($event)"-->
               <ng-template mat-tab-label>
                   <mat-icon class="example-tab-icon" color="primary">local_activity</mat-icon>
                   JMactiv Events

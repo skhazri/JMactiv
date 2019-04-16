@@ -43,19 +43,12 @@ export class EventjmactivComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    // create header using child_id
-    console.log(this.eventCriteria);
-    console.log(this.LongitudeCriteria);
-    console.log(this.LatitudeCriteria);
-    console.log("distance" + this.DistanceCriteria);
-    console.log(this.StartDateCriteria);
-    console.log(this.StartTimeCriteria);
-    console.log(this.EndDateCriteria);
-    console.log(this.EndTimeCriteria);
-    this.searchEvent();
+      console.log("Search jmactiv : " + this.eventCriteria);
+      this.searchEvents();
+
   }
 
-  private searchEvent(){
+  private searchEvents(){
     let startdatetime = moment(this.StartDateCriteria).format("YYYY-MM-DD") + ' ' + moment(this.StartTimeCriteria).format("HH:mm:ss");
     let enddatetime;
     if (!(this.EndDateCriteria === undefined)) {
@@ -66,12 +59,8 @@ export class EventjmactivComponent implements OnInit, OnChanges {
       } else {
         et = "23:59:59";
       }
-console.log("et :"  + et);
       enddatetime = moment(this.EndDateCriteria).format("YYYY-MM-DD") + 'T' + et;
     }
-    console.log("EndDateCriteria" + this.EndDateCriteria);
-    console.log("startdatetime" + startdatetime);
-    console.log("enddatetime" + enddatetime);
     //this.getActivites();
     this.searchActivites(startdatetime, enddatetime, this.LatitudeCriteria, this.LongitudeCriteria, this.DistanceCriteria);
   }
@@ -80,8 +69,6 @@ console.log("et :"  + et);
     this.activiteService.searchActivities(starttime, enditime, latitude, longitude, distance)
         .subscribe((data) => {
           let res: any[] = data.json();
-console.log(this.LatitudeCriteria);
-console.log(this.LongitudeCriteria);
           for( let i = res.length-1; i--;){
             let e = res[i];
             let activity: any[];

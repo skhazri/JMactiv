@@ -306,7 +306,7 @@ app.get("/api/searchActivites/:startdatetime/:enddatetime", function (req, res) 
             }
 
             connection.execute(
-                "SELECT * FROM EVENTS WHERE TYPE = 'public' AND STARTEVENT >= TO_DATE(:st, 'YYYY-MM-DD HH24:mi:ss') AND ENDEVENT <= TO_DATE(:et, 'YYYY-MM-DD HH24:mi:ss')",
+                "SELECT * FROM EVENTS WHERE TYPE = 'public' AND STARTEVENT >= TO_DATE(:st, 'YYYY-MM-DD HH24:mi:ss') AND CASE WHEN ENDEVENT IS NULL THEN TO_DATE(:et, 'YYYY-MM-DD HH24:mi:ss') ELSE ENDEVENT END <= TO_DATE(:et, 'YYYY-MM-DD HH24:mi:ss')",
                 [st, et],
                 function (err, result) {
                     let activities = [];

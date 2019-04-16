@@ -19,7 +19,6 @@ export class EventbritecardComponent implements OnInit, OnChanges {
     @Input() EndDateCriteria: string;
     @Input() EndTimeCriteria: string;
 
-
     activites: Activities[] = [];
     activite: Activities  = new Activities();
 
@@ -32,7 +31,6 @@ export class EventbritecardComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges() {
-        // create header using child_id
         this.searchEvents();
     }
 

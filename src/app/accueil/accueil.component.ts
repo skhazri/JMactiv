@@ -22,15 +22,15 @@ export class AccueilComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(MyDialogComponent, {
       width: '500px',
-      data: {latitude: this.parentLatitudeCriteria, longitude: this.parentLongitudeCriteria}
+      data: {latitude: this.localLatitudeCriteria, longitude: this.localLongitudeCriteria}
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      this.parentLongitudeCriteria = result.longitude;
-      this.parentLatitudeCriteria = result.latitude;
-      this.activiteService.geocode(this.parentLatitudeCriteria,this.parentLongitudeCriteria).subscribe((location) => {
-        this.parentLocationCriteria = location.json().results[0].formatted_address;
-        console.log(this.parentLocationCriteria);
+      this.localLongitudeCriteria = result.longitude;
+      this.localLatitudeCriteria = result.latitude;
+      this.activiteService.geocode(this.localLatitudeCriteria,this.localLongitudeCriteria).subscribe((location) => {
+        this.localLocationCriteria = location.json().results[0].formatted_address;
+        console.log("dialogRef.afterClosed() " + this.localLatitudeCriteria + "," + this.localLongitudeCriteria);
       });
     });
   }
@@ -38,7 +38,16 @@ export class AccueilComponent implements OnInit {
   user: SocialUser;
 
   loggedIn: boolean;
-  componentActive = 0; //Conserve le numéro du bouton cliquer pour selectionner le bouton actif
+
+  localeventCriteria="";
+  localLongitudeCriteria=-73.67649939547277;
+  localLatitudeCriteria= 45.58148250928232;
+  localDistanceCriteria=50;
+  localStartDateCriteria = new Date();
+  localStartTimeCriteria = new Date();
+  localEndDateCriteria;
+  localEndTimeCriteria;
+  localLocationCriteria;
 
   parentEventCriteria="";
   parentLongitudeCriteria=-73.67649939547277;
@@ -49,6 +58,7 @@ export class AccueilComponent implements OnInit {
   parentEndDateCriteria;
   parentEndTimeCriteria;
   parentLocationCriteria;
+
 
 
   data: [];
@@ -81,6 +91,19 @@ export class AccueilComponent implements OnInit {
   public SignOut() {
     this.socialAuthService.signOut();
     this.router.navigate(['']);
+  }
+
+  private OnSearch(){
+    console.log("OnSearch()");
+    this.parentEventCriteria = this.localeventCriteria;
+    this.parentLongitudeCriteria=this.localLongitudeCriteria;
+    this.parentLatitudeCriteria= this.localLatitudeCriteria;
+    this.parentDistanceCriteria= this.localDistanceCriteria;
+    this.parentStartDateCriteria = this.localStartDateCriteria;
+    this.parentStartTimeCriteria = this.localStartTimeCriteria;
+    this.parentEndDateCriteria = this.localEndDateCriteria;
+    this.parentEndTimeCriteria = this.localEndTimeCriteria;
+    this.parentLocationCriteria = this.localLocationCriteria;
   }
 
 }
