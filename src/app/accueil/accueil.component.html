@@ -91,7 +91,7 @@
                   <!-- Start Date -->
                   <mat-form-field style="margin-right: .5em;width:125px !important" >
                       <input matInput [matDatepicker]="picker" name="startdate"
-                             placeholder="Start Date" [errorStateMatcher]="errorMatcher" onkeydown="return false" [min]="today" [(ngModel)]="localStartDateCriteria" >
+                             placeholder="Start Date"  onkeydown="return false" [min]="today" [(ngModel)]="localStartDateCriteria" >
                       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                       <mat-datepicker #picker class="datepicker"></mat-datepicker>
                   </mat-form-field>
@@ -105,7 +105,7 @@
                   <!-- End Date -->
                   <mat-form-field style="margin-right: .5em;width:125px !important">
                       <input matInput [matDatepicker]="pickerend" name="enddate"
-                             placeholder="End Date" [errorStateMatcher]="errorMatcher" onkeydown="return false" [min]="today" [(ngModel)]="localEndDateCriteria" >
+                             placeholder="End Date"  onkeydown="return false" [min]="today" [(ngModel)]="localEndDateCriteria" >
                       <mat-datepicker-toggle matSuffix [for]="pickerend"></mat-datepicker-toggle>
                       <mat-datepicker #pickerend class="datepicker"></mat-datepicker>
                   </mat-form-field>
