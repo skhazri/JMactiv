@@ -6,6 +6,8 @@ import {MyDialogComponent} from '../my-dialog/my-dialog.component';
 import {Response} from "@angular/http";
 import {MatTabsModule, MatTabChangeEvent} from '@angular/material/tabs';
 import { ActiviteService } from '../services/activite.service';
+import { isNullOrUndefined } from 'util';
+import { isEmpty } from 'rxjs/operators';
 
 export interface GPSData {
   latitude: any;
@@ -29,22 +31,27 @@ export class AccueilComponent implements OnInit {
       this.localLongitudeCriteria = result.longitude;
       this.localLatitudeCriteria = result.latitude;
       this.activiteService.geocode(this.localLatitudeCriteria,this.localLongitudeCriteria).subscribe((location) => {
-        this.localLocationCriteria = location.json().results[0].formatted_address;
-        console.log("dialogRef.afterClosed() " + this.localLatitudeCriteria + "," + this.localLongitudeCriteria);
+        if(location.json().results.length !== 0 ) {
+          this.localLocationCriteria = location.json().results[0].formatted_address;
+        } else {
+          this.localLocationCriteria = "";
+        }
       });
     });
   }
 
   user: SocialUser;
-
   loggedIn: boolean;
-
+  today: any;
+  startTimeMin : any;
+  errorMatcher:any;
+  endTimeMin: any;
   localeventCriteria="";
   localLongitudeCriteria=-73.67649939547277;
   localLatitudeCriteria= 45.58148250928232;
   localDistanceCriteria=50;
   localStartDateCriteria = new Date();
-  localStartTimeCriteria = new Date();
+  localStartTimeCriteria;
   localEndDateCriteria;
   localEndTimeCriteria;
   localLocationCriteria;
@@ -54,7 +61,7 @@ export class AccueilComponent implements OnInit {
   parentLatitudeCriteria= 45.58148250928232;
   parentDistanceCriteria=50;
   parentStartDateCriteria = new Date();
-  parentStartTimeCriteria = new Date();
+  parentStartTimeCriteria;
   parentEndDateCriteria;
   parentEndTimeCriteria;
   parentLocationCriteria;
@@ -93,7 +100,7 @@ export class AccueilComponent implements OnInit {
     this.router.navigate(['']);
   }
 
-  private OnSearch(){
+  public OnSearch(){
     console.log("OnSearch()");
     this.parentEventCriteria = this.localeventCriteria;
     this.parentLongitudeCriteria=this.localLongitudeCriteria;
