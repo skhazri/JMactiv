@@ -4,6 +4,8 @@ import { AuthService, SocialUser } from 'angularx-social-login';
 import {MatDialog} from '@angular/material';
 import {MyDialogComponent} from '../my-dialog/my-dialog.component';
 import {Response} from "@angular/http";
+import {MatTabsModule, MatTabChangeEvent} from '@angular/material/tabs';
+import { ActiviteService } from '../services/activite.service';
 
 export interface GPSData {
   latitude: any;
@@ -26,6 +28,10 @@ export class AccueilComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       this.parentLongitudeCriteria = result.longitude;
       this.parentLatitudeCriteria = result.latitude;
+      this.activiteService.geocode(this.parentLatitudeCriteria,this.parentLongitudeCriteria).subscribe((location) => {
+        this.parentLocationCriteria = location.json().results[0].formatted_address;
+        console.log(this.parentLocationCriteria);
+      });
     });
   }
 
@@ -42,13 +48,14 @@ export class AccueilComponent implements OnInit {
   parentStartTimeCriteria = new Date();
   parentEndDateCriteria;
   parentEndTimeCriteria;
+  parentLocationCriteria;
 
 
   data: [];
   id = {'id': ''};
 
   constructor(
-      public dialog:MatDialog,private router: Router, private socialAuthService: AuthService) { }
+      public dialog:MatDialog,private router: Router, private socialAuthService: AuthService, private activiteService: ActiviteService) { }
 
 
   ngOnInit(){
@@ -66,13 +73,7 @@ export class AccueilComponent implements OnInit {
         }
 
       });
-      //Les évènements sont affichés peut importe si l'usagé est connecté ou non.
-      if (this.loggedIn) {
-        this.showEventComp(0);
-        };
 
-      console.log(this.parentLatitudeCriteria);
-      console.log(this.parentLongitudeCriteria);
   }
   /**
    * SignOut
@@ -80,23 +81,6 @@ export class AccueilComponent implements OnInit {
   public SignOut() {
     this.socialAuthService.signOut();
     this.router.navigate(['']);
-  }
-
-  /**
-   * Affiche le component selon le paramètre reçu
-   * */
-  private showEventComp(compVisible){
-    document.getElementById("appEventJMactiv").style.display = (compVisible == 0) ? "block" : "none" ;
-    document.getElementById("appEventEventbrite").style.display = (compVisible == 1) ? "block" : "none";
-    this.componentActive = compVisible;
-  }
-
-  /**
-   * Retourne la couleur du bouton selon si le component qui lui est relié est visible ou non
-   * */
-  private set_color(compSelect){
-    return (compSelect == this.componentActive ) ? "primary" : "basic";
-
   }
 
 }

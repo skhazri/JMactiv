@@ -87,7 +87,7 @@ export class CreeractiviteComponent implements OnInit {
   ngOnInit() {
     this.form = this.formBuilder.group({
       name: [this.name, [Validators.required, Validators.minLength(3)]],
-      location: [this.location],
+      location: [this.location,[Validators.required]],
       description: [this.description],
       endDateTime: [this.endDateTime],
       type: [this.type, [Validators.required]],
@@ -239,7 +239,7 @@ export class CreeractiviteComponent implements OnInit {
           this.form.value.endDateTime = "false";
       }
       let event = { id: this.userId, attributes: this.form.value }
-      console.log(event);
+      console.log(this.form.value);
       this.activiteService.post(event)
         .subscribe(res => {
           this.dialogRef.close();

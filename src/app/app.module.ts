@@ -46,6 +46,7 @@ import {ErrorComponent} from './error/error.component';
 import {EventbritecardComponent} from './eventbritecard/eventbritecard.component'
 import {EventjmactivComponent} from "./eventjmactiv/eventjmactiv.component";
 import { MyDialogComponent } from './my-dialog/my-dialog.component';
+import {MatTabsModule} from '@angular/material/tabs';
 
 
 //Decorator
@@ -98,6 +99,7 @@ import { MyDialogComponent } from './my-dialog/my-dialog.component';
         MatSlideToggleModule,
         MatDialogModule,
         MatRadioModule,
+        MatTabsModule,
         MatPaginatorModule,
         AgmCoreModule.forRoot({
             apiKey:'AIzaSyARKmM-KagJ34P1bMysrnDbHpLvQAG4Pmw'

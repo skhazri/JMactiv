@@ -9,6 +9,8 @@ import { MatDialog, MatDialogConfig, MatPaginator } from '@angular/material';
 import { CreeractiviteComponent } from '../creeractivite/creeractivite.component';
 import { UserService } from '../services/user.service';
 import { ErrorComponent } from '../error/error.component';
+import {MatTabsModule, MatTabChangeEvent} from '@angular/material/tabs';
+import { toArray, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-authentification',
@@ -21,7 +23,6 @@ export class AuthentificationComponent implements OnInit {
   loggedIn: boolean;
   data: [];
   events: [];
-  eventsLenght: number;
   currentUrl: string;
   searchText;
   eventsF: [];
@@ -30,6 +31,7 @@ export class AuthentificationComponent implements OnInit {
   public errorMessage: string = '';
   public dialogConfig;
   dataSource: object;
+  eventsLength: number;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -48,7 +50,6 @@ export class AuthentificationComponent implements OnInit {
       this.name = params["name"];
     });
     this.currentUrl = window.location.href;
-
     this.getFacebookUser();
     this.getEvents();
     this.getUserId();
@@ -90,8 +91,9 @@ export class AuthentificationComponent implements OnInit {
    * get DB events associated to user
    */
   getActivites(id) {
+   // if (id === 'undefined')
+     // this.getUserId();
 
-    console.log("getActivites(id) " + id);
     this.activiteService.get(id)
         .subscribe((data) => {
           this.eventsF = data.json();
@@ -111,7 +113,7 @@ export class AuthentificationComponent implements OnInit {
     dialogConfig.height = '200px';
     dialogConfig.data = {
       title: 'Delete Event',
-      errorMessage: 'Cannot delete this event. Go to Your fb..',
+      errorMessage: 'Cannot delete this event. Sign to Your Facebook account in order to delete it',
     };
 
     this.activiteService.postDelete(event).subscribe(res => {
@@ -168,7 +170,7 @@ export class AuthentificationComponent implements OnInit {
     dialogConfig.height = '200px';
     dialogConfig.data = {
       title: 'Update Event',
-      errorMessage: 'Cannot update this event. Go to Your fb..',
+      errorMessage: 'Cannot update this event. Sign to Your Facebook account in order to update it',
     };
     this.dialog.open(ErrorComponent, dialogConfig);
   }

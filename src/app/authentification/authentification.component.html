@@ -24,11 +24,11 @@
     <ul *ngIf="user" class="navbar-nav align-items-center d-none d-md-flex">
       <li class="nav-item dropdown">
         <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
-           aria-expanded="false">
+          aria-expanded="false">
           <div class="media align-items-center">
-              <span class="avatar avatar-sm rounded-circle">
-                <img alt="Image authcomp30" src="{{ user.photoUrl }}">
-              </span>
+            <span class="avatar avatar-sm rounded-circle">
+              <img alt="Image authcomp30" src="{{ user.photoUrl }}">
+            </span>
             <div class="media-body ml-2 d-none d-lg-block">
               <span class="mb-0 text-sm  font-weight-bold">{{user.name}}</span>
             </div>
@@ -55,7 +55,7 @@
 <div class="main-content">
   <!-- Header -->
   <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
-       style="min-height:400px; background-image: url(../../assets/activ1.jpg); background-size:contain; background-position: center top;">
+    style="min-height:400px; background-image: url(../../assets/activ1.jpg); background-size:contain; background-position: center top;">
     <!-- Mask -->
     <span class="mask bg-gradient-default opacity-8"></span>
     <!-- Header container -->
@@ -92,23 +92,23 @@
                 <div class="card-profile-stats d-flex justify-content-center mt-md-5">
                   <div>
                     <span class="heading"></span>
-                    <span class="description text-primary">Events</span>
+                    <span class="description text-primary"> <span class="font-weight-light">{{events?.length + eventsF?.length }}</span>  Events</span>
                   </div>
                 </div>
               </div>
             </div>
             <div class="text-center">
               <h3>
-                {{user.name}}<span class="font-weight-light">20</span>
+                {{user.name}}
               </h3>
               <div class="h5 font-weight-300">
                 <i class="ni location_pin mr-2"></i>{{user.email}}
               </div>
               <div class="h5 mt-4">
-                <i class="ni business_briefcase-24 mr-2"></i>{{user.id}}
+                <!-- <i class="ni business_briefcase-24 mr-2"></i>{{user.id}} -->
               </div>
               <div>
-                <i class="ni education_hat mr-2"></i>{{user.idToken}}
+                <!-- <i class="ni education_hat mr-2"></i>{{user.idToken}} -->
               </div>
               <hr class="my-4" />
               <span class="badge badge-default">Sport</span>
@@ -129,88 +129,113 @@
               <div class="col-8">
                 <h3 class="mb-0">My Events</h3>
               </div>
-              <div class="col-4 text-right">
-
-                <button type="button" class="btn btn-info btn-sm" (click)="addEvent()">
-                  Add Event
-                </button>
-              </div>
             </div>
           </div>
           <div class="card-body">
             <form>
-              <div *ngIf="events">
-                <!-- Search -->
-                <div class="row justify-content-end">
-                  <div class="form-group mb-0">
-                    <div class="input-group input-group-alternative">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-search"></i></span>
-                      </div>
-                      <input class="form-control" name="search" placeholder="Search" [(ngModel)]="searchText"
-                             type="text" autocomplete="off">
+              <!-- Search -->
+              <div class="row justify-content-end">
+                <div class="form-group mb-0">
+                  <div class="input-group input-group-alternative">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-search"></i></span>
                     </div>
+                    <input class="form-control" name="search" placeholder="Search" [(ngModel)]="searchText" type="text"
+                      autocomplete="off">
                   </div>
                 </div>
+              </div>
+            </form>
+            <br>
+            <mat-tab-group>
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <mat-icon class="example-tab-icon" color="primary">local_activity</mat-icon>
+                  JMactiv Events
+                </ng-template>
                 <br>
-                <br>
-                <div class="row">
-                  <div *ngFor="let event of eventsF  | filter:searchText">
-                    <div class="col-sm">
-                      <div class="card card-single" style="width: 14rem;">
-                        <img class="card-img-top" height="165" *ngIf="event.image" src={{event.image}} >
-                        <img class="card-img-top" *ngIf="!event.image" src="../../assets/event.jpg">
-                        <div class="card-body">
-                          <ul class="navbar-nav d-none d-sm d-md-flex" style="position:absolute;right:13px">
-                            <li class="nav-item dropdown">
-                              <a class="nav-link pr-0" role="button" data-toggle="dropdown" aria-haspopup="true"
-                                 aria-expanded="false">
-                                <i class="fas fa-bars fa-sm"></i>
-                              </a>
-                              <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
-                                <a class="dropdown-item">
-                                  <i class="fas fa-share-square fa-sm "></i>
-                                  <span>
-                                    <share-button [button]="'facebook'" [showIcon]="false" [showText]="true" [size]="1"
-                                                  [icon]="['fas', 'fa-share-square']" text='share Event'
-                                                  url="/profile/events/{{event.id}}" [autoSetMeta]="false">
-                                    </share-button>
-                                  </span>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" (click)="updateEvent(event)">
-                                  <i class=" fas fa-edit fa-sm "></i>
-                                  <span>Update Event</span>
-                                </a>
-                                <a class="dropdown-item" (click)="removeEvent(event)">
-                                  <i class="far fa-trash-alt fa-sm "></i>
-                                  <span>Remove Event</span>
-                                </a>
-                              </div>
-                            </li>
-                          </ul>
+                <form>
+                  <div >
+                    <!-- add jMACTIV EBVENT -->
+                    <div class="row justify-content-end">
+                      <div class="col-4 text-right">
+                        <button type="button" class="btn btn-primary btn-sm" (click)="addEvent()">
+                          Add JMactiv Event
+                        </button>
+                      </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row" *ngIf="eventsF">
+                      <div *ngFor="let event of eventsF  | filter:searchText">
+                        <div class="col-sm">
+                          <div class="card card-single" style="width: 14rem;">
+                            <img class="card-img-top" height="165" *ngIf="event.image" src={{event.image}}>
+                            <img class="card-img-top" *ngIf="!event.image" src="../../assets/event.jpg">
+                            <div class="card-body">
+                              <ul class="navbar-nav d-none d-sm d-md-flex" style="position:absolute;right:13px">
+                                <li class="nav-item dropdown">
+                                  <a class="nav-link pr-0" role="button" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    <i class="fas fa-bars fa-sm"></i>
+                                  </a>
+                                  <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+                                    <a class="dropdown-item">
+                                      <i class="fas fa-share-square fa-sm "></i>
+                                      <span>
+                                        <share-button [button]="'facebook'" [showIcon]="false" [showText]="true"
+                                          [size]="1" [icon]="['fas', 'fa-share-square']" text='share Event'
+                                          url="/profile/events/{{event.id}}" [autoSetMeta]="false">
+                                        </share-button>
+                                      </span>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" (click)="updateEvent(event)">
+                                      <i class=" fas fa-edit fa-sm "></i>
+                                      <span>Update Event</span>
+                                    </a>
+                                    <a class="dropdown-item" (click)="removeEvent(event)">
+                                      <i class="far fa-trash-alt fa-sm "></i>
+                                      <span>Remove Event</span>
+                                    </a>
+                                  </div>
+                                </li>
+                              </ul>
+                              <br>
+                              <h5 class="card-title">{{event.name}}</h5>
+                              <p class="card-text">{{event.description | slice:0:70 }}</p>
+                              <a [routerLink]="['/profile/events', event.id]" [queryParams]="{type:'local'}"
+                                class="btn btn-primary">Read More</a>
+                            </div>
+                          </div>
                           <br>
-                          <h5 class="card-title">{{event.name}}</h5>
-                          <p class="card-text">{{event.description | slice:0:70 }}</p>
-                          <a [routerLink]="['/profile/events', event.id]" [queryParams]="{type:'local'}" class="btn btn-primary">Read More</a>
                         </div>
                       </div>
-                      <br>
+                      <!-- db -->
                     </div>
                   </div>
-                  <!--  -->
+                </form>
+              </mat-tab>
 
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <mat-icon class="example-tab-icon" color="primary">local_activity</mat-icon>
+                  Facebook Events
+                </ng-template>
+                <br>
+                <br>
+                <div class="row" *ngIf="events">
                   <div *ngFor="let event of events  | filter:searchText">
                     <div class="col-sm">
                       <div class="card card-single" style="width: 14rem;">
-                          <img class="card-img-top" src={{event.cover.source}} alt="Card image cap">
+                        <img class="card-img-top" src={{event.cover.source}} alt="Card image cap">
 
                         <!-- <img class="card-img-top" src="../../assets/event.jpg" alt="Card image cap"> -->
                         <div class="card-body">
                           <ul class="navbar-nav d-none d-sm d-md-flex" style="position:absolute;right:13px">
                             <li class="nav-item dropdown">
                               <a class="nav-link pr-0" role="button" data-toggle="dropdown" aria-haspopup="true"
-                                 aria-expanded="false">
+                                aria-expanded="false">
                                 <i class="fas fa-bars fa-sm"></i>
                               </a>
                               <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
@@ -218,8 +243,8 @@
                                   <i class="fas fa-share-square fa-sm "></i>
                                   <span>
                                     <share-button [button]="'facebook'" [showIcon]="false" [showText]="true" [size]="1"
-                                                  [icon]="['fas', 'fa-share-square']" text='share Event'
-                                                  url="/profile/events/{{event.id}}" [autoSetMeta]="false">
+                                      [icon]="['fas', 'fa-share-square']" text='share Event'
+                                      url="/profile/events/{{event.id}}" [autoSetMeta]="false">
                                     </share-button>
                                   </span>
                                 </a>
@@ -238,16 +263,16 @@
                           <br>
                           <h5 class="card-title">{{event.name}}</h5>
                           <p class="card-text">{{event.description | slice:0:70 }}</p>
-                          <a [routerLink]="['/profile/events', event.id]" [queryParams]="{type:'facebook'}" class="btn btn-primary">Read More</a>
+                          <a [routerLink]="['/profile/events', event.id]" [queryParams]="{type:'facebook'}"
+                            class="btn btn-primary">Read More</a>
                         </div>
                       </div>
                       <br>
                     </div>
                   </div>
-                  <!-- db -->
                 </div>
-              </div>
-            </form>
+              </mat-tab>
+            </mat-tab-group>
           </div>
         </div>
       </div>

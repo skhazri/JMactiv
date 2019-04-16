@@ -3,13 +3,13 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "concurrently \"ng serve \" \"node server/server.js\"",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "heroku-postbuild": "ng build --prod",
-    "server": "nodemon server/server.js"
+    "server": "nodemon server/server.js",
+    "publishheroku": "git push jmactiv-web master || true"
   },
   "engines": {
     "node": "10.15.3",
@@ -64,7 +64,8 @@
     "tslib": "^1.9.0",
     "tslint": "^5.11.0",
     "typescript": "^3.2.1",
-    "zone.js": "^0.8.26"
+    "zone.js": "^0.8.26",
+    "concurrently": "^4.1.0"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.8.1"

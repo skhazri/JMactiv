@@ -19,18 +19,20 @@ export class MyDialogComponent implements OnInit {
   ngOnInit() {
     if (navigator) {
       navigator.geolocation.getCurrentPosition( pos => {
+        console.log(pos);
         this.latitude = +pos.coords.latitude;
         this.longitude = +pos.coords.longitude;
-        console.log(this.data);
+        // console.log(this.data);
       });
     }
   }
 
   onChoseLocation($event){
+
     this.data.latitude = $event.coords.lat;
     this.data.longitude = $event.coords.lng;
-    console.log($event);
-    console.log(this.data);
+    // console.log($event);
+    // console.log(this.data);
   }
 
   setGPSCoord() {
