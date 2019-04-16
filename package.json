@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "server": "nodemon server/server.js",
-    "buildheroku": "ng build --prod",
+    "heroku-postbuild": "ng build --prod",
     "publishheroku": "git push jmactiv-web master || true"
   },
   "engines": {
