@@ -1,6 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from "@angular/material";
 import {GPSData} from "../accueil/accueil.component";
+import {google} from "@agm/core/services/google-maps-types";
 
 
 @Component({
@@ -44,6 +45,10 @@ export class MyDialogComponent implements OnInit {
   onChoseLocation($event){
     this.data.latitude = $event.coords.lat;
     this.data.longitude = $event.coords.lng;
+
+    this.latitude = $event.coords.lat;
+    this.longitude = $event.coords.lng;
+
   }
 
   setGPSCoord() {
