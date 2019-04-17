@@ -32,17 +32,17 @@ interface Location {
 })
 
 export class MapComponent implements OnInit {
-  circleRadius:number = 5000; // km
+  circleRadius:number = 50; // km
   geocoder:any;
   public location:Location = {
-    lat: 51.678418,
-    lng: 7.809007,
+    lat: 45.509324,
+    lng: -73.568179,
     marker: {
-      lat: 51.678418,
-      lng: 7.809007,
+      lat: 45.509324,
+      lng: -73.568179,
       draggable: true
     },
-    zoom: 5
+    zoom: 3
   };
 
   @ViewChild(AgmMap) map: AgmMap;

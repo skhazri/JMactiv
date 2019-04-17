@@ -47,7 +47,6 @@ export class EventjmactivComponent implements OnInit, OnChanges {
   ngOnChanges() {
       console.log("Search jmactiv : " + this.eventCriteria);
       this.searchEvents();
-
   }
 
   private searchEvents(){
