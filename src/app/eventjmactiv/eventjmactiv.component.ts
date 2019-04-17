@@ -1,6 +1,6 @@
 import {Component, OnInit, Input, OnChanges} from '@angular/core';
 import { Observable, of } from "rxjs";
-import { map } from 'rxjs/operators';
+import { map, isEmpty } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { GoogleMapsAPIWrapper } from '@agm/core/services';
 import {ActiviteService} from "../services/activite.service";
@@ -40,6 +40,8 @@ export class EventjmactivComponent implements OnInit, OnChanges {
     console.log("eventjmactiv24")
     console.log(this.eventCriteria);
     this.getActivites();
+    // this.searchEvents();
+
   }
 
   ngOnChanges() {
@@ -69,20 +71,23 @@ export class EventjmactivComponent implements OnInit, OnChanges {
     this.activiteService.searchActivities(starttime, enditime, latitude, longitude, distance)
         .subscribe((data) => {
           let res: any[] = data.json();
-          for( let i = res.length-1; i--;){
-            let e = res[i];
-            let activity: any[];
-
-            if(!this.distanceOk(e.location, e.latitude, e.longitude)){
-              console.log("K " + e.location);
-            //  console.log(e);
-              res.splice(i, 1);
+          if(res.length !== 0) {
+            for( let i = res.length-1; i--;){
+              let e = res[i];
+              let activity: any[];
+  
+              if(!this.distanceOk(e.location, e.latitude, e.longitude)){
+                console.log("K " + e.location);
+              //  console.log(e);
+                res.splice(i, 1);
+              }
+  
             }
-
+            this.events = res;
           }
-
-          console.log(data);
-          this.events = res;
+          else {
+            this.events = res;
+          }
         });
   }
   public getActivites() {

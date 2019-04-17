@@ -274,7 +274,8 @@ app.get("/api/getMonActivite/:activityid", function (req, res) {
 
 app.get("/api/searchActivites/:startdatetime/:enddatetime", function (req, res) {
     console.log("searchActivites " + req.params["startdatetime"]);
-    let st = moment(req.params["startdatetime"]).format("YYYY-MM-DD HH:mm:ss");
+    let st = req.params["startdatetime"];
+     //moment(req.params["startdatetime"]).format("YYYY-MM-DD HH:mm:ss");
     console.log(req.params["enddatetime"]);
     //let et;
     if (req.params["enddatetime"] === 'undefined'){
@@ -283,6 +284,8 @@ app.get("/api/searchActivites/:startdatetime/:enddatetime", function (req, res) 
         et = moment(req.params["enddatetime"]).format("YYYY-MM-DD HH:mm:ss");
     }
     console.log(st);
+    console.log(et);
+
     //console.log(req.params);
     /*for (let p in req.params) {
         let val = req.params[p];
@@ -306,7 +309,7 @@ app.get("/api/searchActivites/:startdatetime/:enddatetime", function (req, res) 
             }
 
             connection.execute(
-                "SELECT * FROM EVENTS WHERE TYPE = 'public' AND STARTEVENT >= TO_DATE(:st, 'YYYY-MM-DD HH24:mi:ss') AND CASE WHEN ENDEVENT IS NULL THEN TO_DATE(:et, 'YYYY-MM-DD HH24:mi:ss') ELSE ENDEVENT END <= TO_DATE(:et, 'YYYY-MM-DD HH24:mi:ss')",
+                "SELECT * FROM EVENTS WHERE TYPE = 'public' AND STARTEVENT >= :st AND CASE WHEN ENDEVENT IS NULL THEN :et ELSE ENDEVENT END <= :et",
                 [st, et],
                 function (err, result) {
                     let activities = [];
@@ -316,7 +319,7 @@ app.get("/api/searchActivites/:startdatetime/:enddatetime", function (req, res) 
                         res.send(err);
                     } else {
                         console.log("resultat search");
-                    //    console.log(result);
+                        console.log(result);
                         result.rows.forEach(function (e) {
                             let activity = {};
                             activity.id = e[1];
@@ -362,16 +365,16 @@ app.post("/api/SaveActivity", function (req, res) {
             }
 
             connection.execute(
-                "INSERT INTO EVENTS (NAME, LOCATION, DESCRIPTION, TYPE, STARTDATE, STARTTIME, ENDDATE, ENDTIME, ENDDATETIME, ISONLINE,USERID,IMAGE,LATITUDE,LONGITUDE) VALUES (:name, :location, :description, :type, :startDate, :startTime, :endDate, :endTime, :endDateTime, :isOnline, :userId, :image, :lat, :lng)",
+                "INSERT INTO EVENTS (NAME, LOCATION, DESCRIPTION, TYPE, STARTDATE, STARTTIME, ENDDATE, ENDTIME, ENDDATETIME, ISONLINE,USERID,IMAGE,LATITUDE,LONGITUDE,STARTEVENT,ENDEVENT) VALUES (:name, :location, :description, :type, :startDate, :startTime, :endDate, :endTime, :endDateTime, :isOnline, :userId, :image, :lat, :lng, :startEvent, :endEvent)",
                 [req.body.attributes.name, req.body.attributes.location, req.body.attributes.description, req.body.attributes.type, req.body.attributes.startDate, req.body.attributes.startTime,
-                req.body.attributes.endDate, req.body.attributes.endTime, req.body.attributes.endDateTime, req.body.attributes.online, req.body.id,req.body.attributes.image,req.body.attributes.latitude,req.body.attributes.longitude],
+                req.body.attributes.endDate, req.body.attributes.endTime, req.body.attributes.endDateTime, req.body.attributes.online, req.body.id,req.body.attributes.image,req.body.attributes.latitude,req.body.attributes.longitude,req.body.attributes.startDate,req.body.attributes.endDate],
                 { autoCommit: true },
                 function (err, result) {
                     if (err) {
                         console.error(err);
                         res.send(err);
                     } else {
-                        console.log(result.rowsAffected);
+                        console.log(result);
                         res.json(1);
                         doRelease(connection);
                     }
@@ -395,9 +398,9 @@ app.post("/api/UpdateActivity", function (req, res) {
             }
 
             connection.execute(
-                "UPDATE EVENTS SET NAME = :name, LOCATION = :location, DESCRIPTION = :description,TYPE = :type, STARTDATE = :startDate, STARTTIME = :startTime,ENDDATETIME = :endDateTime, ENDDATE = :endDate, ENDTIME = :endTime,ISONLINE = :isOnline, IMAGE= :image, LATITUDE= :lat, LONGITUDE= :lng where EVENTID = :eventid ",
+                "UPDATE EVENTS SET NAME = :name, LOCATION = :location, DESCRIPTION = :description,TYPE = :type, STARTDATE = :startDate, STARTTIME = :startTime,ENDDATETIME = :endDateTime, ENDDATE = :endDate, ENDTIME = :endTime,ISONLINE = :isOnline, IMAGE= :image, LATITUDE= :lat, LONGITUDE= :lng, STARTEVENT = :startDate,ENDEVENT = :endDate where EVENTID = :eventid ",
                 [req.body.attributes.name, req.body.attributes.location, req.body.attributes.description, req.body.attributes.type, req.body.attributes.startDate, req.body.attributes.startTime,
-                req.body.attributes.endDateTime, req.body.attributes.endDate, req.body.attributes.endTime, req.body.attributes.online,req.body.attributes.image, req.body.attributes.latitude, req.body.attributes.longitude, eventid],
+                req.body.attributes.endDateTime, req.body.attributes.endDate, req.body.attributes.endTime, req.body.attributes.online,req.body.attributes.image, req.body.attributes.latitude, req.body.attributes.longitude,req.body.attributes.startDate,req.body.attributes.endDate,eventid],
                 { autoCommit: true },
                 function (err, result) {
                     if (err) {
