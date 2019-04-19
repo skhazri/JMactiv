@@ -20,7 +20,7 @@ export const routes: Routes = [
         component: AboutComponent
     },
     {
-        path: 'events/:id?*',
+        path: 'events/:id',
         component: AfficheractiviteComponent
     },
     {
