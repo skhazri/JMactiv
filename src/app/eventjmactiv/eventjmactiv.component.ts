@@ -37,8 +37,8 @@ export class EventjmactivComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    console.log("eventjmactiv24")
-    console.log(this.eventCriteria);
+    // console.log("eventjmactiv24")
+    // console.log(this.eventCriteria);
     this.getActivites();
     // this.searchEvents();
 
@@ -50,7 +50,14 @@ export class EventjmactivComponent implements OnInit, OnChanges {
   }
 
   private searchEvents(){
-    let startdatetime = moment(this.StartDateCriteria).format("YYYY-MM-DD") + ' ' + moment(this.StartTimeCriteria).format("HH:mm:ss");
+    let startdatetime;
+    if(!(this.StartTimeCriteria === undefined)) {
+      startdatetime = moment(this.StartDateCriteria).format("YYYY-MM-DD") + ' ' + moment(this.StartTimeCriteria).format("HH:mm:ss");
+
+    } else {
+      startdatetime = moment(this.StartDateCriteria).format("YYYY-MM-DD") ;
+    }
+
     let enddatetime;
     if (!(this.EndDateCriteria === undefined)) {
 
@@ -71,16 +78,12 @@ export class EventjmactivComponent implements OnInit, OnChanges {
         .subscribe((data) => {
           let res: any[] = data.json();
           if(res.length !== 0) {
-            for( let i = res.length-1; i--;){
+            for( let i = res.length; i--;){
               let e = res[i];
               let activity: any[];
-  
               if(!this.distanceOk(e.location, e.latitude, e.longitude)){
-                console.log("K " + e.location);
-              //  console.log(e);
                 res.splice(i, 1);
               }
-  
             }
             this.events = res;
           }
@@ -103,13 +106,11 @@ export class EventjmactivComponent implements OnInit, OnChanges {
       const centre = {lat: this.LatitudeCriteria, lon: this.LongitudeCriteria};
       //const dest = //this.getDest(adr);
       distance = headingDistanceTo( centre, dest).distance;
-      console.log(distance/1000, " km");
       return distance;
 
   }
   public getDest(adr:string) {
     let dest: any;
-    console.log("adr69:", adr);
     if (adr !== null && adr !== undefined) {
       const [level_1, level_2, state, zip, country] = adr.split(',');
       this.MapComponent.location.address_level_1 = level_1;
@@ -120,7 +121,6 @@ export class EventjmactivComponent implements OnInit, OnChanges {
       this.MapComponent.updateOnMap();
       dest = {lat: this.MapComponent.location.lat, lon: this.MapComponent.location.lng};
     } else dest = "error";
-    console.log("dest80:", dest);
     return dest;
   }
 
@@ -131,7 +131,6 @@ export class EventjmactivComponent implements OnInit, OnChanges {
     const dest ={lat: lat, lon: lng};
     let res1 =  (this.getDistance(Adre, dest) <= Max);
     let res2 =  insideCircle(dest,centre,Max*1000);
-    console.log("ok1:",res1,"ok2:", res2);
     return res2;
   }
 }

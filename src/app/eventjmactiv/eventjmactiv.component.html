@@ -6,7 +6,8 @@
         <div *ngFor=" let event of events  | filter:eventCriteria">
           <div class="col-sm">
             <div class="card card-single" style="width: 14rem;">
-              <img class="card-img-top" src={{event.image}} alt="Card image cap">
+              <img class="card-img-top" src={{event.image}} alt="">
+               <span class=" top-left badge badge-primary">{{event.startDate | date:'mediumDate'}} {{event.startTime | date:'shortTime'}} </span>
               <div class="card-body">
                 <ul class="navbar-nav d-none d-sm d-md-flex" style="position:absolute;right:13px">
                   <li class="nav-item dropdown">
@@ -20,7 +21,7 @@
                         <span>
                                         <share-button [button]="'facebook'" [showIcon]="false" [showText]="true" [size]="1"
                                                       [icon]="['fas', 'fa-share-square']" text='share Event'
-                                                      url="/profile/events/{{event.id}}" [autoSetMeta]="false">
+                                                      url="https://jmactiv-web.herokuapp.com/events/{{event.id}}" [autoSetMeta]="false">
                                         </share-button>
                                       </span>
                       </a>
@@ -38,8 +39,10 @@
                 </ul>
                 <br>
                 <h5 class="card-title">{{event.name}}</h5>
+                <p class=" card-text text-sm"><mat-icon class="text-primary text-sm">place</mat-icon>
+                  {{event.location}}</p>
                 <p class="card-text">{{event.description | slice:0:70 }}</p>
-                <a [routerLink]="['/profile/events', event.id]" [queryParams]="{type:'local'}"  class="btn btn-primary">Read More</a>
+                <a [routerLink]="['/events', event.id]" [queryParams]="{type:'local'}"  class="btn btn-primary">Read More</a>
               </div>
             </div>
             <br>

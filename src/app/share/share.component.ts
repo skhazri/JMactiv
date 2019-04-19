@@ -16,7 +16,7 @@ export class ShareComponent implements OnInit {
 
   ngOnInit() {
     // get current url
-    //this.currentUrl = "http://www.google.com/" + this.router.url;
+    // this.currentUrl = "https://jmactiv-web.herokuapp.com" + this.router.url;
 
     //uncomment when depolyment
     this.currentUrl = window.location.href;

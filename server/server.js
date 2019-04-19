@@ -274,9 +274,9 @@ app.get("/api/getMonActivite/:activityid", function (req, res) {
 
 app.get("/api/searchActivites/:startdatetime/:enddatetime", function (req, res) {
     console.log("searchActivites " + req.params["startdatetime"]);
-    let st = req.params["startdatetime"];
-     //moment(req.params["startdatetime"]).format("YYYY-MM-DD HH:mm:ss");
-    console.log(req.params["enddatetime"]);
+    let st = moment(req.params["startdatetime"]).format("YYYY-MM-DD HH:mm:ss");
+
+    //req.params["startdatetime"];
     //let et;
     if (req.params["enddatetime"] === 'undefined'){
         et = moment("9999-12-31 23:59:59").format("YYYY-MM-DD HH:mm:ss");
@@ -339,8 +339,10 @@ app.get("/api/searchActivites/:startdatetime/:enddatetime", function (req, res) 
                             activity.startevent = e[15];
                             activity.endevent = e[16];
                             activities.push(activity);
+                            console.log((e[15]));
+
                         });
-                        // console.log((activities));
+                        // console.log((e[15]));
                         doRelease(connection);
                         res.json(activities);
                     }
@@ -350,7 +352,17 @@ app.get("/api/searchActivites/:startdatetime/:enddatetime", function (req, res) 
 
 
 app.post("/api/SaveActivity", function (req, res) {
-    console.log("/api/SaveActivity" + req.body.attributes);
+    console.log("/api/SaveActivity" );
+    let startdatetime = moment(req.body.attributes.startDate).format("YYYY-MM-DD") + ' ' + moment(req.body.attributes.startTime).format("HH:mm:ss");
+    let enddatetime;
+    if (req.body.attributes.endDate === null){
+        enddatetime = moment("9999-12-31 23:59:59").format("YYYY-MM-DD HH:mm:ss");
+    } else {
+        enddatetime = moment(req.body.attributes.endDate).format("YYYY-MM-DD") + ' ' + moment(req.body.attributes.endTime).format("HH:mm:ss");
+    }
+    console.log(startdatetime);
+    console.log(enddatetime);
+
     const uid = req.body.id;
     var connection = oracledb.getConnection(
         {
@@ -367,7 +379,7 @@ app.post("/api/SaveActivity", function (req, res) {
             connection.execute(
                 "INSERT INTO EVENTS (NAME, LOCATION, DESCRIPTION, TYPE, STARTDATE, STARTTIME, ENDDATE, ENDTIME, ENDDATETIME, ISONLINE,USERID,IMAGE,LATITUDE,LONGITUDE,STARTEVENT,ENDEVENT) VALUES (:name, :location, :description, :type, :startDate, :startTime, :endDate, :endTime, :endDateTime, :isOnline, :userId, :image, :lat, :lng, :startEvent, :endEvent)",
                 [req.body.attributes.name, req.body.attributes.location, req.body.attributes.description, req.body.attributes.type, req.body.attributes.startDate, req.body.attributes.startTime,
-                req.body.attributes.endDate, req.body.attributes.endTime, req.body.attributes.endDateTime, req.body.attributes.online, req.body.id,req.body.attributes.image,req.body.attributes.latitude,req.body.attributes.longitude,req.body.attributes.startDate,req.body.attributes.endDate],
+                req.body.attributes.endDate, req.body.attributes.endTime, req.body.attributes.endDateTime, req.body.attributes.online, req.body.id,req.body.attributes.image,req.body.attributes.latitude,req.body.attributes.longitude,startdatetime,enddatetime],
                 { autoCommit: true },
                 function (err, result) {
                     if (err) {
@@ -384,6 +396,15 @@ app.post("/api/SaveActivity", function (req, res) {
 
 app.post("/api/UpdateActivity", function (req, res) {
     console.log("/api/UpdateActivity " + req.body.attributes.latitude);
+    let startdatetime = moment(req.body.attributes.startDate).format("YYYY-MM-DD") + ' ' + moment(req.body.attributes.startTime).format("HH:mm:ss");
+    let enddatetime;
+    if (req.body.attributes.endDate === null){
+        enddatetime = moment("9999-12-31 23:59:59").format("YYYY-MM-DD HH:mm:ss");
+    } else {
+        enddatetime = moment(req.body.attributes.endDate).format("YYYY-MM-DD") + ' ' + moment(req.body.attributes.endTime).format("HH:mm:ss");
+    }
+    console.log(startdatetime);
+    console.log(enddatetime);
     const eventid = parseInt(req.body.id, 10);
     var connection = oracledb.getConnection(
         {
@@ -400,7 +421,7 @@ app.post("/api/UpdateActivity", function (req, res) {
             connection.execute(
                 "UPDATE EVENTS SET NAME = :name, LOCATION = :location, DESCRIPTION = :description,TYPE = :type, STARTDATE = :startDate, STARTTIME = :startTime,ENDDATETIME = :endDateTime, ENDDATE = :endDate, ENDTIME = :endTime,ISONLINE = :isOnline, IMAGE= :image, LATITUDE= :lat, LONGITUDE= :lng, STARTEVENT = :startDate,ENDEVENT = :endDate where EVENTID = :eventid ",
                 [req.body.attributes.name, req.body.attributes.location, req.body.attributes.description, req.body.attributes.type, req.body.attributes.startDate, req.body.attributes.startTime,
-                req.body.attributes.endDateTime, req.body.attributes.endDate, req.body.attributes.endTime, req.body.attributes.online,req.body.attributes.image, req.body.attributes.latitude, req.body.attributes.longitude,req.body.attributes.startDate,req.body.attributes.endDate,eventid],
+                req.body.attributes.endDateTime, req.body.attributes.endDate, req.body.attributes.endTime, req.body.attributes.online,req.body.attributes.image, req.body.attributes.latitude, req.body.attributes.longitude,startdatetime,enddatetime,eventid],
                 { autoCommit: true },
                 function (err, result) {
                     if (err) {

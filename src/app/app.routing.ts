@@ -20,16 +20,16 @@ export const routes: Routes = [
         component: AboutComponent
     },
     {
+        path: 'events/:id',
+        component: AfficheractiviteComponent
+    },
+    {
         path: 'profile',
         canActivate: [AuthGuard],
         children: [
             {
                 path: '',
                 component: AuthentificationComponent
-            },
-            {
-                path: 'events/:id',
-                component: AfficheractiviteComponent
             }
         ]
     }

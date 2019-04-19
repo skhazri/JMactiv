@@ -1,0 +1,11 @@
+.card {
+    position: relative;
+  }
+  .top-left {
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    &:hover{
+     color: white;
+    } 
+  }
