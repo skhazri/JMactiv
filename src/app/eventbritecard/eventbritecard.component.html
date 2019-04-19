@@ -5,7 +5,7 @@
                 <div class="col-sm">
                     <div class="card card-single" style="width: 14rem;">
                         <img class="card-img-top" src={{activite.LOGO}} alt="Card image cap">
-                        <span class=" top-left badge badge-primary">{{event.startDate | date:'mediumDate'}} {{event.startTime | date:'shortTime'}} </span>
+                        <span *ngIf="activite.STARTTIME" class=" top-left badge badge-primary">{{activite.STARTTIME | date:'mediumDate'}} {{activite.STARTTIME | date:'shortTime'}} </span>
                         <div class="card-body">
                             <ul class="navbar-nav d-none d-sm d-md-flex" style="position:absolute;right:13px">
                                 <li class="nav-item dropdown">
@@ -20,7 +20,7 @@
                                                 <share-button [button]="'facebook'" [showIcon]="false" [showText]="true"
                                                               [size]="1"
                                                               [icon]="['fas', 'fa-share-square']" text='share Event'
-                                                              url="https://jmactiv-web.herokuapp.com/events/{{activite.ID}}"
+                                                              url="https://jmactiv-web.herokuapp.com/events/{{activite.ID}}?type=eventbrite"
                                                               [autoSetMeta]="false">
                                                 </share-button>
                                               </span>
@@ -40,7 +40,7 @@
                             <br>
                             <h5 class="card-title">{{activite.ACTIVITYTYPE}}</h5>
                             <p class=" card-text text-sm"><mat-icon class="text-primary text-sm">place</mat-icon>
-                                {{event.location}}</p>
+                                {{activite.ACTIVITYLOCATION}}</p>
                             <p class="card-text">{{activite.DESCRIPTION.text| slice:0:70 }}</p>
                             <a [routerLink]="['/events', activite.ID]" [queryParams]="{type:'eventbrite'}" class="btn btn-primary">Read More</a>
                             </div>

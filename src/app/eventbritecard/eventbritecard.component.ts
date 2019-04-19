@@ -67,6 +67,7 @@ export class EventbritecardComponent implements OnInit, OnChanges {
                 });
 
                 this.activites = a;
+                console.log(this.activites)
                 this.searchEventsVenue();
 
             });
