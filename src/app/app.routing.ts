@@ -21,6 +21,7 @@ export const routes: Routes = [
     },
     {
         path: 'events/:id',
+        pathMatch: 'prefix',
         component: AfficheractiviteComponent
     },
     {
