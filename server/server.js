@@ -151,7 +151,7 @@ app.get("/api/getMaListeActivite/:userid", function (req, res) {
                             activity.longitude = e[14];
                             activity.startevent = e[15];
                             activity.endevent = e[16];
-
+                            activity.maxAttendees = e[17];
                             activities.push(activity);
                         });
                         // console.log((activities));
@@ -208,7 +208,7 @@ app.get("/api/getActivites/", function (req, res) {
                             activity.longitude = e[14];
                             activity.startevent = e[15];
                             activity.endevent = e[16];
-
+                            activity.maxAttendees = e[17];
                             activities.push(activity);
                         });
                       //  console.log((activities));
@@ -263,6 +263,7 @@ app.get("/api/getMonActivite/:activityid", function (req, res) {
                             activity.longitude = e[14];
                             activity.startevent = e[15];
                             activity.endevent = e[16];
+                            activity.maxAttendees = e[17];
                         });
                    //     console.log((activity));
                         doRelease(connection);
@@ -277,14 +278,14 @@ app.get("/api/searchActivites/:startdatetime/:enddatetime", function (req, res) 
     let st = moment(req.params["startdatetime"]).format("YYYY-MM-DD HH:mm:ss");
 
     //req.params["startdatetime"];
-    //let et;
+    let et;
     if (req.params["enddatetime"] === 'undefined'){
         et = moment("9999-12-31 23:59:59").format("YYYY-MM-DD HH:mm:ss");
     } else {
         et = moment(req.params["enddatetime"]).format("YYYY-MM-DD HH:mm:ss");
     }
+
     console.log(st);
-    console.log(et);
 
     //console.log(req.params);
     /*for (let p in req.params) {
@@ -309,7 +310,7 @@ app.get("/api/searchActivites/:startdatetime/:enddatetime", function (req, res) 
             }
 
             connection.execute(
-                "SELECT * FROM EVENTS WHERE TYPE = 'public' AND STARTEVENT >= :st AND CASE WHEN ENDEVENT IS NULL THEN :et ELSE ENDEVENT END <= :et",
+                "SELECT USERID, EVENTID, NAME, LOCATION, DESCRIPTION, STARTDATE, STARTTIME, ENDDATE, ENDTIME, TYPE, ENDDATETIME, ISONLINE, IMAGE, LATITUDE, LONGITUDE, STARTEVENT, ENDEVENT, MAXATTENDEES, DOIATTEND(EVENTID, 22) AS IATTEND, USERBYEVENT(EVENTID) AS USERATTENDEES FROM EVENTS WHERE TYPE = 'public' AND STARTEVENT >= :st AND CASE WHEN ENDEVENT IS NULL THEN :et ELSE ENDEVENT END <= :et",
                 [st, et],
                 function (err, result) {
                     let activities = [];
@@ -338,11 +339,13 @@ app.get("/api/searchActivites/:startdatetime/:enddatetime", function (req, res) 
                             activity.longitude = e[14];
                             activity.startevent = e[15];
                             activity.endevent = e[16];
+                            activity.maxAttendees = e[17] - e[19];
+                            activity.IAttend = e[18];
                             activities.push(activity);
-                            console.log((e[15]));
+                            console.log((e[18]));
 
                         });
-                        // console.log((e[15]));
+                         console.log("release");
                         doRelease(connection);
                         res.json(activities);
                     }
@@ -350,6 +353,106 @@ app.get("/api/searchActivites/:startdatetime/:enddatetime", function (req, res) 
         });
 });
 
+app.post("/api/IAttendActivity", function (req, res) {
+    console.log("/api/IAttendActivity" );
+console.log( req.body[0]);
+
+    var connection = oracledb.getConnection(
+        {
+            user: dbConfig.user,
+            password: dbConfig.password,
+            connectString: dbConfig.connectString
+        },
+        function (err, connection) {
+            if (err) {
+                console.error(err);
+                res.send(err);
+            }
+
+            connection.execute(
+                "INSERT INTO EVENTS_ATTENDEES (EVENTID, USERID) VALUES (:eventId, :userId)",
+                [req.body[0], req.body[1]],
+                { autoCommit: true },
+                function (err, result) {
+                    if (err) {
+                        console.error(err);
+                        res.send(err);
+                    } else {
+                        console.log(result);
+                        res.json(1);
+                        doRelease(connection);
+                    }
+                });
+        });
+});
+
+app.post("/api/NotAttendActivity", function (req, res) {
+    console.log("/api/IAttendActivity" );
+    console.log( req.body[0]);
+
+    var connection = oracledb.getConnection(
+        {
+            user: dbConfig.user,
+            password: dbConfig.password,
+            connectString: dbConfig.connectString
+        },
+        function (err, connection) {
+            if (err) {
+                console.error(err);
+                res.send(err);
+            }
+
+            connection.execute(
+                "DELETE FROM EVENTS_ATTENDEES WHERE EVENTID = :eventId AND USERID = :userId",
+                [req.body[0], req.body[1]],
+                { autoCommit: true },
+                function (err, result) {
+                    if (err) {
+                        console.error(err);
+                        res.send(err);
+                    } else {
+                        console.log(result);
+                        res.json(1);
+                        doRelease(connection);
+                    }
+                });
+        });
+});
+
+
+app.get("/api/DoIAttend/:eventId/:userId", function (req, res) {
+    //(eventId, userId)
+    console.log("EventUserIdAttend : " + req.params["eventId"] + ' - ' + req.params["userId"]);
+    let nbrows =0;
+    let connection = oracledb.getConnection(
+        {
+            user: dbConfig.user,
+            password: dbConfig.password,
+            connectString: dbConfig.connectString
+        },
+        function (err, connection) {
+            if (err) {
+                console.error("err conn : " + err);
+                res.send(err);
+            }
+
+            connection.execute(
+                "SELECT * FROM EVENTS_ATTENDEES WHERE EVENTID = :eventId AND USERID = :userId",
+                [req.params["eventId"], req.params["userId"]],
+                function (err, result) {
+                    if (err) {
+                        console.error("Select " + err);
+                        res.send(err);
+                    } else {
+                        console.log("EventUserIdAttend result: " + result.rows.length);
+                        let nb = result.rows.length;
+                        res.json(nb);
+                        doRelease(connection);
+                    }
+                });
+        });
+
+});
 
 app.post("/api/SaveActivity", function (req, res) {
     console.log("/api/SaveActivity" );
@@ -362,7 +465,7 @@ app.post("/api/SaveActivity", function (req, res) {
     }
     console.log(startdatetime);
     console.log(enddatetime);
-
+    console.log(req.body.attributes.maxAttendees);
     const uid = req.body.id;
     var connection = oracledb.getConnection(
         {
@@ -377,9 +480,9 @@ app.post("/api/SaveActivity", function (req, res) {
             }
 
             connection.execute(
-                "INSERT INTO EVENTS (NAME, LOCATION, DESCRIPTION, TYPE, STARTDATE, STARTTIME, ENDDATE, ENDTIME, ENDDATETIME, ISONLINE,USERID,IMAGE,LATITUDE,LONGITUDE,STARTEVENT,ENDEVENT) VALUES (:name, :location, :description, :type, :startDate, :startTime, :endDate, :endTime, :endDateTime, :isOnline, :userId, :image, :lat, :lng, :startEvent, :endEvent)",
+                "INSERT INTO EVENTS (NAME, LOCATION, DESCRIPTION, TYPE, STARTDATE, STARTTIME, ENDDATE, ENDTIME, ENDDATETIME, ISONLINE,USERID,IMAGE,LATITUDE,LONGITUDE,STARTEVENT,ENDEVENT,MAXATTENDEES) VALUES (:name, :location, :description, :type, :startDate, :startTime, :endDate, :endTime, :endDateTime, :isOnline, :userId, :image, :lat, :lng, :startEvent, :endEvent, :maxAttendees)",
                 [req.body.attributes.name, req.body.attributes.location, req.body.attributes.description, req.body.attributes.type, req.body.attributes.startDate, req.body.attributes.startTime,
-                req.body.attributes.endDate, req.body.attributes.endTime, req.body.attributes.endDateTime, req.body.attributes.online, req.body.id,req.body.attributes.image,req.body.attributes.latitude,req.body.attributes.longitude,startdatetime,enddatetime],
+                req.body.attributes.endDate, req.body.attributes.endTime, req.body.attributes.endDateTime, req.body.attributes.online, req.body.id,req.body.attributes.image,req.body.attributes.latitude,req.body.attributes.longitude,startdatetime,enddatetime, req.body.attributes.maxAttendees],
                 { autoCommit: true },
                 function (err, result) {
                     if (err) {
@@ -405,6 +508,7 @@ app.post("/api/UpdateActivity", function (req, res) {
     }
     console.log(startdatetime);
     console.log(enddatetime);
+    console.log(req.body.attributes.maxAttendees);
     const eventid = parseInt(req.body.id, 10);
     var connection = oracledb.getConnection(
         {
@@ -419,9 +523,9 @@ app.post("/api/UpdateActivity", function (req, res) {
             }
 
             connection.execute(
-                "UPDATE EVENTS SET NAME = :name, LOCATION = :location, DESCRIPTION = :description,TYPE = :type, STARTDATE = :startDate, STARTTIME = :startTime,ENDDATETIME = :endDateTime, ENDDATE = :endDate, ENDTIME = :endTime,ISONLINE = :isOnline, IMAGE= :image, LATITUDE= :lat, LONGITUDE= :lng, STARTEVENT = :startDate,ENDEVENT = :endDate where EVENTID = :eventid ",
+                "UPDATE EVENTS SET NAME = :name, LOCATION = :location, DESCRIPTION = :description,TYPE = :type, STARTDATE = :startDate, STARTTIME = :startTime,ENDDATETIME = :endDateTime, ENDDATE = :endDate, ENDTIME = :endTime,ISONLINE = :isOnline, IMAGE= :image, LATITUDE= :lat, LONGITUDE= :lng, STARTEVENT = :startDate,ENDEVENT = :endDate, MAXATTENDEES = :maxAttendees where EVENTID = :eventid ",
                 [req.body.attributes.name, req.body.attributes.location, req.body.attributes.description, req.body.attributes.type, req.body.attributes.startDate, req.body.attributes.startTime,
-                req.body.attributes.endDateTime, req.body.attributes.endDate, req.body.attributes.endTime, req.body.attributes.online,req.body.attributes.image, req.body.attributes.latitude, req.body.attributes.longitude,startdatetime,enddatetime,eventid],
+                req.body.attributes.endDateTime, req.body.attributes.endDate, req.body.attributes.endTime, req.body.attributes.online,req.body.attributes.image, req.body.attributes.latitude, req.body.attributes.longitude,startdatetime,enddatetime,req.body.attributes.maxAttendees, eventid],
                 { autoCommit: true },
                 function (err, result) {
                     if (err) {

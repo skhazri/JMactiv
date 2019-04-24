@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { environment } from '../../environments/environment';
-import { Observable } from "rxjs";
+import {Observable, pipe} from "rxjs";
 
 
 @Injectable({
@@ -22,16 +22,33 @@ getActivities(){
   return this.http.get(environment.ACTIVITY_API + '/api/getActivites' )
 }
 
-searchActivities(startdatetime, enddatetime, latitude, longitude, distance){
+searchActivities(startdatetime, enddatetime){
     // console.log("searchstarttime " + startdatetime);
     //let params = new HttpParams().set('startTime',startdatetime);//.set("sdt",startdatetime).set("enddatetime", enddatetime).set("latitude", latitude).set("longitude",  longitude).set("distance", distance); //Create new HttpParams
     //console.log(params.toString());
     return this.http.get(environment.ACTIVITY_API + '/api/searchActivites/' + startdatetime + '/' + enddatetime);
 }
 
+DoIAttend(data){
+    return this.http.get(environment.ACTIVITY_API + '/api/DoIAttend/' + data[0] + '/' + data[1])
+      .pipe(res => res)
+      .toPromise()
+      .catch(err => {
+        console.log(err);
+      })
+  }
+
 post(data){
   return this.http.post(environment.ACTIVITY_API+ '/api/SaveActivity', data)
 }
+
+postIAttend(data){
+    return this.http.post(environment.ACTIVITY_API+ '/api/IAttendActivity', data)
+  }
+
+  postNotAttend(data){
+    return this.http.post(environment.ACTIVITY_API+ '/api/NotAttendActivity', data)
+  }
 
 postUpdate(data){
   return this.http.post(environment.ACTIVITY_API + '/api/UpdateActivity', data)

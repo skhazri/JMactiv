@@ -8,6 +8,8 @@
             <div class="card card-single" style="width: 14rem;">
               <img class="card-img-top" src={{event.image}} alt="">
                <span class=" top-left badge badge-primary">{{event.startDate | date:'mediumDate'}} {{event.startTime | date:'shortTime'}} </span>
+                <span *ngIf="(event.IAttend) && (UserId != undefined)" class=" bottom-left badge badge-primary">I attend</span>
+                <span *ngIf="event.maxattendees == 0" class=" bottom-left badge badge-primary">COMPLETE </span>
               <div class="card-body">
                 <ul class="navbar-nav d-none d-sm d-md-flex" style="position:absolute;right:13px">
                   <li class="nav-item dropdown">
@@ -19,12 +21,21 @@
                       <a class="dropdown-item">
                         <i class="fas fa-share-square fa-sm "></i>
                         <span>
-                                        <share-button [button]="'facebook'" [showIcon]="false" [showText]="true" [size]="1"
-                                                      [icon]="['fas', 'fa-share-square']" text='share Event'
-                                                      url="https://jmactiv-web.herokuapp.com/events/{{event.id}}?type=local" [autoSetMeta]="false">
-                                        </share-button>
-                                      </span>
+                            <share-button [button]="'facebook'" [showIcon]="false" [showText]="true" [size]="1"
+                                          [icon]="['fas', 'fa-share-square']" text='share Event'
+                                          url="https://jmactiv-web.herokuapp.com/events/{{event.id}}?type=local" [autoSetMeta]="false">
+                            </share-button>
+                        </span>
                       </a>
+                        <a class="dropdown-item" *ngIf="UserId != undefined">
+
+                            <span *ngIf="(event.maxattendees >= 0) && (event.IAttend)">
+                                <button mat-button (click)="RemoveAttends(event.id)">Not Attend</button>
+                            </span>
+                            <span *ngIf="(event.maxattendees > 0) && (!event.IAttend)">
+                                <button mat-button (click)="WantAttends(event.id)">I Attend</button>
+                            </span>
+                        </a>
                       <!-- <div class="dropdown-divider"></div>
                       <a routerLink="/profile" class="dropdown-item">
                         <i class=" fas fa-edit fa-sm "></i>

@@ -56,6 +56,7 @@ export class CreeractiviteComponent implements OnInit {
   image: any;
   latitude: any;
   longitude: any;
+  maxAttendees: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -81,6 +82,7 @@ export class CreeractiviteComponent implements OnInit {
     this.image = event.image;
     this.latitude = event.latitude;
     this.longitude = event.longitude;
+    this.maxAttendees = event.maxAttendees;
   }
 
 
@@ -98,7 +100,8 @@ export class CreeractiviteComponent implements OnInit {
       online: [this.online],
       image: [this.image],
       latitude: [this.latitude],
-      longitude: [this.longitude]
+      longitude: [this.longitude],
+      maxAttendees: [this.maxAttendees]
     },
       {
         validators: [
@@ -256,7 +259,8 @@ export class CreeractiviteComponent implements OnInit {
             online: 'false',
             image: null,
             latitude: null,
-            longitude: null
+            longitude: null,
+            maxAttendees: null
           });
 
           for (let i in this.form.controls) { this.form.controls[i].setErrors(null);}

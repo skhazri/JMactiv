@@ -8,6 +8,7 @@ import {MatTabsModule, MatTabChangeEvent} from '@angular/material/tabs';
 import { ActiviteService } from '../services/activite.service';
 import { isNullOrUndefined } from 'util';
 import { isEmpty } from 'rxjs/operators';
+import {UserService} from "../services/user.service";
 
 export interface GPSData {
   latitude: any;
@@ -65,14 +66,18 @@ export class AccueilComponent implements OnInit {
   parentEndDateCriteria;
   parentEndTimeCriteria;
   parentLocationCriteria;
-
+  parentUserId;
 
 
   data: [];
   id = {'id': ''};
 
   constructor(
-      public dialog:MatDialog,private router: Router, private socialAuthService: AuthService, private activiteService: ActiviteService) { }
+      public dialog:MatDialog,
+      private router: Router,
+      private socialAuthService: AuthService,
+      private activiteService: ActiviteService,
+      private userService: UserService) { }
 
 
   ngOnInit(){
@@ -81,7 +86,9 @@ export class AccueilComponent implements OnInit {
         this.user = user;
         if (user != null) {
           if (user.id != null) {
-            this.loggedIn = true; }
+            this.loggedIn = true;
+            this.getUserId();
+          }
           else {
             this.loggedIn = false;
           }
@@ -113,4 +120,15 @@ export class AccueilComponent implements OnInit {
     this.parentLocationCriteria = this.localLocationCriteria;
   }
 
+  /**
+   * getUserId
+   */
+  getUserId() {
+
+    this.userService.get(this.user.id).then(
+      (res) => {
+        this.parentUserId  = res;
+        console.log(this.parentUserId);
+      });
+  }
 }

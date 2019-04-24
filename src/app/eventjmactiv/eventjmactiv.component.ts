@@ -28,6 +28,7 @@ export class EventjmactivComponent implements OnInit, OnChanges {
   @Input() StartTimeCriteria: string;
   @Input() EndDateCriteria: string;
   @Input() EndTimeCriteria: string;
+  @Input() UserId: number;
 
   events: any[];
   lat: number;
@@ -40,8 +41,6 @@ export class EventjmactivComponent implements OnInit, OnChanges {
     // console.log("eventjmactiv24")
     // console.log(this.eventCriteria);
     this.getActivites();
-    // this.searchEvents();
-
   }
 
   ngOnChanges() {
@@ -70,11 +69,12 @@ export class EventjmactivComponent implements OnInit, OnChanges {
       enddatetime = moment(this.EndDateCriteria).format("YYYY-MM-DD") + 'T' + et;
     }
     //this.getActivites();
-    this.searchActivites(startdatetime, enddatetime, this.LatitudeCriteria, this.LongitudeCriteria, this.DistanceCriteria);
+    this.searchActivites(startdatetime, enddatetime);
+
   }
 
-  public searchActivites(starttime, enditime, latitude, longitude, distance) {
-    this.activiteService.searchActivities(starttime, enditime, latitude, longitude, distance)
+  public searchActivites(starttime, enditime) {
+    this.activiteService.searchActivities(starttime, enditime)
         .subscribe((data) => {
           let res: any[] = data.json();
           if(res.length !== 0) {
@@ -133,4 +133,37 @@ export class EventjmactivComponent implements OnInit, OnChanges {
     let res2 =  insideCircle(dest,centre,Max*1000);
     return res2;
   }
+
+  private WantAttends(eventid:number){
+
+    var eventatt:number[] = new Array(eventid, this.UserId)
+
+
+    console.log("WantAttends : " + eventatt[0]);
+    this.activiteService.postIAttend(eventatt)
+      .subscribe(res => {
+        console.log("I Attend");
+        this.searchEvents();
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  private RemoveAttends(eventid:number){
+
+    var eventatt:number[] = new Array(eventid, this.UserId)
+
+
+    console.log("NotAttends : " + eventatt[0]);
+    this.activiteService.postNotAttend(eventatt)
+      .subscribe(res => {
+        console.log("Not Attend");
+        this.searchEvents();
+      }, error => {
+        console.log(error);
+      });
+
+  }
+
+
 }
