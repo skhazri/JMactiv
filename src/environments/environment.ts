@@ -6,7 +6,7 @@ export const environment = {
     production: false,
     Facebook_API: "https://graph.facebook.com/v3.2",
     App_ID: "2229942433740406",
-    GOOGLE_MAPS_API_KEY: "AIzaSyCkCFTN_v4H8T3BjrU-76w_w1MFSLWfjqw",
+    GOOGLE_MAPS_API_KEY: "",
     ACTIVITY_API: "http://localhost:3000",
     PHOTO_API: "https://api.unsplash.com/"
 };
